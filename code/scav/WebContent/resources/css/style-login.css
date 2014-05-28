@@ -1,0 +1,115 @@
+@CHARSET "ISO-8859-1";
+
+@import url('style-icons.css');
+
+/**************************************************************************************************************/
+/*	Configuraciones Generales	*/
+
+body {
+	margin: 0px;
+	padding: 0px;
+}
+
+/**************************************************************************************************************/
+/* Coloca los layout delante de todo */
+
+.ui-layout-north .ui-layout-unit-content {
+    overflow: visible !important;
+}
+.ui-layout-south .ui-layout-unit-content {
+    overflow: visible !important;
+}
+.ui-layout-center .ui-layout-unit-content {
+     overflow:visible !important;
+}
+          
+/**************************************************************************************************************/
+/* Header */
+
+#header {
+	padding: 4px 0px;
+	height: 75px;
+	position: relative;
+}
+
+#logo {
+	text-align: left;
+	margin-left: 5px;
+}
+
+.title {
+	position: absolute;
+	left: 400px;
+	top: 40px;
+	font-family: inherit;
+	font-size: 25px;
+}
+
+/**************************************************************************************************************/
+/* Footer */
+
+#footer {
+	height: 28px;
+	margin: 0 auto;
+	padding: 0 20px;
+}
+
+#footer p {
+	margin: 0;
+	padding: 4px 0px 0px 0px;
+	text-align: center;
+}
+
+#footer a {
+	margin-top: -14px;
+}
+
+#footer .link {
+	float: right;
+}
+
+#footer .copyright {
+	font-size: 14px;
+}
+
+/**************************************************************************************************************/
+/* Fomulario login */
+
+.gradient {
+    width: 700px;
+    height: 400px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -350px;
+    margin-top: -200px; 
+    background-image: url(img/gradient.png);
+    background-repeat: no-repeat;
+}
+
+.form-login {
+	/* Center Positioning */
+    width: 400px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -200px;
+    margin-top: -90px;
+}
+
+/**************************************************************************************************************/
+/* Style de letra para el formulario */
+
+.name {
+	font-weight: bold;
+	font-size: 12px;
+}
+
+/**************************************************************************************************************/
+/* 	Saca del tema su style */
+
+.ui-widget {
+	font-size: 12px !important;
+}
+
+/**************************************************************************************************************/

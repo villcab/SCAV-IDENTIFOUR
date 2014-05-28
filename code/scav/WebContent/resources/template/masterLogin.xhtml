@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>SCAV IDENTIFOUR</title>
+	<link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/style-login.css" />
+</h:head>
+
+<h:body>
+
+	<p:layout fullPage="true">
+
+		<p:layoutUnit position="north" size="95" styleClass="ui-widget ui-widget-header">
+			<div id="header" class="ui-widget ui-widget-header">
+				<div id="logo">
+					<img src="resources/images/logo_firstonesoft.png" alt="Logo" />
+					<span class="title">SCAV IDENTIFOUR</span>
+				</div>
+			</div>
+		</p:layoutUnit>
+
+		<p:layoutUnit position="center">
+			<ui:insert name="content" />
+		</p:layoutUnit>
+
+		<p:layoutUnit position="south" size="40" styleClass="ui-widget ui-widget-header">
+			<div id="footer" class="ui-widget ui-widget-header">
+				<p class="copyright">© Copyright FirstOneSoft Santa Cruz Bolivia - 2014</p>
+				<a class="link" href="www.google.com">firstonesoft.com</a>
+			</div>
+		</p:layoutUnit>
+
+	</p:layout>
+
+</h:body>
+
+</html>

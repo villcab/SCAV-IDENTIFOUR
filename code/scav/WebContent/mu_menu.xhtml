@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/resources/template/master.xhtml">
+	
+	<ui:define name="content">
+		<h:form>
+			
+			<h1 class="form-title">Gestionar Personas</h1>
+			
+			<p:panel widgetVar="panelLogin" header="Informacion General" style="width: 400px" styleClass="alinear">
+				<h:panelGrid columns="2" cellpadding="2">
+
+					<h:outputLabel value="CI: *" styleClass="name"/>
+					<p:inputText value="" style="width: 200px"/>
+
+					<h:outputLabel value="Nombres: *" styleClass="name"/>
+					<p:password value="" style="width: 200px"/>
+					
+					<h:outputLabel value="Apellidos: *" styleClass="name"/>
+					<p:inputText value="" style="width: 200px"/>
+
+					<h:outputLabel value="Sexo: *" styleClass="name"/>
+					<p:password value="" style="width: 200px"/>
+
+					<p:commandButton value="Guardar" icon="login"/>
+					<p:commandButton value="Limpiar" icon="login"/>
+
+				</h:panelGrid>
+			</p:panel>
+			
+			<div class="line-divider" />
+			
+			<p:dataTable var="car" value="#{menuBean.menus}">
+				<f:facet name="header">
+					<h:outputLabel value="LISTA DE PERSONAS" />
+				</f:facet>
+				
+				<p:column headerText="ID" sortBy="#{car.menuId}" filterBy="#{car.menuId}">
+					<h:outputText value="#{car.menuId}" />
+				</p:column>
+	
+				<p:column headerText="NOMBRE" sortBy="#{car.nombre}" filterBy="#{car.nombre}">
+					<h:outputText value="#{car.nombre}" />
+				</p:column>
+	
+				<p:column headerText="ESTADO" sortBy="#{car.estado}" filterBy="#{car.estado}">
+					<h:outputText value="#{car.estado}" />
+				</p:column>
+	
+				<p:column headerText="NIVEL" sortBy="#{car.nivel}" filterBy="#{car.nivel}">
+					<h:outputText value="#{car.nivel}" />
+				</p:column>
+			</p:dataTable>
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>
+
+</html>

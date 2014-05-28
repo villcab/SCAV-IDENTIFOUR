@@ -1,0 +1,164 @@
+@CHARSET "ISO-8859-1";
+
+@import url('style-icons.css');
+
+/**************************************************************************************************************/
+/*	Configuraciones Generales	*/
+
+body {
+	margin: 0px;
+	padding: 0px;
+}
+
+h1 {
+	margin-top: 0;
+}
+
+/**************************************************************************************************************/
+/* Coloca los layout delante de todo */
+
+.ui-layout-north .ui-layout-unit-content {
+    overflow: visible !important;
+}
+.ui-layout-south .ui-layout-unit-content {
+    overflow: visible !important;
+}
+
+/**************************************************************************************************************/
+/* Header */
+
+#header {
+	padding: 4px 0px;
+	height: 75px;
+	position: relative;
+}
+
+#logo {
+	text-align: left;
+	margin-left: 5px;
+}
+
+.title {
+	position: absolute;
+	left: 400px;
+	top: 40px;
+	font-family: inherit;
+	font-size: 25px;
+}
+
+.subtitle {
+	position: absolute;
+	width: 100%;
+	text-align: right;
+	left: -5px;
+	top: 20px;
+	font-size: 12px;
+}
+
+/**************************************************************************************************************/
+/* Contenedor */
+
+#container {
+	padding: 0px 15px 15px 15px;
+}
+
+#container .line-divider {
+	clear: both;
+	border-bottom: 1px solid #d7d7d7;
+	padding-bottom: 15px;
+	margin-bottom: 15px;
+}
+
+#container .alinear {
+	float: left;
+}
+
+#container .derecha {
+	float: right;
+}
+
+.form-title {
+	text-align: center;
+}
+
+/**************************************************************************************************************/
+/* Footer */
+
+#footer {
+	height: 28px;
+	margin: 0 auto;
+	padding: 0 20px;
+}
+
+#footer p {
+	margin: 0;
+	padding: 4px 0px 0px 0px;
+	text-align: center;
+}
+
+#footer a {
+	margin-top: -15px;
+}
+
+#footer .link {
+	float: right;
+}
+
+#footer .copyright {
+	font-size: 14px;
+}
+
+/**************************************************************************************************************/
+/* Style de letra para el formulario */
+
+.name {
+	font-weight: bold;
+	font-size: 12px;
+}
+
+/**************************************************************************************************************/
+/* 	Saca del tema su style */
+
+.ui-widget {
+	font-size: 12px !important;
+}
+
+/**************************************************************************************************************/
+/* 	Columnas para Layout */
+
+#page-content {
+	float: left;
+	width: 906px;
+	margin-left: 30px;
+	line-height: 1.5em;
+}
+
+.one-half,
+.one-third,
+.two-third,
+.three-fourth,
+.one-fourth {
+	float:left;
+	margin-right:30px;
+	position:relative;
+}
+
+.one-half{ width: 438px; }
+
+.one-third{ width: 282px; }
+
+.one-fourth{ width: 204px; }
+
+.two-third{ width: 594px; }
+
+.three-fourth{ width: 672px; }
+
+.last {
+	clear:right;
+	margin-right:0 !important;
+}
+
+.clear {
+	clear:both;
+	height:1px;
+}

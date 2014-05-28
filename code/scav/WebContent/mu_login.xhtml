@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/resources/template/masterLogin.xhtml">
+
+	<ui:define name="content">
+		<h:form styleClass="gradient">
+			<p:panel widgetVar="panelLoginId" header="Inicio de Session" styleClass="form-login">
+				<h:panelGrid columns="2" cellpadding="5">
+
+					<h:outputLabel value="Nombre de Usuario:" styleClass="name"/>
+					<p:inputText value="" style="width: 200px"/>
+
+					<h:outputLabel value="Contrase&ntilde;a:" styleClass="name"/>
+					<p:password value="" style="width: 200px"/>
+
+					<p:commandButton value="Iniciar Sesion" oncomplete="handleLoginRequest(xhr, status, args)" icon="login"/>
+
+				</h:panelGrid>
+			</p:panel>
+		</h:form>
+		
+		<script type="text/javascript">
+		    function handleLoginRequest(xhr, status, args) {
+		        if(args.validationFailed || !args.loggedIn) {
+// 		            panelLoginId.jq.effect("shake", { times: 5}, 1000)
+					window.location = "/scav/faces/mu_menu.xhtml";
+		        }
+		    }
+		</script>
+
+	</ui:define>
+
+</ui:composition>
+
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/resources/template/master.xhtml">
+	
+	<ui:define name="content">
+		<h:form id="formGralId" styleClass="container">
+		
+			<p:growl id="smsId" />
+			
+			<h1 class="form-title">Gestionar Propietarios</h1>
+
+			<div id="page-content">
+				
+				<div class="one-half">
+					<p:panel id="panelGralId" header="Informacion General" style="width: 438px;" styleClass="alinear">
+						<h:panelGrid columns="2" cellpadding="2">
+		
+							<h:outputLabel value="CI: *" styleClass="name"/>
+							<p:inputText value="#{propietarioBean.propietario.ci}" style="width: 200px" required="true"/>
+		
+							<h:outputLabel value="Nombres: *" styleClass="name"/>
+							<p:inputText value="#{propietarioBean.propietario.nombres}" style="width: 200px" required="true"/>
+							
+							<h:outputLabel value="Apellidos: *" styleClass="name"/>
+							<p:inputText value="#{propietarioBean.propietario.apellidos}" style="width: 200px" required="true"/>
+		
+							<h:outputLabel value="Nro de Licencia: *" styleClass="name"/>
+							<p:inputText value="#{propietarioBean.propietario.nroLicencia}" style="width: 200px" required="true"/>
+		
+							<p:commandButton value="Guardar"
+											 actionListener="#{propietarioBean.guardarPropietario()}"
+											 update="tableGralId, smsId, panelGralId"
+											 icon="guardar" />
+											 
+							<p:commandButton value="Limpiar"
+											 actionListener="#{propietarioBean.nuevoPropitario()}"
+											 update="panelGralId"
+											 icon="limpiar"/>
+		
+						</h:panelGrid>
+					</p:panel>
+					
+					<div class="line-divider" />
+					
+					<p:commandLink id="webcamId" onclick="dialogCamera.show();" style="float: right;">
+                        <p:graphicImage value="#{pageContext.servletContext.contextPath}/resources/images/camara.png" style="border: none;"/>
+                    </p:commandLink>
+                    
+				</div>
+				
+				<div class="one-half last">
+					<p:panel id="panelFotoId" header="Foto" style="width: 360px;height: 280px;">
+						<p:graphicImage value="#{pageContext.servletContext.contextPath}/resources/images/tmp/#{cameraController.foto}"
+										cache="false"/>
+		            </p:panel>
+		            
+		            <p:dialog widgetVar="dialogCamera"
+		            		  resizable="false"
+		            		  width="360" height="300"
+		            		  header="CAMARA"
+		            		  modal="true"
+		            		  appendToBody="true">
+		            		  
+		                <h:panelGrid>
+		                    <p:photoCam widgetVar="photoCam" update="smsId, panelFotoId" listener="#{cameraController.oncapture}"/>
+		                    <h:panelGrid columns="2">
+		                        <p:commandButton value="Capturar" onclick="photoCam.capture();" icon="ok"/>
+		                        <p:commandButton value="Cerrar" onclick="dialogCamera.hide();" icon="cancelar"/>
+		                    </h:panelGrid>
+		                </h:panelGrid>
+		            </p:dialog>
+            
+				</div>
+				<div class="clear "></div>
+				
+			</div>
+            
+			<div class="line-divider" />
+			
+			<p:dataTable id="tableGralId"
+						 var="var" value="#{propietarioBean.propietarios}"
+						 emptyMessage="NO EXISTEN REGISTROS DE PROPIETARIOS" >
+						 
+				<f:facet name="header">
+					<h:outputLabel value="LISTA DE PROPIETARIOS" />
+				</f:facet>
+				
+				<p:column headerText="CI" sortBy="#{var.ci}" filterBy="#{var.ci}">
+					<h:outputText value="#{var.ci}" />
+				</p:column>
+	
+				<p:column headerText="NOMBRES" sortBy="#{var.nombres}" filterBy="#{var.nombres}">
+					<h:outputText value="#{var.nombres}" />
+				</p:column>
+	
+				<p:column headerText="APELLIDOS" sortBy="#{var.apellidos}" filterBy="#{var.apellidos}">
+					<h:outputText value="#{var.apellidos}" />
+				</p:column>
+	
+				<p:column headerText="NRO DE LICENCIA" sortBy="#{var.nroLicencia}" filterBy="#{var.nroLicencia}">
+					<h:outputText value="#{var.nroLicencia}" />
+				</p:column>
+			</p:dataTable>
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>
+
+</html>
