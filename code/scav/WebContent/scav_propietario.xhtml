@@ -10,38 +10,42 @@
 <ui:composition template="/resources/template/master.xhtml">
 	
 	<ui:define name="content">
-		<h:form id="formGralId" styleClass="container">
+		<h:form id="frmGralId" styleClass="container">
 		
-			<p:growl id="smsId" />
+			<p:growl id="smsId" showDetail="true"/>
 			
 			<h1 class="form-title">Gestionar Propietarios</h1>
 
 			<div id="page-content">
 				
 				<div class="one-half">
-					<p:panel id="panelGralId" header="Informacion General" style="width: 438px;" styleClass="alinear">
+					
+					<p:panel id="panelGralId" header="INFORMACION GENERAL" style="width: 438px;" styleClass="alinear">
 						<h:panelGrid columns="2" cellpadding="2">
 		
 							<h:outputLabel value="CI: *" styleClass="name"/>
-							<p:inputText value="#{propietarioBean.propietario.ci}" style="width: 200px" required="true"/>
+							<p:inputText value="#{propietarioBean.propietario.ci}" disabled="#{propietarioBean.edit}" style="width: 200px" />
 		
 							<h:outputLabel value="Nombres: *" styleClass="name"/>
-							<p:inputText value="#{propietarioBean.propietario.nombres}" style="width: 200px" required="true"/>
+							<p:inputText value="#{propietarioBean.propietario.nombres}" style="width: 200px" />
 							
 							<h:outputLabel value="Apellidos: *" styleClass="name"/>
-							<p:inputText value="#{propietarioBean.propietario.apellidos}" style="width: 200px" required="true"/>
+							<p:inputText value="#{propietarioBean.propietario.apellidos}" style="width: 200px" />
 		
-							<h:outputLabel value="Nro de Licencia: *" styleClass="name"/>
-							<p:inputText value="#{propietarioBean.propietario.nroLicencia}" style="width: 200px" required="true"/>
+							<h:outputLabel value="Nro. de Licencia: *" styleClass="name"/>
+							<p:inputText value="#{propietarioBean.propietario.nroLicencia}" style="width: 200px" />
+							
+							<h:outputLabel value="Nro. de Telefono: *" rendered="#{!propietarioBean.edit}" styleClass="name"/>
+							<p:inputText value="#{propietarioBean.telefonoPropietario.telefono}" rendered="#{!propietarioBean.edit}" style="width: 200px" />
 		
 							<p:commandButton value="Guardar"
 											 actionListener="#{propietarioBean.guardarPropietario()}"
-											 update="tableGralId, smsId, panelGralId"
+											 update="tableGralId, smsId, panelGralId, panelFotoId"
 											 icon="guardar" />
 											 
 							<p:commandButton value="Limpiar"
 											 actionListener="#{propietarioBean.nuevoPropitario()}"
-											 update="panelGralId"
+											 update="panelGralId, panelFotoId"
 											 icon="limpiar"/>
 		
 						</h:panelGrid>
@@ -49,22 +53,20 @@
 					
 					<div class="line-divider" />
 					
-					<p:commandLink id="webcamId" onclick="dialogCamera.show();" style="float: right;">
-                        <p:graphicImage value="#{pageContext.servletContext.contextPath}/resources/images/camara.png" style="border: none;"/>
-                    </p:commandLink>
+					<p:commandButton value="Tomar Foto" onclick="dialogCamera.show();" style="float: right;" icon="camara"/>
                     
 				</div>
 				
 				<div class="one-half last">
-					<p:panel id="panelFotoId" header="Foto" style="width: 360px;height: 280px;">
+					<p:panel id="panelFotoId" header="FOTO TOMADA" style="width: 360px;height: 280px;">
 						<p:graphicImage value="#{pageContext.servletContext.contextPath}/resources/images/tmp/#{cameraController.foto}"
 										cache="false"/>
 		            </p:panel>
 		            
 		            <p:dialog widgetVar="dialogCamera"
 		            		  resizable="false"
-		            		  width="360" height="300"
-		            		  header="CAMARA"
+		            		  width="360" height="280"
+		            		  header="Camara"
 		            		  modal="true"
 		            		  appendToBody="true">
 		            		  
@@ -78,7 +80,7 @@
 		            </p:dialog>
             
 				</div>
-				<div class="clear "></div>
+				<div class="clear"></div>
 				
 			</div>
             
@@ -107,8 +109,114 @@
 				<p:column headerText="NRO DE LICENCIA" sortBy="#{var.nroLicencia}" filterBy="#{var.nroLicencia}">
 					<h:outputText value="#{var.nroLicencia}" />
 				</p:column>
+				
+				<p:column headerText="NRO. DE TELEFONOS">
+					<h:outputText value="#{propietarioBean.mostrarTelefonos(var)}" />
+				</p:column>
+				
+				<p:column style="text-align: center;">
+					
+					<f:facet name="header">
+						<h:outputText value="ACCIONES" />
+					</f:facet>
+					
+					<p:commandButton icon="editar"
+									 actionListener="#{propietarioBean.editarPropietario()}"
+									 update=":frmGralId:panelGralId, :frmGralId:panelFotoId">
+						
+						<f:param name="ci" value="#{var.ci}"/>
+					</p:commandButton>
+									 
+					<p:commandButton icon="eliminar"
+									 actionListener="#{propietarioBean.eliminarPropietario()}"
+									 update="tableGralId">
+									 
+						<p:confirm header="Confirmacion" message="¿Estas seguro de eliminar este registro?" icon="ui-icon-alert" />
+						<f:param name="ci" value="#{var.ci}"/>
+					</p:commandButton>
+					
+					<p:commandButton icon="agenda_telefonica"
+									 actionListener="#{propietarioBean.cargarTelefonosPropietarios()}"
+									 update=":frmTelefonoId"
+									 oncomplete="dlgTelefono.show();">
+						
+						<f:param name="ci" value="#{var.ci}"/>
+					</p:commandButton>
+
+				</p:column>
+				
 			</p:dataTable>
+			
 		</h:form>
+		
+		<p:confirmDialog global="true" showEffect="fade" hideEffect="explode" >
+	        <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+	        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+	    </p:confirmDialog>
+	    
+		<!-- DIALOGO PARA LA ADMINISTRACION DE TELEFONOS -->
+	    <p:dialog id="dialogTelefonoId"
+	    		  header="ADMINISTRAR TELEFONOS"
+	    		  widgetVar="dlgTelefono"
+	    		  resizable="false"
+	    		  showEffect="fade"
+	    		  hideEffect="explode"
+	    		  modal="true"
+	    		  appendToBody="true">
+	    		  
+	    	<h:form id="frmTelefonoId">
+
+				<p:panel id="panelTelefonoId" header="INFORMACION GENERAL">
+					<h:panelGrid columns="2" cellpadding="2">
+	
+						<h:outputLabel value="Nro. de Telefono: *" styleClass="name"/>
+						<p:inputText value="#{propietarioBean.telefonoPropietario.telefono}" />
+	
+						<p:commandButton value="Guardar"
+										 actionListener="#{propietarioBean.guardarTelefonoPropietario()}"
+										 update="tableTelefonoId, panelTelefonoId, :frmGralId:smsId, :frmGralId:tableGralId"
+										 icon="guardar" />
+										 
+						<p:commandButton value="Limpiar"
+										 actionListener="#{propietarioBean.nuevoTelefonoPropietario()}"
+										 update="panelTelefonoId"
+										 icon="limpiar"/>
+										 
+					</h:panelGrid>
+				</p:panel>
+	
+				<br />
+	
+				<p:dataTable id="tableTelefonoId"
+							 var="row" value="#{propietarioBean.telefonosPropietarios}" >
+					
+					<p:column headerText="NRO. DE TELEFONO" sortBy="#{row.telefono}" >
+						<h:outputText value="#{row.telefono}" />
+					</p:column>
+	
+					<p:column style="text-align: center;">
+					
+						<f:facet name="header">
+							<h:outputText value="ACCIONES" />
+						</f:facet>
+
+						<p:commandButton icon="eliminar"
+										 actionListener="#{propietarioBean.eliminarTelefonoPropietario()}"
+										 update=":frmTelefonoId:tableTelefonoId, :frmGralId:smsId, :frmGralId:tableGralId">
+										 
+							<p:confirm header="Confirmacion" message="¿Estas seguro de eliminar este registro?" icon="ui-icon-alert" />
+							<f:param name="telefono" value="#{row.telefono}" />
+						</p:commandButton>
+	
+					</p:column>
+	
+				</p:dataTable>
+			
+			</h:form>
+
+		</p:dialog>
+		
+		
 
 	</ui:define>
 
