@@ -13,9 +13,8 @@ import org.apache.log4j.Logger;
 import org.primefaces.event.CaptureEvent;
 
 import com.firstonesoft.util.ArchivoUtil;
-import com.firstonesoft.util.FacesUtil;
 
-@ManagedBean
+@ManagedBean(name = "cameraController")
 @ViewScoped
 public class CameraController implements Serializable {
 
@@ -25,11 +24,13 @@ public class CameraController implements Serializable {
 	private String archivoFoto;
 	private String foto;
 	private ServletContext servletContext;
+	private boolean fotoTomada;
 	
 	@PostConstruct
 	private void init() {
 		
 		try {
+			fotoTomada = false;
 			servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
 		} catch (Exception e) {
 			log.error("Error al cargar el controller: ", e);
@@ -45,9 +46,19 @@ public class CameraController implements Serializable {
         										 File.separator + "tmp" +
         										 File.separator + foto);
         ArchivoUtil.crearArchivo(archivoFoto, captureEvent.getData());
-        FacesUtil.showFacesMessage("Foto capturada correctamente.", FacesUtil.SEVERITY_INFO);
-        FacesUtil.setParametro("fotoId", archivoFoto);
+        fotoTomada = true;
     }
+	
+	public void colocarArchivoBytes(byte [] array) {
+		ArchivoUtil.verificarEliminar(archivoFoto);
+        foto = "foto" + getNumeroRandomico() + ".png";
+        archivoFoto = servletContext.getRealPath(File.separator + "resources"+
+        										 File.separator + "images" +
+        										 File.separator + "tmp" +
+        										 File.separator + foto);
+        ArchivoUtil.crearArchivo(archivoFoto, array);
+        fotoTomada = false;
+	}
 	
 	private String getNumeroRandomico() {
         int i = (int) (Math.random() * 10000);
@@ -71,6 +82,14 @@ public class CameraController implements Serializable {
 
 	public void setFoto(String foto) {
 		this.foto = foto;
+	}
+	
+	public void setFotoTomada(boolean fotoTomada) {
+		this.fotoTomada = fotoTomada;
+	}
+	
+	public boolean isFotoTomada() {
+		return fotoTomada;
 	}
 	
 }

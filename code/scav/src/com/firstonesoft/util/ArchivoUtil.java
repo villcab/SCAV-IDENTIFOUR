@@ -1,6 +1,7 @@
 package com.firstonesoft.util;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
@@ -42,5 +43,19 @@ public class ArchivoUtil {
             }
         }
     }
+	
+	public static byte [] obtenerArrayBytes(String archivo) {
+		FileInputStream input;
+		byte[] data = null;
+		try {
+			input = new FileInputStream(archivo);
+			data = new byte[input.available()];
+			input.read(data);
+			input.close();
+		} catch (Exception e) {
+		    log.error("Error al leer los bytes del archivo: " + archivo + ", ", e);
+		}
+		return data;
+	}
 	
 }

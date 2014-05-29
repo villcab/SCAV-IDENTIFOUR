@@ -16,8 +16,8 @@ public class Propietario implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(unique=true, nullable=false)
-	private Integer ci;
+	@Column(unique=true, nullable=false, length=10)
+	private String ci;
 
 	@Column(nullable=false, length=200)
 	private String apellidos;
@@ -31,7 +31,7 @@ public class Propietario implements Serializable {
 	private String nombres;
 
 	@Column(name="nro_licencia", nullable=false)
-	private Integer nroLicencia;
+	private String nroLicencia;
 
 	//bi-directional many-to-one association to AdvertenciaPropietario
 	@OneToMany(mappedBy="propietario")
@@ -57,11 +57,11 @@ public class Propietario implements Serializable {
 	public Propietario() {
 	}
 
-	public Integer getCi() {
+	public String getCi() {
 		return this.ci;
 	}
 
-	public void setCi(Integer ci) {
+	public void setCi(String ci) {
 		this.ci = ci;
 	}
 
@@ -97,11 +97,11 @@ public class Propietario implements Serializable {
 		this.nombres = nombres;
 	}
 
-	public Integer getNroLicencia() {
+	public String getNroLicencia() {
 		return this.nroLicencia;
 	}
 
-	public void setNroLicencia(Integer nroLicencia) {
+	public void setNroLicencia(String nroLicencia) {
 		this.nroLicencia = nroLicencia;
 	}
 
@@ -159,8 +159,7 @@ public class Propietario implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Propietario [ci=" + ci + ", apellidos=" + apellidos
-				+ ", nombres=" + nombres + ", nroLicencia=" + nroLicencia + "]";
+		return "Propietario [ci=" + ci + ", apellidos=" + apellidos + ", nombres=" + nombres + ", nroLicencia=" + nroLicencia + "]";
 	}
 
 }

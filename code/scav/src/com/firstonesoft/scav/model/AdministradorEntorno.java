@@ -16,8 +16,8 @@ public class AdministradorEntorno implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(unique=true, nullable=false)
-	private Integer ci;
+	@Column(unique=true, nullable=false, length=10)
+	private String ci;
 
 	@Column(nullable=false, length=200)
 	private String apellidos;
@@ -46,11 +46,11 @@ public class AdministradorEntorno implements Serializable {
 	public AdministradorEntorno() {
 	}
 
-	public Integer getCi() {
+	public String getCi() {
 		return this.ci;
 	}
 
-	public void setCi(Integer ci) {
+	public void setCi(String ci) {
 		this.ci = ci;
 	}
 

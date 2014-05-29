@@ -16,8 +16,8 @@ public class Visita implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(unique=true, nullable=false)
-	private Integer ci;
+	@Column(unique=true, nullable=false, length=10)
+	private String ci;
 
 	@Column(nullable=false, length=200)
 	private String apellidos;
@@ -27,16 +27,29 @@ public class Visita implements Serializable {
 
 	//bi-directional many-to-one association to VehiculoVisita
 	@OneToMany(mappedBy="visita")
-	private List<VehiculoVisita> vehiculoVisitas;
+	private List<VehiculoVisita> vehiculoVisitas1;
+
+	//bi-directional many-to-many association to VehiculoVisita
+	@ManyToMany
+	@JoinTable(
+		name="visita_vehiculo"
+		, joinColumns={
+			@JoinColumn(name="ci", nullable=false)
+			}
+		, inverseJoinColumns={
+			@JoinColumn(name="placa", nullable=false)
+			}
+		)
+	private List<VehiculoVisita> vehiculoVisitas2;
 
 	public Visita() {
 	}
 
-	public Integer getCi() {
+	public String getCi() {
 		return this.ci;
 	}
 
-	public void setCi(Integer ci) {
+	public void setCi(String ci) {
 		this.ci = ci;
 	}
 
@@ -56,26 +69,34 @@ public class Visita implements Serializable {
 		this.nombres = nombres;
 	}
 
-	public List<VehiculoVisita> getVehiculoVisitas() {
-		return this.vehiculoVisitas;
+	public List<VehiculoVisita> getVehiculoVisitas1() {
+		return this.vehiculoVisitas1;
 	}
 
-	public void setVehiculoVisitas(List<VehiculoVisita> vehiculoVisitas) {
-		this.vehiculoVisitas = vehiculoVisitas;
+	public void setVehiculoVisitas1(List<VehiculoVisita> vehiculoVisitas1) {
+		this.vehiculoVisitas1 = vehiculoVisitas1;
 	}
 
-	public VehiculoVisita addVehiculoVisita(VehiculoVisita vehiculoVisita) {
-		getVehiculoVisitas().add(vehiculoVisita);
-		vehiculoVisita.setVisita(this);
+	public VehiculoVisita addVehiculoVisitas1(VehiculoVisita vehiculoVisitas1) {
+		getVehiculoVisitas1().add(vehiculoVisitas1);
+		vehiculoVisitas1.setVisita(this);
 
-		return vehiculoVisita;
+		return vehiculoVisitas1;
 	}
 
-	public VehiculoVisita removeVehiculoVisita(VehiculoVisita vehiculoVisita) {
-		getVehiculoVisitas().remove(vehiculoVisita);
-		vehiculoVisita.setVisita(null);
+	public VehiculoVisita removeVehiculoVisitas1(VehiculoVisita vehiculoVisitas1) {
+		getVehiculoVisitas1().remove(vehiculoVisitas1);
+		vehiculoVisitas1.setVisita(null);
 
-		return vehiculoVisita;
+		return vehiculoVisitas1;
+	}
+
+	public List<VehiculoVisita> getVehiculoVisitas2() {
+		return this.vehiculoVisitas2;
+	}
+
+	public void setVehiculoVisitas2(List<VehiculoVisita> vehiculoVisitas2) {
+		this.vehiculoVisitas2 = vehiculoVisitas2;
 	}
 
 }

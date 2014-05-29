@@ -23,17 +23,20 @@ public class Tranca implements Serializable {
 	@Column(length=100)
 	private String descripcion;
 
+	@Column(nullable=false)
+	private Integer tipo;
+
 	//bi-directional many-to-one association to AdvertenciaTranca
 	@OneToMany(mappedBy="tranca")
 	private List<AdvertenciaTranca> advertenciaTrancas;
 
-	//bi-directional many-to-one association to IngresSalidaVisita
-	@OneToMany(mappedBy="tranca")
-	private List<IngresSalidaVisita> ingresSalidaVisitas;
-
 	//bi-directional many-to-one association to IngresoSalida
 	@OneToMany(mappedBy="tranca")
 	private List<IngresoSalida> ingresoSalidas;
+
+	//bi-directional many-to-one association to IngresoSalidaVisita
+	@OneToMany(mappedBy="tranca")
+	private List<IngresoSalidaVisita> ingresoSalidaVisitas;
 
 	public Tranca() {
 	}
@@ -52,6 +55,14 @@ public class Tranca implements Serializable {
 
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
+	}
+
+	public Integer getTipo() {
+		return this.tipo;
+	}
+
+	public void setTipo(Integer tipo) {
+		this.tipo = tipo;
 	}
 
 	public List<AdvertenciaTranca> getAdvertenciaTrancas() {
@@ -76,28 +87,6 @@ public class Tranca implements Serializable {
 		return advertenciaTranca;
 	}
 
-	public List<IngresSalidaVisita> getIngresSalidaVisitas() {
-		return this.ingresSalidaVisitas;
-	}
-
-	public void setIngresSalidaVisitas(List<IngresSalidaVisita> ingresSalidaVisitas) {
-		this.ingresSalidaVisitas = ingresSalidaVisitas;
-	}
-
-	public IngresSalidaVisita addIngresSalidaVisita(IngresSalidaVisita ingresSalidaVisita) {
-		getIngresSalidaVisitas().add(ingresSalidaVisita);
-		ingresSalidaVisita.setTranca(this);
-
-		return ingresSalidaVisita;
-	}
-
-	public IngresSalidaVisita removeIngresSalidaVisita(IngresSalidaVisita ingresSalidaVisita) {
-		getIngresSalidaVisitas().remove(ingresSalidaVisita);
-		ingresSalidaVisita.setTranca(null);
-
-		return ingresSalidaVisita;
-	}
-
 	public List<IngresoSalida> getIngresoSalidas() {
 		return this.ingresoSalidas;
 	}
@@ -118,6 +107,28 @@ public class Tranca implements Serializable {
 		ingresoSalida.setTranca(null);
 
 		return ingresoSalida;
+	}
+
+	public List<IngresoSalidaVisita> getIngresoSalidaVisitas() {
+		return this.ingresoSalidaVisitas;
+	}
+
+	public void setIngresoSalidaVisitas(List<IngresoSalidaVisita> ingresoSalidaVisitas) {
+		this.ingresoSalidaVisitas = ingresoSalidaVisitas;
+	}
+
+	public IngresoSalidaVisita addIngresoSalidaVisita(IngresoSalidaVisita ingresoSalidaVisita) {
+		getIngresoSalidaVisitas().add(ingresoSalidaVisita);
+		ingresoSalidaVisita.setTranca(this);
+
+		return ingresoSalidaVisita;
+	}
+
+	public IngresoSalidaVisita removeIngresoSalidaVisita(IngresoSalidaVisita ingresoSalidaVisita) {
+		getIngresoSalidaVisitas().remove(ingresoSalidaVisita);
+		ingresoSalidaVisita.setTranca(null);
+
+		return ingresoSalidaVisita;
 	}
 
 }

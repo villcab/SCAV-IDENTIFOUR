@@ -20,6 +20,8 @@ public class Entorno implements Serializable {
 	@Column(unique=true, nullable=false)
 	private Integer id;
 
+	private byte[] foto;
+
 	@Column(nullable=false, length=100)
 	private String nombre;
 
@@ -56,6 +58,14 @@ public class Entorno implements Serializable {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	public byte[] getFoto() {
+		return this.foto;
+	}
+
+	public void setFoto(byte[] foto) {
+		this.foto = foto;
 	}
 
 	public String getNombre() {

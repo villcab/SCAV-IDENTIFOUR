@@ -8,15 +8,14 @@
 		<class>com.firstonesoft.mu.model.MuRolMenu</class>
 		<class>com.firstonesoft.mu.model.MuRolMenuPK</class>
 		<class>com.firstonesoft.mu.model.MuUsuario</class>
-		
 		<class>com.firstonesoft.scav.model.AdministradorEntorno</class>
 		<class>com.firstonesoft.scav.model.AdvertenciaPropietario</class>
 		<class>com.firstonesoft.scav.model.AdvertenciaTranca</class>
 		<class>com.firstonesoft.scav.model.Entorno</class>
-		<class>com.firstonesoft.scav.model.IngresSalidaVisita</class>
-		<class>com.firstonesoft.scav.model.IngresSalidaVisitaPK</class>
 		<class>com.firstonesoft.scav.model.IngresoSalida</class>
 		<class>com.firstonesoft.scav.model.IngresoSalidaPK</class>
+		<class>com.firstonesoft.scav.model.IngresoSalidaVisita</class>
+		<class>com.firstonesoft.scav.model.IngresoSalidaVisitaPK</class>
 		<class>com.firstonesoft.scav.model.Licencia</class>
 		<class>com.firstonesoft.scav.model.Propietario</class>
 		<class>com.firstonesoft.scav.model.TelefonoAdminitrador</class>

@@ -24,19 +24,19 @@
 						<h:panelGrid columns="2" cellpadding="2">
 		
 							<h:outputLabel value="CI: *" styleClass="name"/>
-							<p:inputText value="#{propietarioBean.propietario.ci}" disabled="#{propietarioBean.edit}" style="width: 200px" />
+							<p:inputText value="#{propietarioBean.ci}" disabled="#{propietarioBean.edit}" style="width: 200px" maxlength="10"/>
 		
 							<h:outputLabel value="Nombres: *" styleClass="name"/>
-							<p:inputText value="#{propietarioBean.propietario.nombres}" style="width: 200px" />
+							<p:inputText value="#{propietarioBean.propietario.nombres}" style="width: 200px" maxlength="70"/>
 							
 							<h:outputLabel value="Apellidos: *" styleClass="name"/>
-							<p:inputText value="#{propietarioBean.propietario.apellidos}" style="width: 200px" />
+							<p:inputText value="#{propietarioBean.propietario.apellidos}" style="width: 200px" maxlength="200"/>
 		
 							<h:outputLabel value="Nro. de Licencia: *" styleClass="name"/>
-							<p:inputText value="#{propietarioBean.propietario.nroLicencia}" style="width: 200px" />
+							<p:inputText value="#{propietarioBean.propietario.nroLicencia}" style="width: 200px" maxlength="10"/>
 							
 							<h:outputLabel value="Nro. de Telefono: *" rendered="#{!propietarioBean.edit}" styleClass="name"/>
-							<p:inputText value="#{propietarioBean.telefonoPropietario.telefono}" rendered="#{!propietarioBean.edit}" style="width: 200px" />
+							<p:inputText value="#{propietarioBean.telefonoNuevo}" rendered="#{!propietarioBean.edit}" style="width: 200px" maxlength="10"/>
 		
 							<p:commandButton value="Guardar"
 											 actionListener="#{propietarioBean.guardarPropietario()}"
@@ -44,7 +44,7 @@
 											 icon="guardar" />
 											 
 							<p:commandButton value="Limpiar"
-											 actionListener="#{propietarioBean.nuevoPropitario()}"
+											 actionListener="#{propietarioBean.nuevoPropietario()}"
 											 update="panelGralId, panelFotoId"
 											 icon="limpiar"/>
 		
@@ -111,7 +111,7 @@
 				</p:column>
 				
 				<p:column headerText="NRO. DE TELEFONOS">
-					<h:outputText value="#{propietarioBean.mostrarTelefonos(var)}" />
+					<h:outputText value="#{propietarioBean.mostrarTelefonos(var.ci)}" />
 				</p:column>
 				
 				<p:column style="text-align: center;">
@@ -170,7 +170,7 @@
 					<h:panelGrid columns="2" cellpadding="2">
 	
 						<h:outputLabel value="Nro. de Telefono: *" styleClass="name"/>
-						<p:inputText value="#{propietarioBean.telefonoPropietario.telefono}" />
+						<p:inputText value="#{propietarioBean.telefono}" maxlength="10"/>
 	
 						<p:commandButton value="Guardar"
 										 actionListener="#{propietarioBean.guardarTelefonoPropietario()}"
@@ -216,8 +216,6 @@
 
 		</p:dialog>
 		
-		
-
 	</ui:define>
 
 </ui:composition>

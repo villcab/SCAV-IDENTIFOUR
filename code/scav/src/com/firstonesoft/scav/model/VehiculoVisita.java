@@ -22,14 +22,18 @@ public class VehiculoVisita implements Serializable {
 	@Column(length=100)
 	private String marca;
 
-	//bi-directional many-to-one association to IngresSalidaVisita
+	//bi-directional many-to-one association to IngresoSalidaVisita
 	@OneToMany(mappedBy="vehiculoVisita")
-	private List<IngresSalidaVisita> ingresSalidaVisitas;
+	private List<IngresoSalidaVisita> ingresoSalidaVisitas;
 
 	//bi-directional many-to-one association to Visita
 	@ManyToOne
 	@JoinColumn(name="ci")
 	private Visita visita;
+
+	//bi-directional many-to-many association to Visita
+	@ManyToMany(mappedBy="vehiculoVisitas2")
+	private List<Visita> visitas;
 
 	public VehiculoVisita() {
 	}
@@ -50,26 +54,26 @@ public class VehiculoVisita implements Serializable {
 		this.marca = marca;
 	}
 
-	public List<IngresSalidaVisita> getIngresSalidaVisitas() {
-		return this.ingresSalidaVisitas;
+	public List<IngresoSalidaVisita> getIngresoSalidaVisitas() {
+		return this.ingresoSalidaVisitas;
 	}
 
-	public void setIngresSalidaVisitas(List<IngresSalidaVisita> ingresSalidaVisitas) {
-		this.ingresSalidaVisitas = ingresSalidaVisitas;
+	public void setIngresoSalidaVisitas(List<IngresoSalidaVisita> ingresoSalidaVisitas) {
+		this.ingresoSalidaVisitas = ingresoSalidaVisitas;
 	}
 
-	public IngresSalidaVisita addIngresSalidaVisita(IngresSalidaVisita ingresSalidaVisita) {
-		getIngresSalidaVisitas().add(ingresSalidaVisita);
-		ingresSalidaVisita.setVehiculoVisita(this);
+	public IngresoSalidaVisita addIngresoSalidaVisita(IngresoSalidaVisita ingresoSalidaVisita) {
+		getIngresoSalidaVisitas().add(ingresoSalidaVisita);
+		ingresoSalidaVisita.setVehiculoVisita(this);
 
-		return ingresSalidaVisita;
+		return ingresoSalidaVisita;
 	}
 
-	public IngresSalidaVisita removeIngresSalidaVisita(IngresSalidaVisita ingresSalidaVisita) {
-		getIngresSalidaVisitas().remove(ingresSalidaVisita);
-		ingresSalidaVisita.setVehiculoVisita(null);
+	public IngresoSalidaVisita removeIngresoSalidaVisita(IngresoSalidaVisita ingresoSalidaVisita) {
+		getIngresoSalidaVisitas().remove(ingresoSalidaVisita);
+		ingresoSalidaVisita.setVehiculoVisita(null);
 
-		return ingresSalidaVisita;
+		return ingresoSalidaVisita;
 	}
 
 	public Visita getVisita() {
@@ -78,6 +82,14 @@ public class VehiculoVisita implements Serializable {
 
 	public void setVisita(Visita visita) {
 		this.visita = visita;
+	}
+
+	public List<Visita> getVisitas() {
+		return this.visitas;
+	}
+
+	public void setVisitas(List<Visita> visitas) {
+		this.visitas = visitas;
 	}
 
 }

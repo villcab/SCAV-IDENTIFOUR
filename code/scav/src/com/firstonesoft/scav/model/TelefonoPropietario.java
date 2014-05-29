@@ -1,6 +1,7 @@
 package com.firstonesoft.scav.model;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
 
 
@@ -40,6 +41,11 @@ public class TelefonoPropietario implements Serializable {
 
 	public void setPropietario(Propietario propietario) {
 		this.propietario = propietario;
+	}
+	
+	@Override
+	public String toString() {
+		return String.valueOf(telefono);
 	}
 
 }

@@ -4,48 +4,33 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import org.apache.log4j.Logger;
-
 import com.firstonesoft.scav.dao.PropietarioDAO;
 import com.firstonesoft.scav.model.Propietario;
+import com.firstonesoft.util.ValidacionUtil;
 
 public class PropietarioBL {
 
-	private final Logger log = Logger.getLogger(PropietarioBL.class);
-
 	@Inject
-	private PropietarioDAO propitarioDao;
+	private PropietarioDAO propietarioDao;
 
-	public void guardar(Propietario data) {
-		try {
-			propitarioDao.guardar(data);
-		} catch (Exception e) {
-			log.error("Error al guardar el propitario: ", e);
-		}
+	public boolean guardar(Propietario data) {
+		return propietarioDao.guardar(data);
 	}
 	
-	public void actualizar(Propietario data) {
-		try {
-			propitarioDao.actualizar(data);
-		} catch (Exception e) {
-			log.error("Error al actualizar el propitario: ", e);
-		}
+	public boolean actualizar(Propietario data) {
+		return propietarioDao.actualizar(data);
 	}
 	
-	public void eliminar(Propietario data) {
-		try {
-			propitarioDao.eliminar(data);
-		} catch (Exception e) {
-			log.error("Error al eliminar el propitario: ", e);
-		}
+	public boolean eliminar(Propietario data) {
+		return propietarioDao.eliminar(data);
 	}
 	
-	public Propietario obtenerPropietarioCi(int ci) {
-		return propitarioDao.obtenerPropietarioCi(ci);
+	public Propietario obtenerPropietarioCi(String ci) {
+		return propietarioDao.obtenerPropietarioCi(ci);
 	}
 	
 	public List<Propietario> obtenerPropietarios() {
-		return propitarioDao.obtenerPropietarios();
+		return propietarioDao.obtenerPropietarios();
 	}
 	
 	/**
@@ -54,11 +39,40 @@ public class PropietarioBL {
 	 * @return error; si no tiene error devuelve vacio
 	 */
 	public String validarNuevo(Propietario data) {
+		
 		String error = "";
+		
 		if (data.getCi().equals("")) {
 			return "Error debe completar el campo CI";
+		} else {
+			if (propietarioDao.obtenerPropietarioCi(data.getCi()) != null) {
+				return "Ya existe un Propietario con el CI: " + data.getCi();
+			}
 		}
-		if (data.getNombres().equals("Error debe completar el campo Nombre"));
+		
+		if (data.getNombres().equals("")) {
+			return "Error debe completar el campo Nombres";
+		} else {
+			if (!ValidacionUtil.sonLetrasPalabras(data.getNombres())) {
+				return "Error el campo Nombres no es valido";
+			}
+		}
+		
+		if (data.getApellidos().equals("")) {
+			return "Error debe completar el campo Apellidos";
+		} else {
+			if (!ValidacionUtil.sonLetrasPalabras(data.getApellidos())) {
+				return "Error el campo Apellidos no es valido";
+			}
+		}
+		
+		if (data.getNroLicencia().equals("")) {
+			return "Error debe completar el campo Nro de Licencia";
+		}
+		
+		if (data.getFoto() == null) {
+			return "Error debe sacar una foto";
+		}
 		
 		return error;
 	}
@@ -69,7 +83,30 @@ public class PropietarioBL {
 	 * @return error; si no tiene error devuelve vacio
 	 */
 	public String validarActualizar(Propietario data) {
-		return "";
+		
+		String error = "";
+		
+		if (data.getNombres().equals("")) {
+			return "Error debe completar el campo Nombres";
+		} else {
+			if (!ValidacionUtil.sonLetrasPalabras(data.getNombres())) {
+				return "Error el campo Nombres no es valido";
+			}
+		}
+		
+		if (data.getApellidos().equals("")) {
+			return "Error debe completar el campo Apellidos";
+		} else {
+			if (!ValidacionUtil.sonLetrasPalabras(data.getApellidos())) {
+				return "Error el campo Apellidos no es valido";
+			}
+		}
+		
+		if (data.getNroLicencia().equals("")) {
+			return "Error debe completar el campo Nro de Licencia";
+		}
+		
+		return error;
 	}
 	
 	
