@@ -31,13 +31,9 @@ public class AdministradorEntorno implements Serializable {
 	@Column(nullable=false, length=100)
 	private String password;
 
-	@Column(nullable=false, length=50)
-	private String username;
-
 	//bi-directional many-to-one association to Entorno
-	@ManyToOne
-	@JoinColumn(name="id_entorno")
-	private Entorno entorno;
+	@OneToMany(mappedBy="administradorEntorno")
+	private List<Entorno> entornos;
 
 	//bi-directional many-to-one association to TelefonoAdminitrador
 	@OneToMany(mappedBy="administradorEntorno")
@@ -86,20 +82,26 @@ public class AdministradorEntorno implements Serializable {
 		this.password = password;
 	}
 
-	public String getUsername() {
-		return this.username;
+	public List<Entorno> getEntornos() {
+		return this.entornos;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setEntornos(List<Entorno> entornos) {
+		this.entornos = entornos;
 	}
 
-	public Entorno getEntorno() {
-		return this.entorno;
+	public Entorno addEntorno(Entorno entorno) {
+		getEntornos().add(entorno);
+		entorno.setAdministradorEntorno(this);
+
+		return entorno;
 	}
 
-	public void setEntorno(Entorno entorno) {
-		this.entorno = entorno;
+	public Entorno removeEntorno(Entorno entorno) {
+		getEntornos().remove(entorno);
+		entorno.setAdministradorEntorno(null);
+
+		return entorno;
 	}
 
 	public List<TelefonoAdminitrador> getTelefonoAdminitradors() {

@@ -30,12 +30,8 @@ public class Propietario implements Serializable {
 	@Column(nullable=false, length=70)
 	private String nombres;
 
-	@Column(name="nro_licencia", nullable=false)
+	@Column(name="nro_licencia", nullable=false, length=10)
 	private String nroLicencia;
-
-	//bi-directional many-to-one association to AdvertenciaPropietario
-	@OneToMany(mappedBy="propietario")
-	private List<AdvertenciaPropietario> advertenciaPropietarios;
 
 	//bi-directional many-to-many association to Vehiculo
 	@ManyToMany
@@ -53,6 +49,10 @@ public class Propietario implements Serializable {
 	//bi-directional many-to-one association to TelefonoPropietario
 	@OneToMany(mappedBy="propietario")
 	private List<TelefonoPropietario> telefonoPropietarios;
+
+	//bi-directional many-to-one association to AvisoPropietario
+	@OneToMany(mappedBy="propietario")
+	private List<AvisoPropietario> avisoPropietarios;
 
 	public Propietario() {
 	}
@@ -105,28 +105,6 @@ public class Propietario implements Serializable {
 		this.nroLicencia = nroLicencia;
 	}
 
-	public List<AdvertenciaPropietario> getAdvertenciaPropietarios() {
-		return this.advertenciaPropietarios;
-	}
-
-	public void setAdvertenciaPropietarios(List<AdvertenciaPropietario> advertenciaPropietarios) {
-		this.advertenciaPropietarios = advertenciaPropietarios;
-	}
-
-	public AdvertenciaPropietario addAdvertenciaPropietario(AdvertenciaPropietario advertenciaPropietario) {
-		getAdvertenciaPropietarios().add(advertenciaPropietario);
-		advertenciaPropietario.setPropietario(this);
-
-		return advertenciaPropietario;
-	}
-
-	public AdvertenciaPropietario removeAdvertenciaPropietario(AdvertenciaPropietario advertenciaPropietario) {
-		getAdvertenciaPropietarios().remove(advertenciaPropietario);
-		advertenciaPropietario.setPropietario(null);
-
-		return advertenciaPropietario;
-	}
-
 	public List<Vehiculo> getVehiculos() {
 		return this.vehiculos;
 	}
@@ -157,6 +135,28 @@ public class Propietario implements Serializable {
 		return telefonoPropietario;
 	}
 
+	public List<AvisoPropietario> getAvisoPropietarios() {
+		return this.avisoPropietarios;
+	}
+
+	public void setAvisoPropietarios(List<AvisoPropietario> avisoPropietarios) {
+		this.avisoPropietarios = avisoPropietarios;
+	}
+
+	public AvisoPropietario addAvisoPropietario(AvisoPropietario avisoPropietario) {
+		getAvisoPropietarios().add(avisoPropietario);
+		avisoPropietario.setPropietario(this);
+
+		return avisoPropietario;
+	}
+
+	public AvisoPropietario removeAvisoPropietario(AvisoPropietario avisoPropietario) {
+		getAvisoPropietarios().remove(avisoPropietario);
+		avisoPropietario.setPropietario(null);
+
+		return avisoPropietario;
+	}
+	
 	@Override
 	public String toString() {
 		return "Propietario [ci=" + ci + ", apellidos=" + apellidos + ", nombres=" + nombres + ", nroLicencia=" + nroLicencia + "]";

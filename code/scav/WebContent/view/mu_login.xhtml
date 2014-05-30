@@ -11,16 +11,23 @@
 
 	<ui:define name="content">
 		<h:form styleClass="gradient">
+			
+			<p:growl id="smsId" showDetail="true"/>
+			
 			<p:panel widgetVar="panelLoginId" header="Inicio de Session" styleClass="form-login">
 				<h:panelGrid columns="2" cellpadding="5">
 
-					<h:outputLabel value="Nombre de Usuario:" styleClass="name"/>
-					<p:inputText value="" style="width: 200px"/>
+					<h:outputLabel value="Email:" styleClass="name"/>
+					<p:inputText value="#{loginBean.email}" style="width: 200px"/>
 
 					<h:outputLabel value="Contrase&ntilde;a:" styleClass="name"/>
-					<p:password value="" style="width: 200px"/>
+					<p:password value="#{loginBean.password}" style="width: 200px"/>
 
-					<p:commandButton value="Iniciar Sesion" oncomplete="handleLoginRequest(xhr, status, args)" icon="login"/>
+					<p:commandButton icon="login"
+									 value="Iniciar Sesion"
+									 actionListener="#{loginBean.loguear()}"
+									 update="smsId"
+									 oncomplete="handleLoginRequest(xhr, status, args)" />
 
 				</h:panelGrid>
 			</p:panel>
@@ -28,10 +35,11 @@
 		
 		<script type="text/javascript">
 		    function handleLoginRequest(xhr, status, args) {
-		        if(args.validationFailed || !args.loggedIn) {
-// 		            panelLoginId.jq.effect("shake", { times: 5}, 1000)
-					window.location = "/scav/faces/mu_menu.xhtml";
-		        }
+		        if(args.validationFailed || !args.sw) {
+		            panelLoginId.jq.effect("shake", { times: 5}, 1000)
+		        } else {
+		        	window.location = "/scav/faces/mu_menu.xhtml";
+				}
 		    }
 		</script>
 

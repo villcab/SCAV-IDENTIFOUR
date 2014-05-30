@@ -29,8 +29,9 @@ public class Entorno implements Serializable {
 	private String ubicacion;
 
 	//bi-directional many-to-one association to AdministradorEntorno
-	@OneToMany(mappedBy="entorno")
-	private List<AdministradorEntorno> administradorEntornos;
+	@ManyToOne
+	@JoinColumn(name="ci")
+	private AdministradorEntorno administradorEntorno;
 
 	//bi-directional many-to-many association to Vehiculo
 	@ManyToMany
@@ -84,26 +85,12 @@ public class Entorno implements Serializable {
 		this.ubicacion = ubicacion;
 	}
 
-	public List<AdministradorEntorno> getAdministradorEntornos() {
-		return this.administradorEntornos;
+	public AdministradorEntorno getAdministradorEntorno() {
+		return this.administradorEntorno;
 	}
 
-	public void setAdministradorEntornos(List<AdministradorEntorno> administradorEntornos) {
-		this.administradorEntornos = administradorEntornos;
-	}
-
-	public AdministradorEntorno addAdministradorEntorno(AdministradorEntorno administradorEntorno) {
-		getAdministradorEntornos().add(administradorEntorno);
-		administradorEntorno.setEntorno(this);
-
-		return administradorEntorno;
-	}
-
-	public AdministradorEntorno removeAdministradorEntorno(AdministradorEntorno administradorEntorno) {
-		getAdministradorEntornos().remove(administradorEntorno);
-		administradorEntorno.setEntorno(null);
-
-		return administradorEntorno;
+	public void setAdministradorEntorno(AdministradorEntorno administradorEntorno) {
+		this.administradorEntorno = administradorEntorno;
 	}
 
 	public List<Vehiculo> getVehiculos() {

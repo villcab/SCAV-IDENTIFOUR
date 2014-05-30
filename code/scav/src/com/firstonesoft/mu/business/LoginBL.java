@@ -1,5 +1,5 @@
 package com.firstonesoft.mu.business;
 
-public class LoginBl {
+public class LoginBL {
 
 }

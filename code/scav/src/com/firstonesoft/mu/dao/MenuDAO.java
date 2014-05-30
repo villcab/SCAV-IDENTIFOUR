@@ -8,7 +8,7 @@ import javax.persistence.Query;
 
 import com.firstonesoft.mu.model.MuMenu;
 
-public class MenuDao {
+public class MenuDAO {
 
 	@PersistenceContext
 	private transient EntityManager manager;

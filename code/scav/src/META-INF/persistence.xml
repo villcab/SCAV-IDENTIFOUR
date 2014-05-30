@@ -9,8 +9,8 @@
 		<class>com.firstonesoft.mu.model.MuRolMenuPK</class>
 		<class>com.firstonesoft.mu.model.MuUsuario</class>
 		<class>com.firstonesoft.scav.model.AdministradorEntorno</class>
-		<class>com.firstonesoft.scav.model.AdvertenciaPropietario</class>
-		<class>com.firstonesoft.scav.model.AdvertenciaTranca</class>
+		<class>com.firstonesoft.scav.model.AvisoPropietario</class>
+		<class>com.firstonesoft.scav.model.AvisoTranca</class>
 		<class>com.firstonesoft.scav.model.Entorno</class>
 		<class>com.firstonesoft.scav.model.IngresoSalida</class>
 		<class>com.firstonesoft.scav.model.IngresoSalidaPK</class>
