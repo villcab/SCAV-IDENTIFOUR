@@ -10,7 +10,13 @@
 <ui:composition template="/resources/template/master.xhtml">
 	
 	<ui:define name="content">
+
 		<h:form id="frmGralId" styleClass="container">
+		
+			<p:ajaxStatus onstart="dialogAguarde.show();" oncomplete="dialogAguarde.hide();"/>
+			<p:dialog widgetVar="dialogAguarde" showHeader="false" resizable="false" closable="false">
+                <p:graphicImage value="/resources/images/ajax_loader.gif" />
+            </p:dialog>
 		
 			<p:growl id="smsId" showDetail="true"/>
 			
@@ -160,7 +166,7 @@
 	    		  widgetVar="dlgTelefono"
 	    		  resizable="false"
 	    		  showEffect="fade"
-	    		  hideEffect="explode"
+	    		  hideEffect="fade"
 	    		  modal="true"
 	    		  appendToBody="true">
 	    		  

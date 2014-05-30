@@ -14,6 +14,7 @@ import org.primefaces.model.menu.DefaultMenuModel;
 import org.primefaces.model.menu.DefaultSubMenu;
 
 import com.firstonesoft.mu.business.MenuBL;
+import com.firstonesoft.mu.filter.LoginFilter;
 import com.firstonesoft.mu.model.MuMenu;
 import com.firstonesoft.scav.business.AdministradorEntornoBL;
 import com.firstonesoft.scav.model.AdministradorEntorno;
@@ -51,12 +52,12 @@ public class LoginBean implements Serializable {
 		AdministradorEntorno usuario = administradorEntornoBL.obtenerAdminitradorEntorno(email, password);
 		
 		if (usuario != null) {	// SE LOGUEO CORRETAMENTE
-			
 			cargarMenus();
 			FacesUtil.setParametro("sw", true);
+			FacesUtil.setParametro("sig", LoginFilter.rederingMenu);
+			FacesUtil.setSessionAttribute("TEMP$USER_NAME", usuario.getEmail());
 			
 		} else {				// FALLO AL LOGUEARSE
-			
 			FacesUtil.setParametro("sw", false);
 			FacesUtil.showFacesMessage("Credenciales Invalidas", FacesUtil.SEVERITY_ERROR);
 		}

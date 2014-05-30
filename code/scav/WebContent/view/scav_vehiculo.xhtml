@@ -1,0 +1,152 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/resources/template/master.xhtml">
+	
+	<ui:define name="content">
+
+		<h:form id="frmGralId" styleClass="container">
+		
+			<p:ajaxStatus onstart="dialogAguarde.show();" oncomplete="dialogAguarde.hide();"/>
+			<p:dialog widgetVar="dialogAguarde" showHeader="false" resizable="false" closable="false">
+                <p:graphicImage value="/resources/images/ajax_loader.gif" />
+            </p:dialog>
+		
+			<p:growl id="smsId" showDetail="true"/>
+			
+			<h1 class="form-title">Gestionar Vehiculos</h1>
+
+			<div id="page-content">
+				
+				<div class="one-half">
+					
+					<p:panel id="panelGralId" header="INFORMACION GENERAL" style="width: 438px;">
+						<h:panelGrid columns="2" cellpadding="2">
+		
+							<h:outputLabel value="Nro. de Placa: *" styleClass="name"/>
+							<p:inputText value="#{vehiculoBean.placa}" disabled="#{vehiculoBean.edit}" style="width: 200px" maxlength="10"/>
+		
+							<h:outputLabel value="Marca: *" styleClass="name"/>
+							<p:inputText value="#{vehiculoBean.vehiculo.marca}" style="width: 200px" maxlength="100"/>
+							
+							<h:outputLabel value="Modelo: *" styleClass="name"/>
+							<p:inputText value="#{vehiculoBean.vehiculo.modelo}" style="width: 200px" maxlength="50"/>
+		
+							<h:outputLabel value="Codigo RFID: *" styleClass="name"/>
+							<p:inputText value="#{vehiculoBean.vehiculo.rfid}" style="width: 200px" maxlength="10"/>
+		
+							<p:commandButton value="Guardar"
+											 actionListener="#{vehiculoBean.guardarVehiculo()}"
+											 update="tableGralId, smsId, panelGralId, panelFotoId"
+											 icon="guardar" />
+											 
+							<p:commandButton value="Limpiar"
+											 actionListener="#{vehiculoBean.nuevoVehiculo()}"
+											 update="panelGralId, panelFotoId"
+											 icon="limpiar"/>
+		
+						</h:panelGrid>
+					</p:panel>
+					
+					<div class="line-divider" />
+					
+					<p:commandButton value="Tomar Foto" onclick="dialogCamera.show();" style="float: right;" icon="camara"/>
+                    
+				</div>
+				
+				<div class="one-half last">
+					<p:panel id="panelFotoId" header="FOTO DEL VEHICULO" style="width: 360px;height: 280px;">
+						<p:graphicImage value="#{pageContext.servletContext.contextPath}/resources/images/tmp/#{cameraController.foto}"
+										cache="false"/>
+		            </p:panel>
+		            
+		            <p:dialog widgetVar="dialogCamera"
+		            		  resizable="false"
+		            		  width="360" height="280"
+		            		  header="Camara"
+		            		  modal="true"
+		            		  appendToBody="true">
+		            		  
+		                <h:panelGrid>
+		                    <p:photoCam widgetVar="photoCam" update="smsId, panelFotoId" listener="#{cameraController.oncapture}"/>
+		                    <h:panelGrid columns="2">
+		                        <p:commandButton value="Capturar" onclick="photoCam.capture();" icon="ok"/>
+		                        <p:commandButton value="Cerrar" onclick="dialogCamera.hide();" icon="cancelar"/>
+		                    </h:panelGrid>
+		                </h:panelGrid>
+		            </p:dialog>
+            
+				</div>
+				<div class="clear"></div>
+				
+			</div>
+            
+			<div class="line-divider" />
+			
+			<p:dataTable id="tableGralId"
+						 var="var" value="#{vehiculoBean.vehiculos}"
+						 emptyMessage="NO EXISTEN REGISTROS DE VEHICULOS" >
+						 
+				<f:facet name="header">
+					<h:outputLabel value="LISTA DE VEHICULOS" />
+				</f:facet>
+				
+				<p:column headerText="NRO. DE PLACA" sortBy="#{var.placa}" filterBy="#{var.placa}">
+					<h:outputText value="#{var.placa}" />
+				</p:column>
+	
+				<p:column headerText="MARCA" sortBy="#{var.marca}" filterBy="#{var.marca}">
+					<h:outputText value="#{var.marca}" />
+				</p:column>
+	
+				<p:column headerText="MODELO" sortBy="#{var.modelo}" filterBy="#{var.modelo}">
+					<h:outputText value="#{var.modelo}" />
+				</p:column>
+	
+				<p:column headerText="CODIGO RFID" sortBy="#{var.rfid}" filterBy="#{var.rfid}">
+					<h:outputText value="#{var.rfid}" />
+				</p:column>
+				
+				<p:column style="text-align: center;">
+					
+					<f:facet name="header">
+						<h:outputText value="ACCIONES" />
+					</f:facet>
+					
+					<p:commandButton icon="editar"
+									 actionListener="#{vehiculoBean.editarVehiculo()}"
+									 update=":frmGralId:panelGralId, :frmGralId:panelFotoId">
+						
+						<f:param name="placa" value="#{var.placa}"/>
+					</p:commandButton>
+									 
+					<p:commandButton icon="eliminar"
+									 actionListener="#{vehiculoBean.eliminarVehiculo()}"
+									 update="tableGralId">
+									 
+						<p:confirm header="Confirmacion" message="¿Estas seguro de eliminar este registro?" icon="ui-icon-alert" />
+						<f:param name="placa" value="#{var.placa}"/>
+					</p:commandButton>
+
+				</p:column>
+				
+			</p:dataTable>
+			
+		</h:form>
+		
+		<p:confirmDialog global="true" showEffect="fade" hideEffect="explode" >
+	        <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+	        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+	    </p:confirmDialog>
+	    
+	</ui:define>
+
+</ui:composition>
+
+</html>

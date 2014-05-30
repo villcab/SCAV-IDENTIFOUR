@@ -6,11 +6,11 @@
 	<display-name>scav</display-name>
 	<context-param>
 		<param-name>javax.faces.PROJECT_STAGE</param-name>
-		<param-value>Development</param-value>
+		<param-value>Production</param-value>
 	</context-param>
 	<context-param>
 		<param-name>primefaces.THEME</param-name>
-		<param-value>hot-sneaks</param-value>
+		<param-value>redmond</param-value>
 	</context-param>
 	<filter>
 		<filter-name>LoginFilter</filter-name>
@@ -29,7 +29,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>FacesServlet</servlet-name>
-		<url-pattern>/faces/*</url-pattern>
+		<url-pattern>*.xhtml</url-pattern>
 	</servlet-mapping>
 	<session-config>
 		<session-timeout>45</session-timeout>

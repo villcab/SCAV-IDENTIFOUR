@@ -134,4 +134,10 @@ public class Vehiculo implements Serializable {
 		this.propietarios = propietarios;
 	}
 
+	@Override
+	public String toString() {
+		return "Vehiculo [placa=" + placa + ", marca=" + marca + ", modelo="
+				+ modelo + ", rfid=" + rfid + "]";
+	}
+
 }

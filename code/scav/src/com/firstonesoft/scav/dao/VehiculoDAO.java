@@ -81,16 +81,16 @@ public class VehiculoDAO {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public Vehiculo obtenerPropietarioCi(String ci) {
-		Query q = manager.createQuery("FROM Propietario p WHERE p.ci = :ci AND p.estado = true");
-		q.setParameter("ci", ci);
+	public Vehiculo obtenerVehiculosPlaca(String placa) {
+		Query q = manager.createQuery("FROM Vehiculo p WHERE p.placa = :placa AND p.estado = true");
+		q.setParameter("placa", placa);
 		List<Vehiculo> list = q.getResultList();
 		return list.isEmpty() ? null : list.get(0);
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<Vehiculo> obtenerPropietarios() {
-		Query q = manager.createQuery("FROM Propietario p WHERE p.estado = true");
+	public List<Vehiculo> obtenerVehiculos() {
+		Query q = manager.createQuery("FROM Vehiculo p WHERE p.estado = true");
 		return q.getResultList();
 	}
 	

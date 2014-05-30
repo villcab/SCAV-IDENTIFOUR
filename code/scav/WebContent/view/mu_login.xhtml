@@ -35,11 +35,11 @@
 		
 		<script type="text/javascript">
 		    function handleLoginRequest(xhr, status, args) {
-		        if(args.validationFailed || !args.sw) {
+		        if (args.validationFailed || !args.sw) {
 		            panelLoginId.jq.effect("shake", { times: 5}, 1000)
 		        } else {
-		        	window.location = "/scav/faces/mu_menu.xhtml";
-				}
+					window.location = args.sig;
+			    }
 		    }
 		</script>
 
