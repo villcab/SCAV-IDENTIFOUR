@@ -1,0 +1,159 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/resources/template/master.xhtml">
+	
+	<ui:define name="content">
+
+		<h:form id="frmGralId" styleClass="container" enctype="multipart/form-data">
+		
+			<p:ajaxStatus onstart="dialogAguarde.show();" oncomplete="dialogAguarde.hide();"/>
+			<p:dialog widgetVar="dialogAguarde" showHeader="false" resizable="false" closable="false">
+                <p:graphicImage value="/resources/images/ajax_loader.gif" />
+            </p:dialog>
+		
+			<p:growl id="smsId" showDetail="true"/>
+			
+			<h1 class="form-title">Gestionar Entornos</h1>
+
+			<div id="page-content">
+				
+				<div class="one-half">
+					
+					<p:panel id="panelGralId" header="INFORMACION GENERAL" style="width: 438px;">
+						<h:panelGrid columns="2" cellpadding="2">
+						
+							<h:outputLabel value="Id Entorno: *" styleClass="name" rendered="#{entornoBean.edit}"/>
+							<p:inputText value="#{entornoBean.id}" rendered="#{entornoBean.edit}" disabled="#{entornoBean.edit}" style="width: 200px"/>
+						
+							<h:outputLabel value="Nombre: *" styleClass="name"/>
+							<p:inputText value="#{entornoBean.entorno.nombre}" style="width: 200px" maxlength="100"/>
+							
+							<h:outputLabel value="Ubicacion: *" styleClass="name"/>
+							<p:inputText value="#{entornoBean.entorno.ubicacion}" style="width: 250px" maxlength="100"/>
+		
+							<h:outputLabel value="Estado de Licencia: *" styleClass="name"/>
+							<p:selectBooleanCheckbox value="#{entornoBean.entorno.licenciaActiva}" />
+		
+							<p:commandButton value="Actualizar"
+											 actionListener="#{entornoBean.guardarEntorno()}"
+											 update="tableGralId, smsId, panelGralId, panelFotoId"
+											 rendered="#{entornoBean.edit}"
+											 icon="guardar" />
+											 
+							<p:commandButton value="Limpiar"
+											 actionListener="#{entornoBean.nuevoEntorno()}"
+											 update="panelGralId, panelFotoId"
+											 icon="limpiar"/>
+		
+						</h:panelGrid>
+					</p:panel>
+					
+					<div class="line-divider" />
+					<p:commandButton value="Cargar Foto" onclick="dialogCargar.show();" style="float: right;" icon="foto" />
+                    
+				</div>
+				
+				<div class="one-half last">
+					
+					<p:panel id="panelFotoId" header="FOTO DEL ENTORNO" style="width: 360px;height: 280px;">
+						<p:graphicImage value="#{pageContext.servletContext.contextPath}/resources/images/tmp/#{photoController.foto}"
+										cache="false"
+										style="width: 340px;height: 240px;"/>
+		            </p:panel>
+		            
+		            <p:dialog widgetVar="dialogCargar"
+		            		  resizable="false"
+		            		  header="Cargar Imagen"
+		            		  modal="true"
+		            		  showEffect="fade"
+		            		  hideEffect="fade"
+		            		  appendToBody="true">
+		            		  
+		                <h:panelGrid>
+		                    <p:fileUpload fileUploadListener="#{photoController.onupload}"
+		                    			  mode="advanced"
+		                    			  dragDropSupport="false"
+           								  update="smsId, panelFotoId"
+           								  sizeLimit="400000"
+           								  uploadLabel="Subir Imagen"
+           								  cancelLabel="Cancelar"
+           								  label="Seleccionar"
+           								  allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+		                    
+		                    <h:panelGrid columns="2">
+		                        <p:commandButton value="Cerrar" onclick="dialogCargar.hide();" icon="cancelar"/>
+		                    </h:panelGrid>
+		                </h:panelGrid>
+		            </p:dialog>
+            
+				</div>
+				<div class="clear"></div>
+				
+			</div>
+            
+			<div class="line-divider" />
+			
+			<p:dataTable id="tableGralId"
+						 var="var" value="#{entornoBean.entornos}"
+						 emptyMessage="NO EXISTEN REGISTROS DE ENTORNOS" >
+						 
+				<f:facet name="header">
+					<h:outputLabel value="LISTA DE ENTORNOS" />
+				</f:facet>
+				
+				<p:column headerText="ADM ENTORNO CI" sortBy="#{var.administradorEntorno.ci}" filterBy="#{var.administradorEntorno.ci}">
+					<h:outputText value="#{var.administradorEntorno.ci}" />
+				</p:column>
+				
+				<p:column headerText="ADM ENTORNO NOMBRES" sortBy="#{var.administradorEntorno.nombres}" filterBy="#{var.administradorEntorno.nombres}">
+					<h:outputText value="#{var.administradorEntorno.nombres}" />
+				</p:column>
+				
+				<p:column headerText="ADM ENTORNO APELLIDOS" sortBy="#{var.administradorEntorno.apellidos}" filterBy="#{var.administradorEntorno.apellidos}">
+					<h:outputText value="#{var.administradorEntorno.apellidos}" />
+				</p:column>
+				
+				<p:column headerText="NOMBRE ENTORNO" sortBy="#{var.nombre}" filterBy="#{var.nombre}">
+					<h:outputText value="#{var.nombre}" />
+				</p:column>
+	
+				<p:column headerText="UBICACION ENTORNO" sortBy="#{var.ubicacion}" filterBy="#{var.ubicacion}">
+					<h:outputText value="#{var.ubicacion}" />
+				</p:column>
+	
+				<p:column headerText="ESTADO DE LICENCIA" style="text-align: center;">
+				<p:graphicImage value="/resources/images/#{entornoBean.transformarEstado(var.licenciaActiva)}"/>
+										   
+				</p:column>
+				
+				<p:column style="text-align: center;">
+					
+					<f:facet name="header">
+						<h:outputText value="ACCIONES" />
+					</f:facet>
+					
+					<p:commandButton icon="editar"
+									 actionListener="#{entornoBean.editarEntorno()}"
+									 update=":frmGralId:panelGralId, :frmGralId:panelFotoId">
+						
+						<f:param name="id" value="#{var.id}"/>
+					</p:commandButton>
+
+				</p:column>
+				
+			</p:dataTable>
+			
+		</h:form>
+	    
+	</ui:define>
+
+</ui:composition>
+
+</html>

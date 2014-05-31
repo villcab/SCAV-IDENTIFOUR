@@ -155,7 +155,9 @@ public class VehiculoBean implements Serializable {
 		vehiculo =vehiculoBL.obtenerVehiculosPlaca(idStr);
 		placa = idStr;
 		
-		photoController.colocarArchivoBytes(vehiculo.getFoto());
+		if (vehiculo.getFoto() != null) {
+			photoController.colocarArchivoBytes(vehiculo.getFoto());
+		}
 		edit = true;
 	}
 	
