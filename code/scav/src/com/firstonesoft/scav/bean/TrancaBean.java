@@ -31,9 +31,9 @@ public class TrancaBean implements Serializable {
 	private String id;
 	private boolean edit;
 	
-	private Integer idEntorno;
-	
 	private String selectTipo;
+	
+	private Integer idEntorno;
 
 	@PostConstruct
 	private void init() {
@@ -66,6 +66,10 @@ public class TrancaBean implements Serializable {
 			
 			Entorno eaux = new Entorno();
 			eaux.setId(idEntorno);
+			
+			log.info("entorno: " + idEntorno);
+			log.info("tipo: " + selectTipo);
+			
 			tranca.setEntorno(eaux);
 			tranca.setTipo(selectTipo);
 			
