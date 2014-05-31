@@ -8,10 +8,10 @@
 		<class>com.firstonesoft.mu.model.MuRolMenu</class>
 		<class>com.firstonesoft.mu.model.MuRolMenuPK</class>
 		<class>com.firstonesoft.mu.model.MuUsuario</class>
-		<class>com.firstonesoft.scav.model.AdministradorEntorno</class>
 		<class>com.firstonesoft.scav.model.AvisoPropietario</class>
 		<class>com.firstonesoft.scav.model.AvisoTranca</class>
 		<class>com.firstonesoft.scav.model.BitacoraGuardia</class>
+		<class>com.firstonesoft.scav.model.AdministradorEntorno</class>
 		<class>com.firstonesoft.scav.model.Entorno</class>
 		<class>com.firstonesoft.scav.model.Guardia</class>
 		<class>com.firstonesoft.scav.model.IngresoSalida</class>
@@ -25,5 +25,14 @@
 		<class>com.firstonesoft.scav.model.Vehiculo</class>
 		<class>com.firstonesoft.scav.model.VehiculoVisita</class>
 		<class>com.firstonesoft.scav.model.Visita</class>
+		
+		<properties>
+			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" />
+			<property name="hibernate.show_sql" value="false" />
+			<property name="hibernate.format_sql" value="false" />
+			<property name="hibernate.default_schema" value="public" />
+			<property name="hibernate.transaction.manager_lookup_class" value="org.hibernate.transaction.JBossTransactionManagerLookup" />
+		</properties>
+		
 	</persistence-unit>
 </persistence>

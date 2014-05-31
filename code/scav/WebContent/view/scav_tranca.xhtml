@@ -1,0 +1,115 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/resources/template/master.xhtml">
+	
+	<ui:define name="content">
+
+		<h:form id="frmGralId" styleClass="container">
+		
+			<p:ajaxStatus onstart="dialogAguarde.show();" oncomplete="dialogAguarde.hide();"/>
+			<p:dialog widgetVar="dialogAguarde" showHeader="false" resizable="false" closable="false">
+                <p:graphicImage value="/resources/images/ajax_loader.gif" />
+            </p:dialog>
+		
+			<p:growl id="smsId" showDetail="true"/>
+			
+			<h1 class="form-title">Gestionar Trancas</h1>
+
+			<div id="page-content">
+				
+				<div class="one-half">
+					
+					<p:panel id="panelGralId" header="INFORMACION GENERAL" style="width: 438px;" styleClass="alinear">
+						<h:panelGrid columns="2" cellpadding="2">
+		
+							<h:outputLabel value="Id: *" styleClass="name" rendered="#{trancaBean.edit}" />
+							<p:inputText value="#{trancaBean.id}" disabled="#{!trancaBean.edit}" rendered="#{trancaBean.edit}" style="width: 200px" maxlength="10"/>
+		
+							<h:outputLabel value="Descripcion: *" styleClass="name"/>
+							<p:inputText value="#{trancaBean.tranca.descripcion}" style="width: 300px" maxlength="100"/>
+							
+							<h:outputLabel value="Tipo: *" styleClass="name"/>
+							<p:selectOneMenu value="#{trancaBean.selectTipo}" style="width: 200px">
+								<f:selectItem itemLabel="Ingreso" itemValue="Ingreso"/>
+								<f:selectItem itemLabel="Salida" itemValue="Salida"/>
+							</p:selectOneMenu>
+		
+							<p:commandButton value="Guardar"
+											 actionListener="#{trancaBean.guardarTranca()}"
+											 update="tableGralId, smsId, panelGralId"
+											 icon="guardar" />
+											 
+							<p:commandButton value="Limpiar"
+											 actionListener="#{trancaBean.nuevoTranca()}"
+											 update="panelGralId"
+											 icon="limpiar"/>
+		
+						</h:panelGrid>
+					</p:panel>
+					
+				</div>
+				
+			</div>
+            
+			<div class="line-divider" />
+			
+			<p:dataTable id="tableGralId"
+						 var="var" value="#{trancaBean.trancas}"
+						 emptyMessage="NO EXISTEN REGISTROS DE GUARDIAS" >
+						 
+				<f:facet name="header">
+					<h:outputLabel value="LISTA DE GUARDIAS" />
+				</f:facet>
+				
+				<p:column headerText="TIPO" sortBy="#{var.tipo}" filterBy="#{var.tipo}">
+					<h:outputText value="#{var.tipo}" />
+				</p:column>
+	
+				<p:column headerText="DESCRIPCION" sortBy="#{var.descripcion}" filterBy="#{var.descripcion}">
+					<h:outputText value="#{var.descripcion}" />
+				</p:column>
+				
+				<p:column style="text-align: center;">
+					
+					<f:facet name="header">
+						<h:outputText value="ACCIONES" />
+					</f:facet>
+					
+					<p:commandButton icon="editar"
+									 actionListener="#{trancaBean.editarTranca()}"
+									 update=":frmGralId:panelGralId">
+						
+						<f:param name="id" value="#{var.id}"/>
+					</p:commandButton>
+									 
+					<p:commandButton icon="eliminar"
+									 actionListener="#{trancaBean.eliminarTranca()}"
+									 update="tableGralId">
+									 
+						<p:confirm header="Confirmacion" message="¿Estas seguro de eliminar este registro?" icon="ui-icon-alert" />
+						<f:param name="id" value="#{var.id}"/>
+					</p:commandButton>
+
+				</p:column>
+				
+			</p:dataTable>
+			
+		</h:form>
+		
+		<p:confirmDialog global="true" showEffect="fade" hideEffect="explode" >
+	        <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+	        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+	    </p:confirmDialog>
+	    
+	</ui:define>
+
+</ui:composition>
+
+</html>

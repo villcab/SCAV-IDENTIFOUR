@@ -44,13 +44,13 @@ public class Entorno implements Serializable {
 	@OneToMany(mappedBy="entorno")
 	private List<Propietario> propietarios;
 
-	//bi-directional many-to-one association to Tranca
-	@OneToMany(mappedBy="entorno")
-	private List<Tranca> trancas;
-
 	//bi-directional many-to-one association to Vehiculo
 	@OneToMany(mappedBy="entorno")
 	private List<Vehiculo> vehiculos;
+	
+	//bi-directional many-to-one association to Vehiculo
+	@OneToMany(mappedBy="tranca")
+	private List<Tranca> trancas;
 
 	public Entorno() {
 	}
@@ -145,28 +145,6 @@ public class Entorno implements Serializable {
 		propietario.setEntorno(null);
 
 		return propietario;
-	}
-
-	public List<Tranca> getTrancas() {
-		return this.trancas;
-	}
-
-	public void setTrancas(List<Tranca> trancas) {
-		this.trancas = trancas;
-	}
-
-	public Tranca addTranca(Tranca tranca) {
-		getTrancas().add(tranca);
-		tranca.setEntorno(this);
-
-		return tranca;
-	}
-
-	public Tranca removeTranca(Tranca tranca) {
-		getTrancas().remove(tranca);
-		tranca.setEntorno(null);
-
-		return tranca;
 	}
 
 	public List<Vehiculo> getVehiculos() {

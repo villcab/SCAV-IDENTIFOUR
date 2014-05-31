@@ -1,0 +1,119 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/resources/template/master.xhtml">
+	
+	<ui:define name="content">
+
+		<h:form id="frmGralId" styleClass="container">
+		
+			<p:ajaxStatus onstart="dialogAguarde.show();" oncomplete="dialogAguarde.hide();"/>
+			<p:dialog widgetVar="dialogAguarde" showHeader="false" resizable="false" closable="false">
+                <p:graphicImage value="/resources/images/ajax_loader.gif" />
+            </p:dialog>
+		
+			<p:growl id="smsId" showDetail="true"/>
+			
+			<h1 class="form-title">Gestionar Guardias</h1>
+
+			<div id="page-content">
+				
+				<div class="one-half">
+					
+					<p:panel id="panelGralId" header="INFORMACION GENERAL" style="width: 438px;" styleClass="alinear">
+						<h:panelGrid columns="2" cellpadding="2">
+		
+							<h:outputLabel value="CI: *" styleClass="name"/>
+							<p:inputText value="#{guardiaBean.ci}" disabled="#{guardiaBean.edit}" style="width: 200px" maxlength="10"/>
+		
+							<h:outputLabel value="Nombres: *" styleClass="name"/>
+							<p:inputText value="#{guardiaBean.guardia.nombre}" style="width: 200px" maxlength="100"/>
+							
+							<h:outputLabel value="Apellidos: *" styleClass="name"/>
+							<p:inputText value="#{guardiaBean.guardia.apellido}" style="width: 200px" maxlength="100"/>
+		
+							<h:outputLabel value="Contrase&ntilde;a: *" styleClass="name" rendered="#{!guardiaBean.edit}"/>
+							<p:password value="#{guardiaBean.guardia.password}" rendered="#{!guardiaBean.edit}" style="width: 200px" maxlength="50"/>
+		
+							<p:commandButton value="Guardar"
+											 actionListener="#{guardiaBean.guardarGuardia()}"
+											 update="tableGralId, smsId, panelGralId"
+											 icon="guardar" />
+											 
+							<p:commandButton value="Limpiar"
+											 actionListener="#{guardiaBean.nuevoGuardia()}"
+											 update="panelGralId"
+											 icon="limpiar"/>
+		
+						</h:panelGrid>
+					</p:panel>
+					
+				</div>
+				
+			</div>
+            
+			<div class="line-divider" />
+			
+			<p:dataTable id="tableGralId"
+						 var="var" value="#{guardiaBean.guardias}"
+						 emptyMessage="NO EXISTEN REGISTROS DE GUARDIAS" >
+						 
+				<f:facet name="header">
+					<h:outputLabel value="LISTA DE GUARDIAS" />
+				</f:facet>
+				
+				<p:column headerText="CI" sortBy="#{var.ci}" filterBy="#{var.ci}">
+					<h:outputText value="#{var.ci}" />
+				</p:column>
+	
+				<p:column headerText="NOMBRES" sortBy="#{var.nombre}" filterBy="#{var.nombre}">
+					<h:outputText value="#{var.nombre}" />
+				</p:column>
+	
+				<p:column headerText="APELLIDOS" sortBy="#{var.apellido}" filterBy="#{var.apellido}">
+					<h:outputText value="#{var.apellido}" />
+				</p:column>
+				
+				<p:column style="text-align: center;">
+					
+					<f:facet name="header">
+						<h:outputText value="ACCIONES" />
+					</f:facet>
+					
+					<p:commandButton icon="editar"
+									 actionListener="#{guardiaBean.editarGuardia()}"
+									 update=":frmGralId:panelGralId">
+						
+						<f:param name="ci" value="#{var.ci}"/>
+					</p:commandButton>
+									 
+					<p:commandButton icon="eliminar"
+									 actionListener="#{guardiaBean.eliminarGuardia()}"
+									 update="tableGralId">
+									 
+						<p:confirm header="Confirmacion" message="¿Estas seguro de eliminar este registro?" icon="ui-icon-alert" />
+						<f:param name="ci" value="#{var.ci}"/>
+					</p:commandButton>
+
+				</p:column>
+				
+			</p:dataTable>
+			
+		</h:form>
+		
+		<p:confirmDialog global="true" showEffect="fade" hideEffect="explode" >
+	        <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+	        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+	    </p:confirmDialog>
+	    
+	</ui:define>
+
+</ui:composition>
+
+</html>

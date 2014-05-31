@@ -1,8 +1,18 @@
 package com.firstonesoft.scav.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 
 /**
@@ -25,6 +35,11 @@ public class Tranca implements Serializable {
 
 	@Column(nullable=false, length=10)
 	private String tipo;
+	
+	//bi-directional many-to-one association to Entorno
+	@ManyToOne
+	@JoinColumn(name="id_entorno")
+	private Entorno entorno;
 
 	//bi-directional many-to-one association to AvisoTranca
 	@OneToMany(mappedBy="tranca")
@@ -37,11 +52,6 @@ public class Tranca implements Serializable {
 	//bi-directional many-to-one association to IngresoSalidaVisita
 	@OneToMany(mappedBy="tranca")
 	private List<IngresoSalidaVisita> ingresoSalidaVisitas;
-
-	//bi-directional many-to-one association to Entorno
-	@ManyToOne
-	@JoinColumn(name="id_entorno")
-	private Entorno entorno;
 
 	public Tranca() {
 	}
@@ -135,11 +145,11 @@ public class Tranca implements Serializable {
 
 		return ingresoSalidaVisita;
 	}
-
+	
 	public Entorno getEntorno() {
-		return this.entorno;
+		return entorno;
 	}
-
+	
 	public void setEntorno(Entorno entorno) {
 		this.entorno = entorno;
 	}
