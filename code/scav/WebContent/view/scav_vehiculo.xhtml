@@ -11,7 +11,7 @@
 	
 	<ui:define name="content">
 
-		<h:form id="frmGralId" styleClass="container">
+		<h:form id="frmGralId" styleClass="container" enctype="multipart/form-data">
 		
 			<p:ajaxStatus onstart="dialogAguarde.show();" oncomplete="dialogAguarde.hide();"/>
 			<p:dialog widgetVar="dialogAguarde" showHeader="false" resizable="false" closable="false">
@@ -28,6 +28,14 @@
 					
 					<p:panel id="panelGralId" header="INFORMACION GENERAL" style="width: 438px;">
 						<h:panelGrid columns="2" cellpadding="2">
+						
+							<h:outputLabel value="Propietario: *" styleClass="name" rendered="#{!vehiculoBean.edit}"/>
+							<p:selectOneMenu value="#{vehiculoBean.selectPropietario}"
+											 filter="true"
+											 filterMatchMode="startsWith"
+											 rendered="#{!vehiculoBean.edit}">
+								<f:selectItems value="#{vehiculoBean.itemPropietarios}"/>
+							</p:selectOneMenu>
 		
 							<h:outputLabel value="Nro. de Placa: *" styleClass="name"/>
 							<p:inputText value="#{vehiculoBean.placa}" disabled="#{vehiculoBean.edit}" style="width: 200px" maxlength="10"/>
@@ -57,13 +65,16 @@
 					<div class="line-divider" />
 					
 					<p:commandButton value="Tomar Foto" onclick="dialogCamera.show();" style="float: right;" icon="camara"/>
+					<p:commandButton value=" Cargar Foto" onclick="dialogCargar.show();" style="float: right;" icon="foto"/>
                     
 				</div>
 				
 				<div class="one-half last">
+					
 					<p:panel id="panelFotoId" header="FOTO DEL VEHICULO" style="width: 360px;height: 280px;">
-						<p:graphicImage value="#{pageContext.servletContext.contextPath}/resources/images/tmp/#{cameraController.foto}"
-										cache="false"/>
+						<p:graphicImage value="#{pageContext.servletContext.contextPath}/resources/images/tmp/#{photoController.foto}"
+										cache="false"
+										style="width: 340px;height: 240px;"/>
 		            </p:panel>
 		            
 		            <p:dialog widgetVar="dialogCamera"
@@ -71,13 +82,40 @@
 		            		  width="360" height="280"
 		            		  header="Camara"
 		            		  modal="true"
+		            		  showEffect="fade"
+		            		  hideEffect="fade"
 		            		  appendToBody="true">
 		            		  
 		                <h:panelGrid>
-		                    <p:photoCam widgetVar="photoCam" update="smsId, panelFotoId" listener="#{cameraController.oncapture}"/>
+		                    <p:photoCam widgetVar="photoCam" update="smsId, panelFotoId" listener="#{photoController.oncapture}"/>
 		                    <h:panelGrid columns="2">
 		                        <p:commandButton value="Capturar" onclick="photoCam.capture();" icon="ok"/>
 		                        <p:commandButton value="Cerrar" onclick="dialogCamera.hide();" icon="cancelar"/>
+		                    </h:panelGrid>
+		                </h:panelGrid>
+		            </p:dialog>
+		            
+		            <p:dialog widgetVar="dialogCargar"
+		            		  resizable="false"
+		            		  header="Cargar Imagen"
+		            		  modal="true"
+		            		  showEffect="fade"
+		            		  hideEffect="fade"
+		            		  appendToBody="true">
+		            		  
+		                <h:panelGrid>
+		                    <p:fileUpload fileUploadListener="#{photoController.onupload}"
+		                    			  mode="advanced"
+		                    			  dragDropSupport="false"
+           								  update="smsId, panelFotoId"
+           								  sizeLimit="400000"
+           								  uploadLabel="Subir Imagen"
+           								  cancelLabel="Cancelar"
+           								  label="Seleccionar"
+           								  allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+		                    
+		                    <h:panelGrid columns="2">
+		                        <p:commandButton value="Cerrar" onclick="dialogCargar.hide();" icon="cancelar"/>
 		                    </h:panelGrid>
 		                </h:panelGrid>
 		            </p:dialog>
@@ -133,6 +171,14 @@
 						<p:confirm header="Confirmacion" message="¿Estas seguro de eliminar este registro?" icon="ui-icon-alert" />
 						<f:param name="placa" value="#{var.placa}"/>
 					</p:commandButton>
+					
+					<p:commandButton icon="login"
+									 actionListener="#{vehiculoBean.cargarPropietariosPickList()}"
+									 update=":frmPropietarioId"
+									 oncomplete="dlgPropietario.show();">
+						
+						<f:param name="placa" value="#{var.placa}"/>
+					</p:commandButton>
 
 				</p:column>
 				
@@ -144,6 +190,56 @@
 	        <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
 	        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
 	    </p:confirmDialog>
+	    
+	    <!-- DIALOGO PARA LA ADMINISTRACION DE PROPIETARIOS VEHICULOS -->
+	    <p:dialog id="dialogPropietarioId"
+	    		  header="ADMINISTRAR PROPIETARIOS"
+	    		  widgetVar="dlgPropietario"
+	    		  resizable="false"
+	    		  showEffect="fade"
+	    		  hideEffect="fade"
+	    		  modal="true"
+	    		  appendToBody="true">
+	    		  
+	    	<h:form id="frmPropietarioId">
+
+				<h:panelGrid columns="2" cellpadding="2">
+				
+					<h:outputLabel value="NRO. DE PLACA: " styleClass="name"/>
+					<h:outputLabel value="#{vehiculoBean.vehiculoSelect.placa}" />
+					
+					<h:outputLabel value="MARCA: " styleClass="name"/>
+					<h:outputLabel value="#{vehiculoBean.vehiculoSelect.marca}" />
+					
+					<h:outputLabel value="MODELO: " styleClass="name"/>
+					<h:outputLabel value="#{vehiculoBean.vehiculoSelect.modelo}" />
+									 
+				</h:panelGrid>
+				
+				<p:pickList id="pickListId"
+							value="#{vehiculoBean.propietarioPickList}"
+							var="cities"
+							itemLabel="#{cities}"
+							itemValue="#{cities}"
+							showSourceFilter="true"
+							showTargetFilter="true"
+							filterMatchMode="contains">
+							
+					<f:facet name="sourceCaption">Propietarios Disponibles</f:facet>
+					<f:facet name="targetCaption">Propietarios del Vehiculo</f:facet>
+					
+					<p:ajax event="transfer" listener="#{vehiculoBean.onTransfer}" update=":frmGralId:smsId"/>
+							
+				</p:pickList>
+				
+				<p:commandButton value="Cerrar"
+								 icon="cancelar"
+								 onclick="dlgPropietario.hide();"
+								 style="float: right;"/>
+	
+			</h:form>
+
+		</p:dialog>
 	    
 	</ui:define>
 

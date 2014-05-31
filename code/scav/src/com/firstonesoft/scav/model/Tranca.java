@@ -26,6 +26,10 @@ public class Tranca implements Serializable {
 	@Column(nullable=false)
 	private Integer tipo;
 
+	//bi-directional many-to-one association to AvisoTranca
+	@OneToMany(mappedBy="tranca")
+	private List<AvisoTranca> avisoTrancas;
+
 	//bi-directional many-to-one association to IngresoSalida
 	@OneToMany(mappedBy="tranca")
 	private List<IngresoSalida> ingresoSalidas;
@@ -33,10 +37,6 @@ public class Tranca implements Serializable {
 	//bi-directional many-to-one association to IngresoSalidaVisita
 	@OneToMany(mappedBy="tranca")
 	private List<IngresoSalidaVisita> ingresoSalidaVisitas;
-
-	//bi-directional many-to-one association to AvisoTranca
-	@OneToMany(mappedBy="tranca")
-	private List<AvisoTranca> avisoTrancas;
 
 	public Tranca() {
 	}
@@ -63,6 +63,28 @@ public class Tranca implements Serializable {
 
 	public void setTipo(Integer tipo) {
 		this.tipo = tipo;
+	}
+
+	public List<AvisoTranca> getAvisoTrancas() {
+		return this.avisoTrancas;
+	}
+
+	public void setAvisoTrancas(List<AvisoTranca> avisoTrancas) {
+		this.avisoTrancas = avisoTrancas;
+	}
+
+	public AvisoTranca addAvisoTranca(AvisoTranca avisoTranca) {
+		getAvisoTrancas().add(avisoTranca);
+		avisoTranca.setTranca(this);
+
+		return avisoTranca;
+	}
+
+	public AvisoTranca removeAvisoTranca(AvisoTranca avisoTranca) {
+		getAvisoTrancas().remove(avisoTranca);
+		avisoTranca.setTranca(null);
+
+		return avisoTranca;
 	}
 
 	public List<IngresoSalida> getIngresoSalidas() {
@@ -107,28 +129,6 @@ public class Tranca implements Serializable {
 		ingresoSalidaVisita.setTranca(null);
 
 		return ingresoSalidaVisita;
-	}
-
-	public List<AvisoTranca> getAvisoTrancas() {
-		return this.avisoTrancas;
-	}
-
-	public void setAvisoTrancas(List<AvisoTranca> avisoTrancas) {
-		this.avisoTrancas = avisoTrancas;
-	}
-
-	public AvisoTranca addAvisoTranca(AvisoTranca avisoTranca) {
-		getAvisoTrancas().add(avisoTranca);
-		avisoTranca.setTranca(this);
-
-		return avisoTranca;
-	}
-
-	public AvisoTranca removeAvisoTranca(AvisoTranca avisoTranca) {
-		getAvisoTrancas().remove(avisoTranca);
-		avisoTranca.setTranca(null);
-
-		return avisoTranca;
 	}
 
 }

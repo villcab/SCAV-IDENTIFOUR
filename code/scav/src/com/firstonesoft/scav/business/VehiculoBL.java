@@ -32,6 +32,10 @@ public class VehiculoBL {
 		return vehiculoDAO.obtenerVehiculos();
 	}
 	
+	public List<Vehiculo> obtenerVehiculosEntorno(Integer idEntorno) {
+		return vehiculoDAO.obtenerVehiculosEntorno(idEntorno);
+	}
+	
 	/**
 	 * Validacion cuando se quiere registrar uno nuevo
 	 * @param data
@@ -57,10 +61,6 @@ public class VehiculoBL {
 			return "Error debe completar el campo RFID";
 		}
 		
-		if (data.getFoto() == null) {
-			return "Error debe sacar una foto";
-		}
-		
 		return error;
 	}
 	
@@ -79,10 +79,6 @@ public class VehiculoBL {
 		
 		if (data.getRfid() == 0) {
 			return "Error debe completar el campo RFID";
-		}
-		
-		if (data.getFoto() == null) {
-			return "Error debe sacar una foto";
 		}
 		
 		return error;

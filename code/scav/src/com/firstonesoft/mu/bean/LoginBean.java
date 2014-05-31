@@ -18,6 +18,7 @@ import com.firstonesoft.mu.filter.LoginFilter;
 import com.firstonesoft.mu.model.MuMenu;
 import com.firstonesoft.scav.business.AdministradorEntornoBL;
 import com.firstonesoft.scav.model.AdministradorEntorno;
+import com.firstonesoft.scav.model.Entorno;
 import com.firstonesoft.util.FacesUtil;
 
 @ManagedBean
@@ -53,9 +54,11 @@ public class LoginBean implements Serializable {
 		
 		if (usuario != null) {	// SE LOGUEO CORRETAMENTE
 			cargarMenus();
+			Entorno e = usuario.getEntornos().get(0);
 			FacesUtil.setParametro("sw", true);
 			FacesUtil.setParametro("sig", LoginFilter.rederingMenu);
 			FacesUtil.setSessionAttribute("TEMP$USER_NAME", usuario.getEmail());
+			FacesUtil.setSessionAttribute("TEMP$ENTORNO_ID", e.getId());
 			
 		} else {				// FALLO AL LOGUEARSE
 			FacesUtil.setParametro("sw", false);

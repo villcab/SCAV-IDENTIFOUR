@@ -94,4 +94,12 @@ public class PropietarioDAO {
 		return q.getResultList();
 	}
 	
+	@SuppressWarnings("unchecked")
+	public List<Propietario> obtenerPropietariosEntorno(Integer idEntorno) {
+		String sql = "FROM Propietario p WHERE p.entorno.id = :id AND p.estado = true";
+		Query q = manager.createQuery(sql);
+		q.setParameter("id", idEntorno);
+		return q.getResultList();
+	}
+	
 }

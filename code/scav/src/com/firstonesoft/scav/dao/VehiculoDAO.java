@@ -94,4 +94,11 @@ public class VehiculoDAO {
 		return q.getResultList();
 	}
 	
+	@SuppressWarnings("unchecked")
+	public List<Vehiculo> obtenerVehiculosEntorno(Integer idEntorno) {
+		Query q = manager.createQuery("FROM Vehiculo p WHERE p.entorno.id = :id AND p.estado = true");
+		q.setParameter("id", idEntorno);
+		return q.getResultList();
+	}
+	
 }

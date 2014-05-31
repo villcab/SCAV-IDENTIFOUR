@@ -22,7 +22,7 @@ public class AdministradorEntorno implements Serializable {
 	@Column(nullable=false, length=200)
 	private String apellidos;
 
-	@Column(length=50)
+	@Column(nullable=false, length=50)
 	private String email;
 
 	@Column(nullable=false, length=70)
@@ -32,7 +32,7 @@ public class AdministradorEntorno implements Serializable {
 	private String password;
 
 	//bi-directional many-to-one association to Entorno
-	@OneToMany(mappedBy="administradorEntorno")
+	@OneToMany(mappedBy="administradorEntorno", fetch = FetchType.EAGER)
 	private List<Entorno> entornos;
 
 	//bi-directional many-to-one association to TelefonoAdminitrador

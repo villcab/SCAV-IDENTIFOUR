@@ -2,7 +2,7 @@ package com.firstonesoft.scav.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.sql.Timestamp;
+import java.util.Date;
 
 
 /**
@@ -16,6 +16,7 @@ public class AvisoTranca implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(unique=true, nullable=false)
 	private Integer id;
 
@@ -25,8 +26,9 @@ public class AvisoTranca implements Serializable {
 	@Column(nullable=false)
 	private Boolean enviado;
 
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="fecha_hora")
-	private Timestamp fechaHora;
+	private Date fechaHora;
 
 	//bi-directional many-to-one association to Tranca
 	@ManyToOne
@@ -60,11 +62,11 @@ public class AvisoTranca implements Serializable {
 		this.enviado = enviado;
 	}
 
-	public Timestamp getFechaHora() {
+	public Date getFechaHora() {
 		return this.fechaHora;
 	}
 
-	public void setFechaHora(Timestamp fechaHora) {
+	public void setFechaHora(Date fechaHora) {
 		this.fechaHora = fechaHora;
 	}
 

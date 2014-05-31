@@ -33,17 +33,18 @@ public class Vehiculo implements Serializable {
 	@Column(nullable=false)
 	private Integer rfid;
 
-	//bi-directional many-to-many association to Entorno
-	@ManyToMany(mappedBy="vehiculos")
-	private List<Entorno> entornos;
-
 	//bi-directional many-to-one association to IngresoSalida
 	@OneToMany(mappedBy="vehiculo")
 	private List<IngresoSalida> ingresoSalidas;
 
 	//bi-directional many-to-many association to Propietario
-	@ManyToMany(mappedBy="vehiculos")
+	@ManyToMany(mappedBy="vehiculos", fetch = FetchType.EAGER)
 	private List<Propietario> propietarios;
+
+	//bi-directional many-to-one association to Entorno
+	@ManyToOne
+	@JoinColumn(name="id_entorno")
+	private Entorno entorno;
 
 	public Vehiculo() {
 	}
@@ -96,14 +97,6 @@ public class Vehiculo implements Serializable {
 		this.rfid = rfid;
 	}
 
-	public List<Entorno> getEntornos() {
-		return this.entornos;
-	}
-
-	public void setEntornos(List<Entorno> entornos) {
-		this.entornos = entornos;
-	}
-
 	public List<IngresoSalida> getIngresoSalidas() {
 		return this.ingresoSalidas;
 	}
@@ -134,10 +127,22 @@ public class Vehiculo implements Serializable {
 		this.propietarios = propietarios;
 	}
 
+	public Entorno getEntorno() {
+		return this.entorno;
+	}
+
+	public void setEntorno(Entorno entorno) {
+		this.entorno = entorno;
+	}
+	
+	//equals en vehiculos
 	@Override
-	public String toString() {
-		return "Vehiculo [placa=" + placa + ", marca=" + marca + ", modelo="
-				+ modelo + ", rfid=" + rfid + "]";
+	public boolean equals(Object o) {
+		Vehiculo v = (Vehiculo) o;
+		if (v.getPlaca().equals(placa)) {
+			return true;
+		}
+		return false;
 	}
 
 }

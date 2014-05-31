@@ -37,4 +37,15 @@
 	<welcome-file-list>
 		<welcome-file>view/mu_login.xhtml</welcome-file>
 	</welcome-file-list>
+	
+	
+    
+    <filter>
+        <filter-name>PrimeFacesFileUploadFilter</filter-name>
+        <filter-class>org.primefaces.webapp.filter.FileUploadFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>PrimeFacesFileUploadFilter</filter-name>
+        <servlet-name>FacesServlet</servlet-name>
+    </filter-mapping>
 </web-app>

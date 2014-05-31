@@ -13,7 +13,8 @@ import org.apache.log4j.Logger;
 
 import com.firstonesoft.scav.business.PropietarioBL;
 import com.firstonesoft.scav.business.TelefonoPropietarioBL;
-import com.firstonesoft.scav.controller.CameraController;
+import com.firstonesoft.scav.controller.PhotoController;
+import com.firstonesoft.scav.model.Entorno;
 import com.firstonesoft.scav.model.Propietario;
 import com.firstonesoft.scav.model.TelefonoPropietario;
 import com.firstonesoft.util.ArchivoUtil;
@@ -32,8 +33,8 @@ public class PropietarioBean implements Serializable {
 	@Inject
 	private TelefonoPropietarioBL telefonoPropietarioBL;
 	
-	@ManagedProperty("#{cameraController}")
-    private CameraController cameraController;
+	@ManagedProperty("#{photoController}")
+    private PhotoController photoController;
 
 	private List<Propietario> propietarios;
 	private List<TelefonoPropietario> telefonoPropietarios;
@@ -44,11 +45,17 @@ public class PropietarioBean implements Serializable {
 	private boolean edit;
 	
 	private String telefono;
+	
+	private Integer idEntorno;
 
 	@PostConstruct
 	private void init() {
 		try {
-			propietarios = propietarioBL.obtenerPropietarios();
+			
+			idEntorno = Integer.parseInt(FacesUtil.getSessionAttribute("TEMP$ENTORNO_ID").toString());
+			
+			cargarPropietarios();
+
 			nuevoPropietario();
 			nuevoTelefonoPropietario();
 			
@@ -57,12 +64,16 @@ public class PropietarioBean implements Serializable {
 		}
 	}
 	
+	private void cargarPropietarios() {
+		propietarios = propietarioBL.obtenerPropietariosEntorno(idEntorno);
+	}
+	
 	public void guardarPropietario() {
 
 		if (!edit) {	// GUARDAR
 			
-			if (cameraController.isFotoTomada()) {
-				propietario.setFoto(ArchivoUtil.obtenerArrayBytes(cameraController.getArchivoFoto()));
+			if (photoController.isFotoTomada()) {
+				propietario.setFoto(ArchivoUtil.obtenerArrayBytes(photoController.getArchivoFoto()));
 			}
 			
 			propietario.setCi(ci);
@@ -83,6 +94,10 @@ public class PropietarioBean implements Serializable {
 				return;
 			}
 			
+			Entorno eaux = new Entorno();
+			eaux.setId(idEntorno);
+			propietario.setEntorno(eaux);
+			
 			propietario.setEstado(true);
 			if (propietarioBL.guardar(propietario)) {
 				log.info("Se guardo correctamente el: " + propietario.toString());
@@ -92,15 +107,15 @@ public class PropietarioBean implements Serializable {
 				}
 				FacesUtil.showFacesMessage("Datos guardado correctamente", FacesUtil.SEVERITY_INFO);
 				nuevoPropietario();
-				propietarios = propietarioBL.obtenerPropietarios();
+				cargarPropietarios();
 			} else {
 				FacesUtil.showFacesMessage("Error al guardar el Propietario", FacesUtil.SEVERITY_ERROR);
 			}
 			
 		} else {		// ACTUALIZAR
 			
-			if (cameraController.isFotoTomada()) {
-				propietario.setFoto(ArchivoUtil.obtenerArrayBytes(cameraController.getArchivoFoto()));
+			if (photoController.isFotoTomada()) {
+				propietario.setFoto(ArchivoUtil.obtenerArrayBytes(photoController.getArchivoFoto()));
 			}
 			
 			String error = propietarioBL.validarActualizar(propietario);
@@ -115,7 +130,7 @@ public class PropietarioBean implements Serializable {
 				FacesUtil.showFacesMessage("Datos actualizados correctamente", FacesUtil.SEVERITY_INFO);
 				
 				nuevoPropietario();
-				propietarios = propietarioBL.obtenerPropietarios();
+				cargarPropietarios();
 			} else {
 				FacesUtil.showFacesMessage("Error al actualizar el Propietario", FacesUtil.SEVERITY_ERROR);
 			}
@@ -128,7 +143,7 @@ public class PropietarioBean implements Serializable {
 		propietario = propietarioBL.obtenerPropietarioCi(idStr);
 		ci = idStr;
 		
-		cameraController.colocarArchivoBytes(propietario.getFoto());
+		photoController.colocarArchivoBytes(propietario.getFoto());
 		edit = true;
 	}
 	
@@ -143,7 +158,7 @@ public class PropietarioBean implements Serializable {
 			FacesUtil.showFacesMessage("Datos eliminados correctamente", FacesUtil.SEVERITY_INFO);
 			
 			nuevoPropietario();
-			propietarios = propietarioBL.obtenerPropietarios();
+			cargarPropietarios();
 		} else {
 			FacesUtil.showFacesMessage("Error al eliminar el Propietario", FacesUtil.SEVERITY_ERROR);
 		}
@@ -156,8 +171,8 @@ public class PropietarioBean implements Serializable {
 		telefonoNuevo = "";
 		edit = false;
 		
-		cameraController.setFoto("");
-		cameraController.setFotoTomada(false);
+		photoController.setFoto("");
+		photoController.setFotoTomada(false);
 	}
 	
 	/**
@@ -264,12 +279,12 @@ public class PropietarioBean implements Serializable {
 		this.propietario = propietario;
 	}
 	
-	public CameraController getCameraController() {
-		return cameraController;
+	public PhotoController getPhotoController() {
+		return photoController;
 	}
 
-	public void setCameraController(CameraController cameraController) {
-		this.cameraController = cameraController;
+	public void setPhotoController(PhotoController cameraController) {
+		this.photoController = cameraController;
 	}
 	
 	public boolean isEdit() {

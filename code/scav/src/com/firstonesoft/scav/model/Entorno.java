@@ -22,6 +22,9 @@ public class Entorno implements Serializable {
 
 	private byte[] foto;
 
+	@Column(name="licencia_activa", nullable=false)
+	private Boolean licenciaActiva;
+
 	@Column(nullable=false, length=100)
 	private String nombre;
 
@@ -33,22 +36,17 @@ public class Entorno implements Serializable {
 	@JoinColumn(name="ci")
 	private AdministradorEntorno administradorEntorno;
 
-	//bi-directional many-to-many association to Vehiculo
-	@ManyToMany
-	@JoinTable(
-		name="entorno_vehiculo"
-		, joinColumns={
-			@JoinColumn(name="id_entorno", nullable=false)
-			}
-		, inverseJoinColumns={
-			@JoinColumn(name="placa", nullable=false)
-			}
-		)
+	//bi-directional many-to-one association to Propietario
+	@OneToMany(mappedBy="entorno")
+	private List<Propietario> propietarios;
+
+	//bi-directional many-to-one association to Vehiculo
+	@OneToMany(mappedBy="entorno")
 	private List<Vehiculo> vehiculos;
 
-	//bi-directional many-to-one association to Licencia
+	//bi-directional many-to-one association to Guardia
 	@OneToMany(mappedBy="entorno")
-	private List<Licencia> licencias;
+	private List<Guardia> guardias;
 
 	public Entorno() {
 	}
@@ -67,6 +65,14 @@ public class Entorno implements Serializable {
 
 	public void setFoto(byte[] foto) {
 		this.foto = foto;
+	}
+
+	public Boolean getLicenciaActiva() {
+		return this.licenciaActiva;
+	}
+
+	public void setLicenciaActiva(Boolean licenciaActiva) {
+		this.licenciaActiva = licenciaActiva;
 	}
 
 	public String getNombre() {
@@ -93,6 +99,28 @@ public class Entorno implements Serializable {
 		this.administradorEntorno = administradorEntorno;
 	}
 
+	public List<Propietario> getPropietarios() {
+		return this.propietarios;
+	}
+
+	public void setPropietarios(List<Propietario> propietarios) {
+		this.propietarios = propietarios;
+	}
+
+	public Propietario addPropietario(Propietario propietario) {
+		getPropietarios().add(propietario);
+		propietario.setEntorno(this);
+
+		return propietario;
+	}
+
+	public Propietario removePropietario(Propietario propietario) {
+		getPropietarios().remove(propietario);
+		propietario.setEntorno(null);
+
+		return propietario;
+	}
+
 	public List<Vehiculo> getVehiculos() {
 		return this.vehiculos;
 	}
@@ -101,26 +129,40 @@ public class Entorno implements Serializable {
 		this.vehiculos = vehiculos;
 	}
 
-	public List<Licencia> getLicencias() {
-		return this.licencias;
+	public Vehiculo addVehiculo(Vehiculo vehiculo) {
+		getVehiculos().add(vehiculo);
+		vehiculo.setEntorno(this);
+
+		return vehiculo;
 	}
 
-	public void setLicencias(List<Licencia> licencias) {
-		this.licencias = licencias;
+	public Vehiculo removeVehiculo(Vehiculo vehiculo) {
+		getVehiculos().remove(vehiculo);
+		vehiculo.setEntorno(null);
+
+		return vehiculo;
 	}
 
-	public Licencia addLicencia(Licencia licencia) {
-		getLicencias().add(licencia);
-		licencia.setEntorno(this);
-
-		return licencia;
+	public List<Guardia> getGuardias() {
+		return this.guardias;
 	}
 
-	public Licencia removeLicencia(Licencia licencia) {
-		getLicencias().remove(licencia);
-		licencia.setEntorno(null);
+	public void setGuardias(List<Guardia> guardias) {
+		this.guardias = guardias;
+	}
 
-		return licencia;
+	public Guardia addGuardia(Guardia guardia) {
+		getGuardias().add(guardia);
+		guardia.setEntorno(this);
+
+		return guardia;
+	}
+
+	public Guardia removeGuardia(Guardia guardia) {
+		getGuardias().remove(guardia);
+		guardia.setEntorno(null);
+
+		return guardia;
 	}
 
 }

@@ -33,6 +33,10 @@ public class PropietarioBL {
 		return propietarioDao.obtenerPropietarios();
 	}
 	
+	public List<Propietario> obtenerPropietariosEntorno(Integer idEntorno) {
+		return propietarioDao.obtenerPropietariosEntorno(idEntorno);
+	}
+	
 	/**
 	 * Validacion cuando se quiere registrar uno nuevo
 	 * @param data
@@ -42,11 +46,16 @@ public class PropietarioBL {
 		
 		String error = "";
 		
+		data.setCi(data.getCi().trim());
 		if (data.getCi().equals("")) {
 			return "Error debe completar el campo CI";
 		} else {
-			if (propietarioDao.obtenerPropietarioCi(data.getCi()) != null) {
-				return "Ya existe un Propietario con el CI: " + data.getCi();
+			if (!ValidacionUtil.sonLetrasNumeros(data.getCi())) {
+				return "Error el campo CI solo acepta Letras y Numeros";
+			} else {
+				if (propietarioDao.obtenerPropietarioCi(data.getCi()) != null) {
+					return "Ya existe un Propietario con el CI: " + data.getCi();
+				}
 			}
 		}
 		

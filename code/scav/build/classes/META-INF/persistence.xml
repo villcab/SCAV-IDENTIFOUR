@@ -11,12 +11,13 @@
 		<class>com.firstonesoft.scav.model.AdministradorEntorno</class>
 		<class>com.firstonesoft.scav.model.AvisoPropietario</class>
 		<class>com.firstonesoft.scav.model.AvisoTranca</class>
+		<class>com.firstonesoft.scav.model.BitacoraGuardia</class>
 		<class>com.firstonesoft.scav.model.Entorno</class>
+		<class>com.firstonesoft.scav.model.Guardia</class>
 		<class>com.firstonesoft.scav.model.IngresoSalida</class>
 		<class>com.firstonesoft.scav.model.IngresoSalidaPK</class>
 		<class>com.firstonesoft.scav.model.IngresoSalidaVisita</class>
 		<class>com.firstonesoft.scav.model.IngresoSalidaVisitaPK</class>
-		<class>com.firstonesoft.scav.model.Licencia</class>
 		<class>com.firstonesoft.scav.model.Propietario</class>
 		<class>com.firstonesoft.scav.model.TelefonoAdminitrador</class>
 		<class>com.firstonesoft.scav.model.TelefonoPropietario</class>

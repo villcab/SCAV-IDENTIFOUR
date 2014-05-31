@@ -11,15 +11,16 @@ import javax.servlet.ServletContext;
 
 import org.apache.log4j.Logger;
 import org.primefaces.event.CaptureEvent;
+import org.primefaces.event.FileUploadEvent;
 
 import com.firstonesoft.util.ArchivoUtil;
 
-@ManagedBean(name = "cameraController")
+@ManagedBean(name = "photoController")
 @ViewScoped
-public class CameraController implements Serializable {
+public class PhotoController implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private final Logger log = Logger.getLogger(CameraController.class);
+	private final Logger log = Logger.getLogger(PhotoController.class);
 	
 	private String archivoFoto;
 	private String foto;
@@ -48,6 +49,17 @@ public class CameraController implements Serializable {
         ArchivoUtil.crearArchivo(archivoFoto, captureEvent.getData());
         fotoTomada = true;
     }
+	
+	public void onupload(FileUploadEvent uploadEvent) {
+		ArchivoUtil.verificarEliminar(archivoFoto);
+        foto = "foto" + getNumeroRandomico() + ".png";
+        archivoFoto = servletContext.getRealPath(File.separator + "resources"+
+        										 File.separator + "images" +
+        										 File.separator + "tmp" +
+        										 File.separator + foto);
+        ArchivoUtil.crearArchivo(archivoFoto, uploadEvent.getFile().getContents());
+        fotoTomada = true;
+	}
 	
 	public void colocarArchivoBytes(byte [] array) {
 		ArchivoUtil.verificarEliminar(archivoFoto);

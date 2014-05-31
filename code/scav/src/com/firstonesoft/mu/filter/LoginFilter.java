@@ -39,8 +39,6 @@ public class LoginFilter implements Filter {
 		String path = req.getRequestURI();
 		String usuario = (String) req.getSession().getAttribute("TEMP$USER_NAME");
 		
-		System.out.println(path + " " + usuario);
-		
 		if (path.equals(pathRaiz)) {
 			if (usuario == null)
 				chain.doFilter(request, response);
