@@ -1,7 +1,9 @@
 package com.firstonesoft.scav.model;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.util.Date;
 
 
@@ -25,6 +27,9 @@ public class AvisoTranca implements Serializable {
 
 	@Column(nullable=false)
 	private Boolean enviado;
+	
+	@Column(length=100, name="de")
+	private String de;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="fecha_hora")
@@ -76,6 +81,14 @@ public class AvisoTranca implements Serializable {
 
 	public void setTranca(Tranca tranca) {
 		this.tranca = tranca;
+	}
+	
+	public String getDe() {
+		return de;
+	}
+	
+	public void setDe(String de) {
+		this.de = de;
 	}
 
 }

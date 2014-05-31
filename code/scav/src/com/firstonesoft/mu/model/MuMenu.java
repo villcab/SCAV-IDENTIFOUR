@@ -23,7 +23,7 @@ public class MuMenu implements Serializable {
 
 	private Boolean estado;
 
-	private float nivel;
+	private Float nivel;
 
 	@Column(nullable=false, length=50)
 	private String nombre;
@@ -71,11 +71,11 @@ public class MuMenu implements Serializable {
 		this.estado = estado;
 	}
 
-	public float getNivel() {
+	public Float getNivel() {
 		return this.nivel;
 	}
 
-	public void setNivel(float nivel) {
+	public void setNivel(Float nivel) {
 		this.nivel = nivel;
 	}
 

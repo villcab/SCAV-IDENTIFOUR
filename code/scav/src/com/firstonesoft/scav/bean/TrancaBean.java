@@ -50,7 +50,11 @@ public class TrancaBean implements Serializable {
 	}
 	
 	private void cargarTrancas() {
-		trancas = trancaBL.obtenerTrancasEntorno(idEntorno);
+		if (idEntorno == 0) {
+			trancas = trancaBL.obtenerTrancas();
+		} else {
+			trancas = trancaBL.obtenerTrancasEntorno(idEntorno);
+		}
 	}
 	
 	public void guardarTranca() {

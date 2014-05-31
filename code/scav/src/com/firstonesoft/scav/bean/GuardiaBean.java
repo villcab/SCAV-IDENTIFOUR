@@ -48,7 +48,11 @@ public class GuardiaBean implements Serializable {
 	}
 	
 	private void cargarGuardias() {
-		guardias = guardiaBL.obtenerGuardiaEntorno(idEntorno);
+		if (idEntorno == 0) {
+			guardias = guardiaBL.obtenerGuardias();
+		} else {
+			guardias = guardiaBL.obtenerGuardiaEntorno(idEntorno);
+		}
 	}
 	
 	public void guardarGuardia() {

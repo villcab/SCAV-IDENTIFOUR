@@ -14,7 +14,13 @@ public class MenuDAO {
 	private transient EntityManager manager;
 	
 	@SuppressWarnings("unchecked")
-	public List<MuMenu> getMenus() {
+	public List<MuMenu> getMenusDisponibles() {
+		Query q = manager.createQuery("from MuMenu c where c.muMenu = null and c.estado = true");
+		return q.getResultList();
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<MuMenu> getAllMenus() {
 		Query q = manager.createQuery("from MuMenu c where c.muMenu = null");
 		return q.getResultList();
 	}

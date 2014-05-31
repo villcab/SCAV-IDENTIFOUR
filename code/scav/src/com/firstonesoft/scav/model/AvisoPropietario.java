@@ -25,6 +25,9 @@ public class AvisoPropietario implements Serializable {
 
 	@Column(nullable=false)
 	private Boolean enviado;
+	
+	@Column(length=100)
+	private String de;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="fecha_hora")
@@ -76,6 +79,14 @@ public class AvisoPropietario implements Serializable {
 
 	public void setPropietario(Propietario propietario) {
 		this.propietario = propietario;
+	}
+	
+	public String getDe() {
+		return de;
+	}
+	
+	public void setDe(String de) {
+		this.de = de;
 	}
 
 }

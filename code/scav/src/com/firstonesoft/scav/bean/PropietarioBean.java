@@ -65,7 +65,11 @@ public class PropietarioBean implements Serializable {
 	}
 	
 	private void cargarPropietarios() {
-		propietarios = propietarioBL.obtenerPropietariosEntorno(idEntorno);
+		if (idEntorno == 0) {
+			propietarios = propietarioBL.obtenerPropietarios();
+		} else {
+			propietarios = propietarioBL.obtenerPropietariosEntorno(idEntorno);
+		}
 	}
 	
 	public void guardarPropietario() {

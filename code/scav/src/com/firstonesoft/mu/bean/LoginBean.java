@@ -1,6 +1,8 @@
 package com.firstonesoft.mu.bean;
 
 import java.io.Serializable;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -18,7 +20,6 @@ import com.firstonesoft.mu.filter.LoginFilter;
 import com.firstonesoft.mu.model.MuMenu;
 import com.firstonesoft.scav.business.AdministradorEntornoBL;
 import com.firstonesoft.scav.model.AdministradorEntorno;
-import com.firstonesoft.scav.model.Entorno;
 import com.firstonesoft.util.FacesUtil;
 
 @ManagedBean
@@ -53,12 +54,23 @@ public class LoginBean implements Serializable {
 		AdministradorEntorno usuario = administradorEntornoBL.obtenerAdminitradorEntorno(email, password);
 		
 		if (usuario != null) {	// SE LOGUEO CORRETAMENTE
-			cargarMenus();
-			Entorno e = usuario.getEntornos().get(0);
+			
+			int idEntorno = 0;
+			if (!usuario.getEntornos().isEmpty()) {
+				
+				idEntorno = usuario.getEntornos().get(0).getId();				
+				cargarMenusAdmEntorno();
+			} else {
+				
+				idEntorno = 0;
+				cargarMenusCompleto();
+			}
+			
 			FacesUtil.setParametro("sw", true);
 			FacesUtil.setParametro("sig", LoginFilter.rederingMenu);
+			
 			FacesUtil.setSessionAttribute("TEMP$USER_NAME", usuario.getEmail());
-			FacesUtil.setSessionAttribute("TEMP$ENTORNO_ID", e.getId());
+			FacesUtil.setSessionAttribute("TEMP$ENTORNO_ID", idEntorno);
 			
 		} else {				// FALLO AL LOGUEARSE
 			FacesUtil.setParametro("sw", false);
@@ -66,18 +78,71 @@ public class LoginBean implements Serializable {
 		}
 	}
 	
-	private void cargarMenus() {
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	private void cargarMenusAdmEntorno() {
 		model = new DefaultMenuModel();
-		List<MuMenu> menus = menuBL.obtenerMenus();
+		List<MuMenu> menus = menuBL.getMenusDisponibles();
 		for (MuMenu m : menus) {
 			DefaultSubMenu subMenu = new DefaultSubMenu(m.getNombre());
-			for (MuMenu i : m.getMuMenus()) {
+			List listMenus = m.getMuMenus();
+			Collections.sort(listMenus, new Comparator<MuMenu>() {
+				@Override
+				public int compare(MuMenu o1, MuMenu o2) {
+					return o1.getNivel().compareTo(o2.getNivel());
+				}
+			});
+			for (Object o : listMenus) {
+				MuMenu i = (MuMenu) o;
 				DefaultMenuItem item = new DefaultMenuItem(i.getNombre());
 				item.setUrl(i.getUrl());
 				subMenu.addElement(item);
 			}
 			model.addElement(subMenu);
 		}
+		
+		DefaultSubMenu subMenu = new DefaultSubMenu("Opciones");
+		
+		DefaultMenuItem item = new DefaultMenuItem("Cerrar Sesion");
+		item.setUrl("/cerrarSession");
+		item.setIcon("eliminar");
+		
+		subMenu.addElement(item);
+		
+		model.addElement(subMenu);
+		
+	}
+	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	private void cargarMenusCompleto() {
+		model = new DefaultMenuModel();
+		List<MuMenu> menus = menuBL.getAllMenus();
+		for (MuMenu m : menus) {
+			DefaultSubMenu subMenu = new DefaultSubMenu(m.getNombre());
+			List listMenus = m.getMuMenus();
+			Collections.sort(listMenus, new Comparator<MuMenu>() {
+				@Override
+				public int compare(MuMenu o1, MuMenu o2) {
+					return o1.getNivel().compareTo(o2.getNivel());
+				}
+			});
+			for (Object o : listMenus) {
+				MuMenu i = (MuMenu) o;
+				DefaultMenuItem item = new DefaultMenuItem(i.getNombre());
+				item.setUrl(i.getUrl());
+				subMenu.addElement(item);
+			}
+			model.addElement(subMenu);
+		}
+		
+		DefaultSubMenu subMenu = new DefaultSubMenu("Opciones");
+		
+		DefaultMenuItem item = new DefaultMenuItem("Cerrar Sesion");
+		item.setUrl("/cerrarSession");
+		item.setIcon("eliminar");
+		
+		subMenu.addElement(item);
+		
+		model.addElement(subMenu);
 	}
 
 	/**

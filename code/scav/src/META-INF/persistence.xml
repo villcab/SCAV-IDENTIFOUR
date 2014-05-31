@@ -25,6 +25,7 @@
 		<class>com.firstonesoft.scav.model.Vehiculo</class>
 		<class>com.firstonesoft.scav.model.VehiculoVisita</class>
 		<class>com.firstonesoft.scav.model.Visita</class>
+		<class>com.firstonesoft.scav.model.Sincronizador</class>
 		
 		<properties>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" />

@@ -75,7 +75,11 @@ public class VehiculoBean implements Serializable {
 	}
 	
 	private void cargarVehiculos() {
-		vehiculos = vehiculoBL.obtenerVehiculosEntorno(idEntorno);
+		if (idEntorno == 0) {
+			vehiculos = vehiculoBL.obtenerVehiculos();
+		} else {
+			vehiculos = vehiculoBL.obtenerVehiculosEntorno(idEntorno);
+		}
 	}
 	
 	public void guardarVehiculo() {

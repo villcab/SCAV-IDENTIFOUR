@@ -1,0 +1,87 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/resources/template/master.xhtml">
+	
+	<ui:define name="content">
+
+		<h:form id="frmGralId" styleClass="container" enctype="multipart/form-data">
+		
+			<p:ajaxStatus onstart="dialogAguarde.show();" oncomplete="dialogAguarde.hide();"/>
+			<p:dialog widgetVar="dialogAguarde" showHeader="false" resizable="false" closable="false">
+                <p:graphicImage value="/resources/images/ajax_loader.gif" />
+            </p:dialog>
+		
+			<p:growl id="smsId" showDetail="true"/>
+			
+			<h1 class="form-title">Envio de Alarmas y Avisos</h1>
+
+			<div id="page-content">
+				
+				<div class="one-half">
+					
+					<p:panel id="panelAvisoId" header="ENVIO DE AVISOS" style="width: 400px;">
+						
+						<h:panelGrid columns="1" cellpadding="5px">
+							<p:selectOneRadio value="#{alarmaAvisoBean.selectTipoAviso}" layout="grid" columns="1">
+						    	<f:selectItems var="c" value="#{alarmaAvisoBean.itemsTipoAvisos}"
+						    				   itemLabel="#{c.label}"
+						    				   itemValue="#{c.value}"/>
+						    </p:selectOneRadio>
+						    
+						    <p:inputTextarea rows="5" cols="50" />
+						    
+						    <p:commandButton value="Enviar Aviso"
+											 actionListener="#{vehiculoBean.guardarVehiculo()}"
+											 update=""
+											 icon="guardar" />
+						</h:panelGrid>
+						
+					</p:panel>
+					
+				</div>
+				
+				<div class="one-half last">
+					
+					<p:panel id="panelAlarmaId" header="ENVIO DE ALARMAS" style="width: 400px;">
+						<center>
+						<h:panelGrid columns="1" cellpadding="25px">
+							
+						    <p:commandButton value="Alarma Alta"
+											 actionListener="#{vehiculoBean.guardarVehiculo()}"
+											 update=""
+											 style="width: 150px"
+											 icon="btn_red" />
+											 
+							<p:commandButton value="Alarma Media"
+											 actionListener="#{vehiculoBean.guardarVehiculo()}"
+											 update=""
+											 style="width: 150px"
+											 icon="btn_yellow" />
+											 
+							<p:commandButton value="Alarma Baja"
+											 actionListener="#{vehiculoBean.guardarVehiculo()}"
+											 update=""
+											 style="width: 150px"
+											 icon="btn_green" />
+						</h:panelGrid>
+						</center>
+					</p:panel>
+					
+				</div>
+				
+			</div>
+			
+		</h:form>
+	    
+	</ui:define>
+
+</ui:composition>
+
+</html>

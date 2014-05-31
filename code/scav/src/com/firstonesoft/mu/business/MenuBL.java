@@ -12,7 +12,11 @@ public class MenuBL {
 	@Inject
 	private MenuDAO menuDao;
 	
-	public List<MuMenu> obtenerMenus() {
-		return menuDao.getMenus();
+	public List<MuMenu> getMenusDisponibles() {
+		return menuDao.getMenusDisponibles();
+	}
+	
+	public List<MuMenu> getAllMenus() {
+		return menuDao.getAllMenus();
 	}
 }
