@@ -22,6 +22,11 @@ public class Parameters {
 	
 	public static Integer system_tiempo_fuera;
 	public static Integer system_numero_intentos;
+	
+	public static String db_driver;
+	public static String db_url;
+	public static String db_username;
+	public static String db_password;
 
 	public static void init() {
 		try {
@@ -34,6 +39,11 @@ public class Parameters {
 			
 			system_tiempo_fuera = Integer.parseInt(rb.getString("system.tiempo.fuera"));
 			system_numero_intentos = Integer.parseInt(rb.getString("system.numero.intentos"));
+			
+			db_driver = rb.getString("db.driver");
+			db_url = rb.getString("db.url");
+			db_username = rb.getString("db.username");
+			db_password = rb.getString("db.password");
 			
 		} catch (Exception e) {
 			log.error("Fallo al cargar el Archivo de Properties [" + configFile + "]: ", e);

@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/resources/template/master.xhtml">
+	
+	<ui:define name="content">
+
+		<h:form id="frmGralId" styleClass="container" enctype="multipart/form-data">
+		
+			<p:ajaxStatus onstart="dialogAguarde.show();" oncomplete="dialogAguarde.hide();"/>
+			<p:dialog widgetVar="dialogAguarde" showHeader="false" resizable="false" closable="false" modal="true">
+                <p:graphicImage value="/resources/images/ajax_loader.gif" />
+            </p:dialog>
+		
+			<p:growl id="smsId" showDetail="true"/>
+			
+			<h1 class="form-title">Reporte 1</h1>
+
+			<center>
+				<p:panel id="panelAvisoId" header="GENERACION DE REPORTE" style="width: 400px;">
+				
+					<h3>Genera un reporte con la cantidad de ingresos y salidas dada una fecha</h3>	
+							
+					<h:panelGrid columns="2" cellpadding="5px" >
+					
+						<h:outputLabel value="Seleccion una fecha: " styleClass="name"/>
+						<p:calendar id="button" value="#{reporteBean.fecha}" showOn="button" />
+					    
+					    <p:commandButton value="Generar Reporte"
+										 actionListener="#{reporteBean.generarReporte1()}"
+										 update="smsId"
+										 icon="reporte" />
+					</h:panelGrid>
+					
+				</p:panel>
+			</center>
+			
+		</h:form>
+	    
+	</ui:define>
+
+</ui:composition>
+
+</html>

@@ -1,6 +1,7 @@
 package com.firstonesoft.scav.model;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
 
 
@@ -17,8 +18,8 @@ public class IngresoSalida implements Serializable {
 	@EmbeddedId
 	private IngresoSalidaPK id;
 
-	@Column(nullable=false)
-	private Integer tipo;
+	@Column(nullable=false, length=10)
+	private String tipo;
 
 	//bi-directional many-to-one association to Tranca
 	@ManyToOne
@@ -41,11 +42,11 @@ public class IngresoSalida implements Serializable {
 		this.id = id;
 	}
 
-	public Integer getTipo() {
+	public String getTipo() {
 		return this.tipo;
 	}
 
-	public void setTipo(Integer tipo) {
+	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}
 
