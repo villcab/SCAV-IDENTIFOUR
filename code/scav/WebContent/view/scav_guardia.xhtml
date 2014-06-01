@@ -38,8 +38,8 @@
 							<h:outputLabel value="Apellidos: *" styleClass="name"/>
 							<p:inputText value="#{guardiaBean.guardia.apellido}" style="width: 200px" maxlength="100"/>
 		
-							<h:outputLabel value="Contrase&ntilde;a: *" styleClass="name" rendered="#{!guardiaBean.edit}"/>
-							<p:password value="#{guardiaBean.guardia.password}" rendered="#{!guardiaBean.edit}" style="width: 200px" maxlength="50"/>
+							<h:outputLabel value="Contrase&ntilde;a: *" styleClass="name" />
+							<p:inputText value="#{guardiaBean.guardia.password}" style="width: 200px" maxlength="50"/>
 		
 							<p:commandButton value="Guardar"
 											 actionListener="#{guardiaBean.guardarGuardia()}"

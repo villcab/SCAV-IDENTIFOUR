@@ -10,6 +10,7 @@ import javax.inject.Inject;
 
 import org.apache.log4j.Logger;
 
+import com.firstonesoft.scav.business.SincronizadorBL;
 import com.firstonesoft.scav.business.TrancaBL;
 import com.firstonesoft.scav.model.Entorno;
 import com.firstonesoft.scav.model.Tranca;
@@ -24,6 +25,9 @@ public class TrancaBean implements Serializable {
 
 	@Inject
 	private TrancaBL trancaBL;
+
+	@Inject
+	private SincronizadorBL sincronizadorBL;
 
 	private List<Tranca> trancas;
 	
@@ -96,6 +100,8 @@ public class TrancaBean implements Serializable {
 			if (trancaBL.actualizar(tranca)) {
 				log.info("Se actualizo correctamente el: " + tranca.toString());
 				FacesUtil.showFacesMessage("Datos actualizados correctamente", FacesUtil.SEVERITY_INFO);
+				
+				sincronizadorBL.guardar('M', id, "tranca", idEntorno);
 				
 				nuevoTranca();
 				cargarTrancas();

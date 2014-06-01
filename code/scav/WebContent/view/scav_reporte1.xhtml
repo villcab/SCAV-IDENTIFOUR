@@ -13,28 +13,22 @@
 
 		<h:form id="frmGralId" styleClass="container">
 		
-			<p:ajaxStatus onstart="dialogAguarde.show();" oncomplete="dialogAguarde.hide();"/>
-			<p:dialog widgetVar="dialogAguarde" showHeader="false" resizable="false" closable="false" modal="true">
-                <p:graphicImage value="/resources/images/ajax_loader.gif" />
-            </p:dialog>
-		
 			<p:growl id="smsId" showDetail="true"/>
 			
 			<h1 class="form-title">Reporte 1</h1>
 
-			<p:panel id="panelAvisoId" header="GENERACION DE REPORTE" style="width: 400px;">
+			<p:panel id="panelAvisoId" header="GENERACION DE REPORTE" style="width: 500px;">
 			
 				<h4>Genera un reporte con la cantidad de ingresos y salidas dada una fecha</h4>	
 						
 				<h:panelGrid columns="2" cellpadding="5px" >
 				
 					<h:outputLabel value="Seleccion una fecha: " styleClass="name"/>
-					<p:calendar id="button" value="#{reporteBean.fecha}" showOn="button" />
+					<p:calendar value="#{reporte1Bean.fecha}" showOn="button" pattern="dd-MM-yyyy"/>
 				    
 				    <p:commandButton value="Generar Reporte"
-									 actionListener="#{reporteBean.generarReporte1}"
+									 actionListener="#{reporte1Bean.generarReporte}"
 									 icon="reporte" ajax="false">
-						<p:ajax update="smsId"/>
 					</p:commandButton>
 									 
 				</h:panelGrid>
