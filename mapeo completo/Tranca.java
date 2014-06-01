@@ -1,18 +1,10 @@
 package com.firstonesoft.scav.model;
 
 import java.io.Serializable;
-import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
+
+import java.util.List;
 
 
 /**
@@ -26,7 +18,8 @@ public class Tranca implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@SequenceGenerator(name="tranca_id_seq_generator", sequenceName="tranca_id_seq", allocationSize = 1)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="tranca_id_seq_generator")
 	@Column(unique=true, nullable=false)
 	private Integer id;
 
@@ -35,15 +28,6 @@ public class Tranca implements Serializable {
 
 	@Column(nullable=false, length=10)
 	private String tipo;
-	
-	//bi-directional many-to-one association to Entorno
-	@ManyToOne
-	@JoinColumn(name="id_entorno")
-	private Entorno entorno;
-
-	//bi-directional many-to-one association to AvisoTranca
-	@OneToMany(mappedBy="tranca")
-	private List<AvisoTranca> avisoTrancas;
 
 	//bi-directional many-to-one association to IngresoSalida
 	@OneToMany(mappedBy="tranca")
@@ -52,6 +36,11 @@ public class Tranca implements Serializable {
 	//bi-directional many-to-one association to IngresoSalidaVisita
 	@OneToMany(mappedBy="tranca")
 	private List<IngresoSalidaVisita> ingresoSalidaVisitas;
+
+	//bi-directional many-to-one association to Entorno
+	@ManyToOne
+	@JoinColumn(name="id_entorno")
+	private Entorno entorno;
 
 	public Tranca() {
 	}
@@ -78,28 +67,6 @@ public class Tranca implements Serializable {
 
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
-	}
-
-	public List<AvisoTranca> getAvisoTrancas() {
-		return this.avisoTrancas;
-	}
-
-	public void setAvisoTrancas(List<AvisoTranca> avisoTrancas) {
-		this.avisoTrancas = avisoTrancas;
-	}
-
-	public AvisoTranca addAvisoTranca(AvisoTranca avisoTranca) {
-		getAvisoTrancas().add(avisoTranca);
-		avisoTranca.setTranca(this);
-
-		return avisoTranca;
-	}
-
-	public AvisoTranca removeAvisoTranca(AvisoTranca avisoTranca) {
-		getAvisoTrancas().remove(avisoTranca);
-		avisoTranca.setTranca(null);
-
-		return avisoTranca;
 	}
 
 	public List<IngresoSalida> getIngresoSalidas() {
@@ -145,13 +112,20 @@ public class Tranca implements Serializable {
 
 		return ingresoSalidaVisita;
 	}
-	
+
 	public Entorno getEntorno() {
-		return entorno;
+		return this.entorno;
 	}
-	
+
 	public void setEntorno(Entorno entorno) {
 		this.entorno = entorno;
 	}
+
+	@Override
+	public String toString() {
+		return "Tranca [id=" + id + ", descripcion=" + descripcion + ", tipo="
+				+ tipo + "]";
+	}
+	
 
 }

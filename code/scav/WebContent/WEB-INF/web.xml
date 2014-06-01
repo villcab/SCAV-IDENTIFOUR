@@ -11,13 +11,15 @@
 		<param-name>primefaces.THEME</param-name>
 		<param-value>smoothness</param-value>
 	</context-param>
-	<filter>
-		<filter-name>LoginFilter</filter-name>
-		<filter-class>com.firstonesoft.mu.filter.LoginFilter</filter-class>
-	</filter>
+	
 	<filter>
 		<filter-name>PrimeFacesFileUploadFilter</filter-name>
 		<filter-class>org.primefaces.webapp.filter.FileUploadFilter</filter-class>
+	</filter>
+	
+	<filter>
+		<filter-name>LoginFilter</filter-name>
+		<filter-class>com.firstonesoft.mu.filter.LoginFilter</filter-class>
 	</filter>
 	<filter-mapping>
 		<filter-name>LoginFilter</filter-name>
@@ -25,6 +27,7 @@
 		<dispatcher>REQUEST</dispatcher>
 		<dispatcher>INCLUDE</dispatcher>
 	</filter-mapping>
+	
 	<filter-mapping>
 		<filter-name>PrimeFacesFileUploadFilter</filter-name>
 		<servlet-name>FacesServlet</servlet-name>

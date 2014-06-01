@@ -1,7 +1,9 @@
 package com.firstonesoft.scav.model;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.util.Date;
 
 
@@ -16,7 +18,8 @@ public class BitacoraGuardia implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@SequenceGenerator(name="bitacora_guardia_id_seq_generator", sequenceName="bitacora_guardia_id_seq", allocationSize = 1)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="bitacora_guardia_id_seq_generator")
 	@Column(unique=true, nullable=false)
 	private Long id;
 

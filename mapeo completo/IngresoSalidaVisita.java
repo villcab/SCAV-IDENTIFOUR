@@ -17,8 +17,8 @@ public class IngresoSalidaVisita implements Serializable {
 	@EmbeddedId
 	private IngresoSalidaVisitaPK id;
 
-	@Column(nullable=false)
-	private Integer tipo;
+	@Column(nullable=false, length=10)
+	private String tipo;
 
 	//bi-directional many-to-one association to Tranca
 	@ManyToOne
@@ -41,11 +41,11 @@ public class IngresoSalidaVisita implements Serializable {
 		this.id = id;
 	}
 
-	public Integer getTipo() {
+	public String getTipo() {
 		return this.tipo;
 	}
 
-	public void setTipo(Integer tipo) {
+	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}
 

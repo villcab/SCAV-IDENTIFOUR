@@ -113,4 +113,11 @@ public class Guardia implements Serializable {
 		this.entorno = entorno;
 	}
 
+	@Override
+	public String toString() {
+		return "Guardia [ci=" + ci + ", apellido=" + apellido + ", estado="
+				+ estado + ", nombre=" + nombre + "]";
+	}
+	
+
 }

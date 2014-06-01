@@ -105,6 +105,7 @@ public class LoginBean implements Serializable {
 				MuMenu i = (MuMenu) o;
 				DefaultMenuItem item = new DefaultMenuItem(i.getNombre());
 				item.setUrl(i.getUrl());
+				
 				subMenu.addElement(item);
 			}
 			model.addElement(subMenu);
@@ -139,8 +140,10 @@ public class LoginBean implements Serializable {
 				MuMenu i = (MuMenu) o;
 				DefaultMenuItem item = new DefaultMenuItem(i.getNombre());
 				item.setUrl(i.getUrl());
+				
 				subMenu.addElement(item);
 			}
+			
 			model.addElement(subMenu);
 		}
 		

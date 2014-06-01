@@ -1,9 +1,7 @@
 package com.firstonesoft.scav.model;
 
 import java.io.Serializable;
-
 import javax.persistence.*;
-
 import java.util.List;
 
 
@@ -34,10 +32,6 @@ public class Propietario implements Serializable {
 
 	@Column(name="nro_licencia", nullable=false, length=10)
 	private String nroLicencia;
-
-	//bi-directional many-to-one association to AvisoPropietario
-	@OneToMany(mappedBy="propietario")
-	private List<AvisoPropietario> avisoPropietarios;
 
 	//bi-directional many-to-one association to Entorno
 	@ManyToOne
@@ -112,28 +106,6 @@ public class Propietario implements Serializable {
 		this.nroLicencia = nroLicencia;
 	}
 
-	public List<AvisoPropietario> getAvisoPropietarios() {
-		return this.avisoPropietarios;
-	}
-
-	public void setAvisoPropietarios(List<AvisoPropietario> avisoPropietarios) {
-		this.avisoPropietarios = avisoPropietarios;
-	}
-
-	public AvisoPropietario addAvisoPropietario(AvisoPropietario avisoPropietario) {
-		getAvisoPropietarios().add(avisoPropietario);
-		avisoPropietario.setPropietario(this);
-
-		return avisoPropietario;
-	}
-
-	public AvisoPropietario removeAvisoPropietario(AvisoPropietario avisoPropietario) {
-		getAvisoPropietarios().remove(avisoPropietario);
-		avisoPropietario.setPropietario(null);
-
-		return avisoPropietario;
-	}
-
 	public Entorno getEntorno() {
 		return this.entorno;
 	}
@@ -171,5 +143,12 @@ public class Propietario implements Serializable {
 
 		return telefonoPropietario;
 	}
+
+	@Override
+	public String toString() {
+		return "Propietario [ci=" + ci + ", apellidos=" + apellidos
+				+ ", nombres=" + nombres + ", nroLicencia=" + nroLicencia + "]";
+	}
+	
 
 }

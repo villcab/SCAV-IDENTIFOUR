@@ -1,7 +1,9 @@
 package com.firstonesoft.scav.model;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.util.List;
 
 
@@ -16,7 +18,8 @@ public class Entorno implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@SequenceGenerator(name="entorno_id_seq_generator", sequenceName="entorno_id_seq", allocationSize = 1)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="entorno_id_seq_generator")
 	@Column(unique=true, nullable=false)
 	private Integer id;
 
@@ -44,13 +47,13 @@ public class Entorno implements Serializable {
 	@OneToMany(mappedBy="entorno")
 	private List<Propietario> propietarios;
 
+	//bi-directional many-to-one association to Tranca
+	@OneToMany(mappedBy="entorno")
+	private List<Tranca> trancas;
+
 	//bi-directional many-to-one association to Vehiculo
 	@OneToMany(mappedBy="entorno")
 	private List<Vehiculo> vehiculos;
-	
-	//bi-directional many-to-one association to Vehiculo
-	@OneToMany(mappedBy="tranca")
-	private List<Tranca> trancas;
 
 	public Entorno() {
 	}
@@ -145,6 +148,28 @@ public class Entorno implements Serializable {
 		propietario.setEntorno(null);
 
 		return propietario;
+	}
+
+	public List<Tranca> getTrancas() {
+		return this.trancas;
+	}
+
+	public void setTrancas(List<Tranca> trancas) {
+		this.trancas = trancas;
+	}
+
+	public Tranca addTranca(Tranca tranca) {
+		getTrancas().add(tranca);
+		tranca.setEntorno(this);
+
+		return tranca;
+	}
+
+	public Tranca removeTranca(Tranca tranca) {
+		getTrancas().remove(tranca);
+		tranca.setEntorno(null);
+
+		return tranca;
 	}
 
 	public List<Vehiculo> getVehiculos() {

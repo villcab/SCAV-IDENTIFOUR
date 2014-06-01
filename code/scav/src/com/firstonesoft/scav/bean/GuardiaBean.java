@@ -11,6 +11,7 @@ import javax.inject.Inject;
 import org.apache.log4j.Logger;
 
 import com.firstonesoft.scav.business.GuardiaBL;
+import com.firstonesoft.scav.business.SincronizadorBL;
 import com.firstonesoft.scav.model.Entorno;
 import com.firstonesoft.scav.model.Guardia;
 import com.firstonesoft.util.FacesUtil;
@@ -24,6 +25,9 @@ public class GuardiaBean implements Serializable {
 
 	@Inject
 	private GuardiaBL guardiaBL;
+	
+	@Inject
+	private SincronizadorBL sincronizadorBL;
 
 	private List<Guardia> guardias;
 	
@@ -75,6 +79,9 @@ public class GuardiaBean implements Serializable {
 			if (guardiaBL.guardar(guardia)) {
 				log.info("Se guardo correctamente el: " + guardia.toString());
 				FacesUtil.showFacesMessage("Datos guardado correctamente", FacesUtil.SEVERITY_INFO);
+				
+				sincronizadorBL.guardar('I', ci, "guardia", idEntorno);
+				
 				nuevoGuardia();
 				cargarGuardias();
 			} else {
@@ -93,6 +100,8 @@ public class GuardiaBean implements Serializable {
 			if (guardiaBL.actualizar(guardia)) {
 				log.info("Se actualizo correctamente el: " + guardia.toString());
 				FacesUtil.showFacesMessage("Datos actualizados correctamente", FacesUtil.SEVERITY_INFO);
+				
+				sincronizadorBL.guardar('M', ci, "guardia", idEntorno);
 				
 				nuevoGuardia();
 				cargarGuardias();
@@ -119,6 +128,8 @@ public class GuardiaBean implements Serializable {
 		if (guardiaBL.eliminar(guardia)) {
 			log.info("Se ha eliminado correctamente el: " + guardia.toString());
 			FacesUtil.showFacesMessage("Datos eliminados correctamente", FacesUtil.SEVERITY_INFO);
+			
+			sincronizadorBL.guardar('E', ci, "guardia", idEntorno);
 			
 			nuevoGuardia();
 			cargarGuardias();

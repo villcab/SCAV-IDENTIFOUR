@@ -26,13 +26,8 @@ public class VehiculoVisita implements Serializable {
 	@OneToMany(mappedBy="vehiculoVisita")
 	private List<IngresoSalidaVisita> ingresoSalidaVisitas;
 
-	//bi-directional many-to-one association to Visita
-	@ManyToOne
-	@JoinColumn(name="ci")
-	private Visita visita;
-
 	//bi-directional many-to-many association to Visita
-	@ManyToMany(mappedBy="vehiculoVisitas2")
+	@ManyToMany(mappedBy="vehiculoVisitas")
 	private List<Visita> visitas;
 
 	public VehiculoVisita() {
@@ -74,14 +69,6 @@ public class VehiculoVisita implements Serializable {
 		ingresoSalidaVisita.setVehiculoVisita(null);
 
 		return ingresoSalidaVisita;
-	}
-
-	public Visita getVisita() {
-		return this.visita;
-	}
-
-	public void setVisita(Visita visita) {
-		this.visita = visita;
 	}
 
 	public List<Visita> getVisitas() {

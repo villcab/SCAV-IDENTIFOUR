@@ -16,6 +16,7 @@ import org.primefaces.event.TransferEvent;
 import org.primefaces.model.DualListModel;
 
 import com.firstonesoft.scav.business.PropietarioBL;
+import com.firstonesoft.scav.business.SincronizadorBL;
 import com.firstonesoft.scav.business.VehiculoBL;
 import com.firstonesoft.scav.controller.PhotoController;
 import com.firstonesoft.scav.model.Entorno;
@@ -37,6 +38,9 @@ public class VehiculoBean implements Serializable {
 	
 	@Inject
 	private PropietarioBL propietarioBL;
+	
+	@Inject
+	private SincronizadorBL sincronizadorBL;
 	
 	@ManagedProperty("#{photoController}")
     private PhotoController photoController;
@@ -114,12 +118,16 @@ public class VehiculoBean implements Serializable {
 				log.info("Se guardo correctamente el: " + vehiculo.toString());
 				FacesUtil.showFacesMessage("Datos guardado correctamente", FacesUtil.SEVERITY_INFO);
 				
+				sincronizadorBL.guardar('I', placa, "vehiculo", idEntorno);
+				
 				Propietario paux = propietarioBL.obtenerPropietarioCi(selectPropietario);
 				List<Vehiculo> vs = paux.getVehiculos();
 				vs.add(vehiculo);
 				paux.setVehiculos(vs);
 				if (propietarioBL.actualizar(paux)) {
 					log.info("Se guardo el Vehiculo: "+ vehiculo.getPlaca()+ ", para el Propietario: " + paux.getCi());
+					
+					sincronizadorBL.guardar('I', placa + "," + paux.getCi(), "propietario_vehiculo", idEntorno);
 				}
 				
 				nuevoVehiculo();
@@ -144,6 +152,8 @@ public class VehiculoBean implements Serializable {
 			if (vehiculoBL.actualizar(vehiculo)) {
 				log.info("Se actualizo correctamente el: " + vehiculo.toString());
 				FacesUtil.showFacesMessage("Datos actualizados correctamente", FacesUtil.SEVERITY_INFO);
+				
+				sincronizadorBL.guardar('M', placa, "vehiculo", idEntorno);
 				
 				nuevoVehiculo();
 				cargarVehiculos();
@@ -174,6 +184,8 @@ public class VehiculoBean implements Serializable {
 		if (vehiculoBL.eliminar(vehiculo)) {
 			log.info("Se ha eliminado correctamente el: " + vehiculo.toString());
 			FacesUtil.showFacesMessage("Datos eliminados correctamente", FacesUtil.SEVERITY_INFO);
+			
+			sincronizadorBL.guardar('E', placa, "vehiculo", idEntorno);
 			
 			nuevoVehiculo();
 			cargarVehiculos();
@@ -255,6 +267,8 @@ public class VehiculoBean implements Serializable {
 				String msg = "Se agrego al Vehiculo con Placa: " + vehiculoSelect.getPlaca() + ", el Propietario con CI: " + ciaux;
 				log.info(msg);
 				FacesUtil.showFacesMessage(msg, FacesUtil.SEVERITY_INFO);
+				
+				sincronizadorBL.guardar('I', vehiculoSelect.getPlaca() + "," + ciaux, "propietario_vehiculo", idEntorno);
 			}
 		} else {
 			for (Object o: event.getItems().toArray()) {
@@ -266,6 +280,8 @@ public class VehiculoBean implements Serializable {
 				String msg = "Se quito al Vehiculo con Placa: " + vehiculoSelect.getPlaca() + ", el Propietario con CI: " + ciaux;
 				log.info(msg);
 				FacesUtil.showFacesMessage(msg, FacesUtil.SEVERITY_INFO);
+				
+				sincronizadorBL.guardar('E', vehiculoSelect.getPlaca() + "," + ciaux, "propietario_vehiculo", idEntorno);
 			}
 		}
 		
