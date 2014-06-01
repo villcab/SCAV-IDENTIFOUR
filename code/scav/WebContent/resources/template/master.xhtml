@@ -9,24 +9,27 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title>SCAV IDENTIFOUR</title>
 	<link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/style-master.css" />
+	<link type="text/css" rel="stylesheet" href="%PATH_TO_THEME_FOLDER%/skin.css" />
 </h:head>
 
 <h:body>
 
 	<p:layout fullPage="true">
 
-<!-- 		<p:layoutUnit position="north" size="95" styleClass="ui-widget ui-widget-header"> -->
-<!-- 			<div id="header" class="ui-widget ui-widget-header"> -->
-<!-- 				<div id="logo"> -->
-<!-- 					<img src="resources/images/logo_firstonesoft.png" alt="Logo" /> -->
-<!-- 					<div class="title">SCAV IDENTIFOUR</div> -->
+		<p:layoutUnit position="north" size="95" styleClass="ui-widget ui-widget-header">
+			<div id="header" class="ui-widget ui-widget-header">
+				<div id="logo">
+					<p:graphicImage value="/resources/images/logo_firstonesoft.png"/>
+					<div class="title">SCAV IDENTIFOUR</div>
 <!-- 					<div class="subtitle">Bienvenido: <h:outputText value="Admin"></h:outputText> </div> -->
-<!-- 				</div> -->
-<!-- 			</div> -->
-<!-- 		</p:layoutUnit> -->
+				</div>
+			</div>
+		</p:layoutUnit>
 		
 		<p:layoutUnit position="west" header="Menu" collapsible="true" size="230">
-			<p:menu model="#{loginBean.model}" style="width: 95%"/>
+			<h:form>
+				<p:panelMenu model="#{loginBean.model}" style="width: 100%" />
+			</h:form>
 		</p:layoutUnit>
 
 		<p:layoutUnit position="center">

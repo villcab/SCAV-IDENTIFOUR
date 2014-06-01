@@ -22,24 +22,24 @@
 			
 			<h1 class="form-title">Reporte 1</h1>
 
-			<center>
-				<p:panel id="panelAvisoId" header="GENERACION DE REPORTE" style="width: 400px;">
+			<p:panel id="panelAvisoId" header="GENERACION DE REPORTE" style="width: 400px;">
+			
+				<h4>Genera un reporte con la cantidad de ingresos y salidas dada una fecha</h4>	
+						
+				<h:panelGrid columns="2" cellpadding="5px" >
 				
-					<h3>Genera un reporte con la cantidad de ingresos y salidas dada una fecha</h3>	
-							
-					<h:panelGrid columns="2" cellpadding="5px" >
-					
-						<h:outputLabel value="Seleccion una fecha: " styleClass="name"/>
-						<p:calendar id="button" value="#{reporteBean.fecha}" showOn="button" />
-					    
-					    <p:commandButton value="Generar Reporte"
-										 actionListener="#{reporteBean.generarReporte1()}"
-										 update="smsId"
-										 icon="reporte" />
-					</h:panelGrid>
-					
-				</p:panel>
-			</center>
+					<h:outputLabel value="Seleccion una fecha: " styleClass="name"/>
+					<p:calendar id="button" value="#{reporteBean.fecha}" showOn="button" />
+				    
+				    <p:commandButton value="Generar Reporte"
+									 actionListener="#{reporteBean.generarReporte1}"
+									 icon="reporte" ajax="false">
+						<p:ajax update="smsId"/>
+					</p:commandButton>
+									 
+				</h:panelGrid>
+				
+			</p:panel>
 			
 		</h:form>
 	    

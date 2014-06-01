@@ -9,15 +9,14 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 import javax.servlet.ServletContext;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
 
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.engine.util.JRLoader;
-import net.sf.jasperreports.view.JasperViewer;
+import net.sf.jasperreports.engine.JasperRunManager;
 
 import org.apache.log4j.Logger;
 
@@ -25,7 +24,7 @@ import com.firstonesoft.util.FacesUtil;
 import com.firstonesoft.util.ServiceProvider;
 
 @ManagedBean
-@ViewScoped
+@RequestScoped
 public class ReporteBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -38,6 +37,7 @@ public class ReporteBean implements Serializable {
 	@PostConstruct
 	private void init() {
 		try {
+			fecha = new Date();
 			servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
 		} catch (Exception e) {
 			log.error("Error al cargar la vista");
@@ -49,26 +49,28 @@ public class ReporteBean implements Serializable {
 	 * Generar la cantidad de ingresos y salidas dada una fecha
 	 * @param fecha
 	 */
-	@SuppressWarnings("deprecation")
-	public void generarReporte1() {
+	public void generarReporte1(ActionEvent event) {
         try {
         	Connection conexion = ServiceProvider.openConnection();
         	
         	String ruta = servletContext.getRealPath(File.separator + "reports" +
         											 File.separator + "scav_reporte_1.jasper");
         	
-        	log.info("ruta: " + ruta);
+        	Map<String, Object> parameters = new HashMap<String, Object>();
+        	parameters.put("fecha", fecha);
         	
-            JasperReport reporte = (JasperReport) JRLoader.loadObject(ruta);
-            
-            Map<String, Object> parametros = new HashMap<String, Object>();
-            parametros.put("fecha", fecha);
-            JasperPrint jasperPrint = JasperFillManager.fillReport(reporte, parametros, conexion);
-
-            JasperViewer jviewer = new JasperViewer(jasperPrint, false);
-            jviewer.setVisible(true);
-            
-            log.info("Completo el reporte");
+    		byte[] bytes = JasperRunManager.runReportToPdf(ruta, parameters, conexion);
+    		HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+    		response.setContentType("application/pdf");
+    		response.setContentLength(bytes.length);
+    		ServletOutputStream outStream = response.getOutputStream();
+    		outStream.write(bytes, 0 , bytes.length);
+    		outStream.flush();
+    		outStream.close();
+    			
+    		FacesContext.getCurrentInstance().responseComplete();
+    		
+    		ServiceProvider.closeConnection(conexion);
             
         } catch(Exception e) {
             

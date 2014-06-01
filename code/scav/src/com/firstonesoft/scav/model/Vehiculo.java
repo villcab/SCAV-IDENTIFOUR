@@ -144,4 +144,11 @@ public class Vehiculo implements Serializable {
 		return false;
 	}
 
+	@Override
+	public String toString() {
+		return "Vehiculo [placa=" + placa + ", estado=" + estado + ", marca="
+				+ marca + ", modelo=" + modelo + ", rfid=" + rfid + "]";
+	}
+	
+
 }

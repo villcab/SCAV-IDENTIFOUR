@@ -33,12 +33,12 @@
 							<p:inputText value="#{trancaBean.id}" disabled="#{trancaBean.edit}" rendered="#{trancaBean.edit}" style="width: 200px" maxlength="10"/>
 		
 							<h:outputLabel value="Descripcion: *" styleClass="name"/>
-							<p:inputText value="#{trancaBean.tranca.descripcion}" style="width: 300px" maxlength="100"/>
+							<p:inputText value="#{trancaBean.tranca.descripcion}" style="width: 250px" maxlength="100"/>
 							
 							<h:outputLabel value="Tipo: *" styleClass="name"/>
 							<p:selectOneMenu value="#{trancaBean.selectTipo}" style="width: 200px">
-								<f:selectItem itemLabel="Ingreso" itemValue="Ingreso"/>
-								<f:selectItem itemLabel="Salida" itemValue="Salida"/>
+								<f:selectItem itemLabel="Ingreso" itemValue="INGRESO"/>
+								<f:selectItem itemLabel="Salida" itemValue="SALIDA"/>
 							</p:selectOneMenu>
 		
 							<p:commandButton value="Guardar"

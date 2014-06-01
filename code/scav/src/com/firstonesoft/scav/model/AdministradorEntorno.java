@@ -126,4 +126,10 @@ public class AdministradorEntorno implements Serializable {
 		return telefonoAdminitrador;
 	}
 
+	@Override
+	public String toString() {
+		return "AdministradorEntorno [ci=" + ci + ", apellidos=" + apellidos
+				+ ", email=" + email + ", nombres=" + nombres + "]";
+	}
+
 }

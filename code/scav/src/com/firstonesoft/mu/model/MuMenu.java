@@ -40,10 +40,6 @@ public class MuMenu implements Serializable {
 	@OneToMany(mappedBy="muMenu", fetch = FetchType.EAGER)
 	private List<MuMenu> muMenus;
 
-	//bi-directional many-to-one association to MuRolMenu
-	@OneToMany(mappedBy="muMenu")
-	private List<MuRolMenu> muRolMenus;
-
 	public MuMenu() {
 	}
 
@@ -123,28 +119,6 @@ public class MuMenu implements Serializable {
 		muMenus.setMuMenu(null);
 
 		return muMenus;
-	}
-
-	public List<MuRolMenu> getMuRolMenus() {
-		return this.muRolMenus;
-	}
-
-	public void setMuRolMenus(List<MuRolMenu> muRolMenus) {
-		this.muRolMenus = muRolMenus;
-	}
-
-	public MuRolMenu addMuRolMenus(MuRolMenu muRolMenus) {
-		getMuRolMenus().add(muRolMenus);
-		muRolMenus.setMuMenu(this);
-
-		return muRolMenus;
-	}
-
-	public MuRolMenu removeMuRolMenus(MuRolMenu muRolMenus) {
-		getMuRolMenus().remove(muRolMenus);
-		muRolMenus.setMuMenu(null);
-
-		return muRolMenus;
 	}
 
 }

@@ -71,9 +71,6 @@ public class TrancaBean implements Serializable {
 			Entorno eaux = new Entorno();
 			eaux.setId(idEntorno);
 			
-			log.info("entorno: " + idEntorno);
-			log.info("tipo: " + selectTipo);
-			
 			tranca.setEntorno(eaux);
 			tranca.setTipo(selectTipo);
 			

@@ -1,7 +1,6 @@
 package com.firstonesoft.scav.model;
 
 import java.io.Serializable;
-
 import javax.persistence.*;
 
 

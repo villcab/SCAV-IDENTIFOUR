@@ -27,7 +27,7 @@ public class VehiculoVisita implements Serializable {
 	private List<IngresoSalidaVisita> ingresoSalidaVisitas;
 
 	//bi-directional many-to-many association to Visita
-	@ManyToMany(mappedBy="vehiculoVisitas2")
+	@ManyToMany(mappedBy="vehiculoVisitas")
 	private List<Visita> visitas;
 
 	public VehiculoVisita() {

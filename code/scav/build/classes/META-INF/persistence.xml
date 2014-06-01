@@ -2,16 +2,12 @@
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
 	<persistence-unit name="scav" transaction-type="JTA">
 		<jta-data-source>scavDs</jta-data-source>
+		
 		<class>com.firstonesoft.mu.model.MuBitacora</class>
 		<class>com.firstonesoft.mu.model.MuMenu</class>
-		<class>com.firstonesoft.mu.model.MuRol</class>
-		<class>com.firstonesoft.mu.model.MuRolMenu</class>
-		<class>com.firstonesoft.mu.model.MuRolMenuPK</class>
-		<class>com.firstonesoft.mu.model.MuUsuario</class>
-		<class>com.firstonesoft.scav.model.AvisoPropietario</class>
-		<class>com.firstonesoft.scav.model.AvisoTranca</class>
-		<class>com.firstonesoft.scav.model.BitacoraGuardia</class>
+		
 		<class>com.firstonesoft.scav.model.AdministradorEntorno</class>
+		<class>com.firstonesoft.scav.model.BitacoraGuardia</class>
 		<class>com.firstonesoft.scav.model.Entorno</class>
 		<class>com.firstonesoft.scav.model.Guardia</class>
 		<class>com.firstonesoft.scav.model.IngresoSalida</class>
@@ -19,17 +15,17 @@
 		<class>com.firstonesoft.scav.model.IngresoSalidaVisita</class>
 		<class>com.firstonesoft.scav.model.IngresoSalidaVisitaPK</class>
 		<class>com.firstonesoft.scav.model.Propietario</class>
+		<class>com.firstonesoft.scav.model.Sincronizador</class>
 		<class>com.firstonesoft.scav.model.TelefonoAdminitrador</class>
 		<class>com.firstonesoft.scav.model.TelefonoPropietario</class>
 		<class>com.firstonesoft.scav.model.Tranca</class>
 		<class>com.firstonesoft.scav.model.Vehiculo</class>
 		<class>com.firstonesoft.scav.model.VehiculoVisita</class>
 		<class>com.firstonesoft.scav.model.Visita</class>
-		<class>com.firstonesoft.scav.model.Sincronizador</class>
 		
 		<properties>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" />
-			<property name="hibernate.hbm2ddl.auto" value="none" />
+			<property name="hibernate.hbm2ddl.auto" value="update" />
 			<property name="hibernate.show_sql" value="false" />
 			<property name="hibernate.format_sql" value="false" />
 			<property name="hibernate.default_schema" value="public" />

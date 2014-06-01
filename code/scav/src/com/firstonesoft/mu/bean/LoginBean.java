@@ -20,6 +20,7 @@ import com.firstonesoft.mu.filter.LoginFilter;
 import com.firstonesoft.mu.model.MuMenu;
 import com.firstonesoft.scav.business.AdministradorEntornoBL;
 import com.firstonesoft.scav.model.AdministradorEntorno;
+import com.firstonesoft.scav.model.Entorno;
 import com.firstonesoft.util.FacesUtil;
 
 @ManagedBean
@@ -58,7 +59,16 @@ public class LoginBean implements Serializable {
 			int idEntorno = 0;
 			if (!usuario.getEntornos().isEmpty()) {
 				
-				idEntorno = usuario.getEntornos().get(0).getId();				
+				Entorno e = usuario.getEntornos().get(0);
+				
+				if (!e.getLicenciaActiva()) {
+					FacesUtil.setParametro("sw", false);
+					FacesUtil.showFacesMessage("Su Entorno no esta habilitado", FacesUtil.SEVERITY_ERROR);
+					return;
+				}
+				
+				idEntorno = e.getId();
+				
 				cargarMenusAdmEntorno();
 			} else {
 				
@@ -103,8 +113,8 @@ public class LoginBean implements Serializable {
 		DefaultSubMenu subMenu = new DefaultSubMenu("Opciones");
 		
 		DefaultMenuItem item = new DefaultMenuItem("Cerrar Sesion");
-		item.setUrl("/cerrarSession");
-		item.setIcon("eliminar");
+		item.setUrl("/Logout");
+		item.setIcon("ui-icon-close");
 		
 		subMenu.addElement(item);
 		
@@ -137,8 +147,8 @@ public class LoginBean implements Serializable {
 		DefaultSubMenu subMenu = new DefaultSubMenu("Opciones");
 		
 		DefaultMenuItem item = new DefaultMenuItem("Cerrar Sesion");
-		item.setUrl("/cerrarSession");
-		item.setIcon("eliminar");
+		item.setUrl("/Logout");
+		item.setIcon("ui-icon-close");
 		
 		subMenu.addElement(item);
 		

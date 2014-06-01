@@ -36,7 +36,7 @@ public class Visita implements Serializable {
 			@JoinColumn(name="placa", nullable=false)
 			}
 		)
-	private List<VehiculoVisita> vehiculoVisitas2;
+	private List<VehiculoVisita> vehiculoVisitas;
 
 	public Visita() {
 	}
@@ -65,12 +65,12 @@ public class Visita implements Serializable {
 		this.nombres = nombres;
 	}
 
-	public List<VehiculoVisita> getVehiculoVisitas2() {
-		return this.vehiculoVisitas2;
+	public List<VehiculoVisita> getVehiculoVisitas() {
+		return this.vehiculoVisitas;
 	}
 
-	public void setVehiculoVisitas2(List<VehiculoVisita> vehiculoVisitas2) {
-		this.vehiculoVisitas2 = vehiculoVisitas2;
+	public void setVehiculoVisitas(List<VehiculoVisita> vehiculoVisitas) {
+		this.vehiculoVisitas = vehiculoVisitas;
 	}
 
 }

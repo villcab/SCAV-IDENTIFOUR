@@ -12,6 +12,7 @@ import javax.inject.Inject;
 import org.apache.log4j.Logger;
 
 import com.firstonesoft.scav.business.PropietarioBL;
+import com.firstonesoft.scav.business.SincronizadorBL;
 import com.firstonesoft.scav.business.TelefonoPropietarioBL;
 import com.firstonesoft.scav.controller.PhotoController;
 import com.firstonesoft.scav.model.Entorno;
@@ -32,6 +33,9 @@ public class PropietarioBean implements Serializable {
 	
 	@Inject
 	private TelefonoPropietarioBL telefonoPropietarioBL;
+	
+	@Inject
+	private SincronizadorBL sincronizadorBL;
 	
 	@ManagedProperty("#{photoController}")
     private PhotoController photoController;
@@ -105,13 +109,20 @@ public class PropietarioBean implements Serializable {
 			propietario.setEstado(true);
 			if (propietarioBL.guardar(propietario)) {
 				log.info("Se guardo correctamente el: " + propietario.toString());
+				
+				sincronizadorBL.guardar('I', ci, "propietario", idEntorno);
+				
 				aux.setPropietario(propietario);
 				if (telefonoPropietarioBL.guardar(aux)) {
 					log.info("Se guardo correctamente el: TelefonoPropietario[telefono=" + aux.getTelefono() + ", CI=" + aux.getPropietario().getCi() + "]");
+					
+					sincronizadorBL.guardar('I', telefonoNuevo, "telefono_propietario", idEntorno);
 				}
 				FacesUtil.showFacesMessage("Datos guardado correctamente", FacesUtil.SEVERITY_INFO);
+				
 				nuevoPropietario();
 				cargarPropietarios();
+				
 			} else {
 				FacesUtil.showFacesMessage("Error al guardar el Propietario", FacesUtil.SEVERITY_ERROR);
 			}
@@ -133,8 +144,11 @@ public class PropietarioBean implements Serializable {
 				log.info("Se actualizo correctamente el: " + propietario.toString());
 				FacesUtil.showFacesMessage("Datos actualizados correctamente", FacesUtil.SEVERITY_INFO);
 				
+				sincronizadorBL.guardar('M', ci, "propietario", idEntorno);
+				
 				nuevoPropietario();
 				cargarPropietarios();
+				
 			} else {
 				FacesUtil.showFacesMessage("Error al actualizar el Propietario", FacesUtil.SEVERITY_ERROR);
 			}
@@ -161,8 +175,11 @@ public class PropietarioBean implements Serializable {
 			log.info("Se ha eliminado correctamente el: " + propietario.toString());
 			FacesUtil.showFacesMessage("Datos eliminados correctamente", FacesUtil.SEVERITY_INFO);
 			
+			sincronizadorBL.guardar('E', ci, "propietario", idEntorno);
+			
 			nuevoPropietario();
 			cargarPropietarios();
+			
 		} else {
 			FacesUtil.showFacesMessage("Error al eliminar el Propietario", FacesUtil.SEVERITY_ERROR);
 		}
@@ -200,8 +217,11 @@ public class PropietarioBean implements Serializable {
 			log.info("Se guardo correctamente el: TelefonoPropietario[telefono=" + aux.getTelefono() + ", CI=" + aux.getPropietario().getCi() + "]");
 			FacesUtil.showFacesMessage("Datos guardado correctamente", FacesUtil.SEVERITY_INFO);
 			
+			sincronizadorBL.guardar('I', telefono, "telefono_propietario", idEntorno);
+			
 			nuevoTelefonoPropietario();
 			telefonoPropietarios = telefonoPropietarioBL.obtenerTelefonosPropietarios(ci);
+			
 		} else {
 			FacesUtil.showFacesMessage("Error al guardar el Telefono de Propietario", FacesUtil.SEVERITY_ERROR);
 		}
@@ -228,8 +248,11 @@ public class PropietarioBean implements Serializable {
 			log.info("Se ha eliminado correctamente el: TelefonoPropietario[telefono=" + telefono + ", CI=" + ci + "]");
 			FacesUtil.showFacesMessage("Datos eliminados correctamente", FacesUtil.SEVERITY_INFO);
 			
+			sincronizadorBL.guardar('E', telefono, "telefono_propietario", idEntorno);
+			
 			nuevoTelefonoPropietario();
 			telefonoPropietarios = telefonoPropietarioBL.obtenerTelefonosPropietarios(ci);
+			
 		} else {
 			FacesUtil.showFacesMessage("Error al eliminar el Propietario", FacesUtil.SEVERITY_ERROR);
 		}

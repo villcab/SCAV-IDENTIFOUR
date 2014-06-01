@@ -19,8 +19,11 @@ public class Sincronizador implements Serializable {
 	@Column(unique=true, nullable=false)
 	private Long id;
 
-	@Column(name="red_id", nullable=false, length=50)
-	private String redId;
+	@Column(name="id_entorno", nullable=false)
+	private Integer idEntorno;
+
+	@Column(name="ref_id", nullable=false, length=50)
+	private String refId;
 
 	@Column(nullable=false, length=50)
 	private String tabla;
@@ -39,12 +42,20 @@ public class Sincronizador implements Serializable {
 		this.id = id;
 	}
 
-	public String getRedId() {
-		return this.redId;
+	public Integer getIdEntorno() {
+		return this.idEntorno;
 	}
 
-	public void setRedId(String redId) {
-		this.redId = redId;
+	public void setIdEntorno(Integer idEntorno) {
+		this.idEntorno = idEntorno;
+	}
+
+	public String getRefId() {
+		return this.refId;
+	}
+
+	public void setRefId(String refId) {
+		this.refId = refId;
 	}
 
 	public String getTabla() {
@@ -62,5 +73,13 @@ public class Sincronizador implements Serializable {
 	public void setTransaccion(String transaccion) {
 		this.transaccion = transaccion;
 	}
+
+	@Override
+	public String toString() {
+		return "Sincronizador [id=" + id + ", idEntorno=" + idEntorno
+				+ ", refId=" + refId + ", tabla=" + tabla + ", transaccion="
+				+ transaccion + "]";
+	}
+	
 
 }
