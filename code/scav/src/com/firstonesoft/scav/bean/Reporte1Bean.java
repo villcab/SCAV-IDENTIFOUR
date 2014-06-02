@@ -30,7 +30,6 @@ public class Reporte1Bean implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private final Logger log = Logger.getLogger(Reporte1Bean.class);
 	
-	//reporte 1
 	private Date fecha;
 	
 	private ServletContext servletContext;

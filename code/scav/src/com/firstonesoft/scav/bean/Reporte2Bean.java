@@ -31,7 +31,6 @@ public class Reporte2Bean implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private final Logger log = Logger.getLogger(Reporte2Bean.class);
 
-	//reporte 2
 	private Date fechaInicio;
 	private Date fechaFin;
 	private String tipoTranca;

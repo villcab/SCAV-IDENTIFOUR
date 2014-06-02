@@ -13,6 +13,7 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.model.SelectItem;
@@ -31,7 +32,7 @@ import com.firstonesoft.util.FacesUtil;
 import com.firstonesoft.util.ServiceProvider;
 
 @ManagedBean
-@RequestScoped
+@SessionScoped
 public class Reporte3Bean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -40,7 +41,6 @@ public class Reporte3Bean implements Serializable {
 	@Inject
 	private VehiculoBL vehiculoBL;
 	
-	//reporte 2
 	private Date fechaInicio;
 	private Date fechaFin;
 	
