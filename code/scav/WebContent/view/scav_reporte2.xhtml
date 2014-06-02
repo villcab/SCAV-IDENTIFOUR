@@ -15,30 +15,29 @@
 		
 			<p:growl id="smsId" showDetail="true"/>
 			
-			<h1 class="form-title">Reporte 2 Graficos</h1>
+			<h1 class="form-title">Reporte Grafico de Acciones Generales</h1>
 
-			<p:panel id="panelAvisoId" header="GENERACION DE REPORTE" style="width: 500px;">
+			<p:panel id="panelId" header="GENERACION DE REPORTE" style="width: 500px;">
 			
-				<h4>Genera un reporte con un grafico dado una placa y un rango de fechas</h4>
+				<h4>Genera un reporte general de los 10 vehiculos que mas Ingresaron o Salieron dado un rango determinado de fechas</h4>
 						
 				<h:panelGrid columns="2" cellpadding="5px" >
 				
-					<h:outputLabel value="Seleccion una fecha de inicio: " styleClass="name"/>
-					<p:calendar value="#{reporte2Bean.fechaInicio}" showOn="button" pattern="dd-MM-yyyy" />
+					<h:outputLabel value="Desde la Fecha: " styleClass="name"/>
+					<p:calendar value="#{reporte2Bean.fechaInicio}" showOn="button" pattern="dd-MM-yyyy" required="true"/>
 					
-					<h:outputLabel value="Seleccion una fecha fin: " styleClass="name"/>
-					<p:calendar value="#{reporte2Bean.fechaFin}" showOn="button" pattern="dd-MM-yyyy" />
+					<h:outputLabel value="Hasta la Fecha: " styleClass="name"/>
+					<p:calendar value="#{reporte2Bean.fechaFin}" showOn="button" pattern="dd-MM-yyyy" required="true"/>
 					
-					<h:outputLabel value="Tipo de Transaccion: " styleClass="name"/>
+					<h:outputLabel value="Tipo de Accion " styleClass="name"/>
 					<p:selectOneMenu value="#{reporte2Bean.tipoTranca}" style="width: 190px">
-						<f:selectItem itemLabel="Ingreso" itemValue="INGRESO"/>
-						<f:selectItem itemLabel="Salida" itemValue="SALIDA"/>
+						<f:selectItem itemLabel="INGRESO" itemValue="INGRESO"/>
+						<f:selectItem itemLabel="SALIDA" itemValue="SALIDA"/>
 					</p:selectOneMenu>
 					
 				    <p:commandButton value="Generar Reporte"
 									 actionListener="#{reporte2Bean.generarReporte}"
-									 icon="reporte" ajax="false">
-					</p:commandButton>
+									 icon="reporte" ajax="false" />
 									 
 				</h:panelGrid>
 				

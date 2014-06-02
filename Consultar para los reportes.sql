@@ -30,3 +30,13 @@ where vis.placa = vv.placa and (vis.fecha_hora::timestamp::date) >= ('2014-06-01
 GROUP BY vv.placa
 ORDER BY cant_total DESC
 LIMIT 10;
+
+-- REPORTE 3, TRANSACCIONES DE UN VEHICULO
+SELECT vis.tipo, vis.fecha_hora, vt.descripcion
+FROM ingreso_salida vis, tranca vt
+WHERE vis.placa = '1234ASD' AND
+			vt."id" = vis.id_tranca AND
+			(vis.fecha_hora::timestamp::date) >= ('2014-06-01 17:53:16'::timestamp::date) and
+			(vis.fecha_hora::timestamp::date) <= ('2014-06-07 17:53:16'::timestamp::date)
+
+ORDER BY vis.fecha_hora ASC;

@@ -13,23 +13,22 @@
 
 		<h:form id="frmGralId" styleClass="container">
 		
-			<p:growl id="smsId" showDetail="true"/>
+			<h1 class="form-title">Reporte de Ingresos y Salidas</h1>
 			
-			<h1 class="form-title">Reporte 1</h1>
+			<p:messages id="smsId" showDetail="false" />
 
-			<p:panel id="panelAvisoId" header="GENERACION DE REPORTE" style="width: 500px;">
+			<p:panel id="panelId" header="GENERACION DE REPORTE" style="width: 500px;">
 			
 				<h4>Genera un reporte con la cantidad de ingresos y salidas dada una fecha</h4>	
 						
 				<h:panelGrid columns="2" cellpadding="5px" >
 				
-					<h:outputLabel value="Seleccion una fecha: " styleClass="name"/>
-					<p:calendar value="#{reporte1Bean.fecha}" showOn="button" pattern="dd-MM-yyyy"/>
+					<p:outputLabel value="Ingrese una Fecha: " styleClass="name" />
+					<p:calendar value="#{reporte1Bean.fecha}" showOn="button" pattern="dd-MM-yyyy" required="true"/>
 				    
 				    <p:commandButton value="Generar Reporte"
 									 actionListener="#{reporte1Bean.generarReporte}"
-									 icon="reporte" ajax="false">
-					</p:commandButton>
+									 icon="reporte" update="smsId" ajax="false" />
 									 
 				</h:panelGrid>
 				

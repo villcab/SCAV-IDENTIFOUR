@@ -9,7 +9,7 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.servlet.ServletContext;
@@ -24,7 +24,7 @@ import com.firstonesoft.util.FacesUtil;
 import com.firstonesoft.util.ServiceProvider;
 
 @ManagedBean
-@RequestScoped
+@SessionScoped
 public class Reporte1Bean implements Serializable {
 
 	private static final long serialVersionUID = 1L;

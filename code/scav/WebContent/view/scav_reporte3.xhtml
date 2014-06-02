@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/resources/template/master.xhtml">
+	
+	<ui:define name="content">
+
+		<h:form id="frmGralId" styleClass="container">
+		
+			<p:growl id="smsId" showDetail="true"/>
+			
+			<h1 class="form-title">Trasacciones de un Vehiculo</h1>
+
+			<p:panel id="panelAvisoId" header="GENERACION DE REPORTE" style="width: 500px;">
+			
+				<h4>Genera un reporte con todas las acciones que realizo un vehiculo en un rango determinado de fechas</h4>
+						
+				<h:panelGrid columns="2" cellpadding="5px" >
+				
+					<h:outputLabel value="Seleccione el Vehiculo: " styleClass="name"/>
+					<p:selectOneMenu value="#{reporte3Bean.selectPlaca}"
+									 filter="true"
+									 filterMatchMode="startsWith" >
+						<f:selectItems value="#{reporte3Bean.itemPlacas}"/>
+					</p:selectOneMenu>
+					
+					<h:outputLabel value="Desde la Fecha: : " styleClass="name"/>
+					<p:calendar value="#{reporte3Bean.fechaInicio}" showOn="button" pattern="dd-MM-yyyy" required="true"/>
+					
+					<h:outputLabel value="Hasta la Fecha: " styleClass="name"/>
+					<p:calendar value="#{reporte3Bean.fechaFin}" showOn="button" pattern="dd-MM-yyyy" required="true"/>
+					
+				    <p:commandButton value="Generar Reporte"
+									 actionListener="#{reporte3Bean.generarReporte}"
+									 icon="reporte" ajax="false">
+					</p:commandButton>
+
+				</h:panelGrid>
+				
+			</p:panel>
+			
+		</h:form>
+	    
+	</ui:define>
+
+</ui:composition>
+
+</html>
