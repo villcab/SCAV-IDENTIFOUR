@@ -50,13 +50,9 @@ public class Reporte4Bean implements Serializable {
 	@PostConstruct
 	private void init() {
 		try {
-
-			
-			selectPropietario = "";
 			
 			idEntorno = Integer.parseInt(FacesUtil.getSessionAttribute("TEMP$ENTORNO_ID").toString());
 			servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
-			
 			cargarPropietarios();
 			
 		} catch (Exception e) {
@@ -65,6 +61,7 @@ public class Reporte4Bean implements Serializable {
 	}
 	
 	private void cargarPropietarios() {
+		selectPropietario = "-1";
 		itemPropietarios = new ArrayList<SelectItem>();
 		itemPropietarios.add(new SelectItem("-1", "Seleccione un Propietario"));
 		List<Propietario> list;

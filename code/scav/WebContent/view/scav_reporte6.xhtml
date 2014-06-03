@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/resources/template/master.xhtml">
+	
+	<ui:define name="content">
+
+		<h:form id="frmGralId" styleClass="container">
+		
+			<p:ajaxStatus onstart="dialogAguarde.show();" oncomplete="dialogAguarde.hide();"/>
+			<p:dialog widgetVar="dialogAguarde" showHeader="false" resizable="false" closable="false" modal="true">
+                <p:graphicImage value="/resources/images/ajax_loader.gif" />
+            </p:dialog>
+		
+			<p:growl id="smsId" showDetail="true"/>
+			
+			<h1 class="form-title">Bitacoras de los Guardias</h1>
+
+			<p:panel id="panelAvisoId" header="GENERACION DE REPORTE" style="width: 500px;">
+			
+				<h4>Genera un reporte de las ultimas 100 transacciones que realizaron los guardias</h4>
+						
+				<h:panelGrid columns="2" cellpadding="5px" >
+				
+					<h:outputLabel value="Seleccione el Guardia " styleClass="name"/>
+					<p:selectOneMenu value="#{reporte6Bean.selectGuardia}"
+									 filter="true"
+									 filterMatchMode="startsWith" >
+						<f:selectItems value="#{reporte6Bean.itemGuardias}"/>
+					</p:selectOneMenu>
+					
+				    <p:commandButton value="Generar Reporte"
+				    				 update="tableGralId, smsId"
+									 actionListener="#{reporte6Bean.generarReporte()}"
+									 icon="reporte"/>
+
+				</h:panelGrid>
+				
+			</p:panel>
+			
+			<div class="line-divider" />
+			
+			<p:dataTable id="tableGralId"
+						 var="var" value="#{reporte6Bean.bitacoraGuardias}"
+						 paginator="true"
+						 rows="10"
+						 rowsPerPageTemplate="5,10,15"
+						 paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+						 emptyMessage="NO EXISTEN REGISTROS DE BITACORAS DE GUARDIAS" >
+						 
+				<f:facet name="header">
+					<h:outputLabel value="LISTA DE BITACORAS DEL GUARDIA: #{reporte6Bean.nombresGuardias}" />
+				</f:facet>
+				
+				<p:column headerText="FECHA" sortBy="#{var.fechaHora}" style="width: 130px">
+					<p:outputLabel value="#{var.fechaHora}">
+						<f:convertDateTime pattern="dd-MM-yyyy HH:mm:ss"/>
+					</p:outputLabel>
+				</p:column>
+	
+				<p:column headerText="ACCION" sortBy="#{var.accion}" filterBy="#{var.accion}" style="width: 150px">
+					<h:outputText value="#{var.accion}" />
+				</p:column>
+	
+				<p:column headerText="DETALLE">
+					<h:outputText value="#{var.detalle}" />
+				</p:column>
+	
+			</p:dataTable>
+			
+		</h:form>
+	    
+	</ui:define>
+
+</ui:composition>
+
+</html>
