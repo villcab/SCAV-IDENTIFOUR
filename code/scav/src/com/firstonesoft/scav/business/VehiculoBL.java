@@ -6,6 +6,7 @@ import javax.inject.Inject;
 
 import com.firstonesoft.scav.dao.VehiculoDAO;
 import com.firstonesoft.scav.model.Vehiculo;
+import com.firstonesoft.util.ValidacionUtil;
 
 public class VehiculoBL {
 
@@ -48,13 +49,21 @@ public class VehiculoBL {
 		if (data.getPlaca().equals("")) {
 			return "Error debe completar el campo Placa";
 		} else {
-			if (vehiculoDAO.obtenerVehiculosPlaca(data.getPlaca()) != null) {
-				return "Ya existe un Vehiculo con la Placa: " + data.getPlaca();
+			if (!ValidacionUtil.esPlaca(data.getPlaca())) {
+				return "Error debe insertar una Placa Correcta";
+			} else {
+				if (vehiculoDAO.obtenerVehiculosPlaca(data.getPlaca()) != null) {
+					return "Ya existe un Vehiculo con la Placa: " + data.getPlaca();
+				}
 			}
 		}
 		
 		if (data.getMarca().equals("")) {
 			return "Error debe completar el campo Marca";
+		} else {
+			if (!ValidacionUtil.esMarca(data.getMarca())) {
+				return "Error debe ingresar una Marca correcta";
+			}
 		}
 		
 		if (data.getRfid() == 0) {
@@ -75,6 +84,10 @@ public class VehiculoBL {
 		
 		if (data.getMarca().equals("")) {
 			return "Error debe completar el campo Marca";
+		} else {
+			if (!ValidacionUtil.esMarca(data.getMarca())) {
+				return "Error debe ingresar una Marca correcta";
+			}
 		}
 		
 		if (data.getRfid() == 0) {

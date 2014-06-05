@@ -41,7 +41,7 @@ public class TelefonoPropietarioBL {
 		if (data.getTelefono() == 0) {
 			return "Error debe completar el campo Nro. de Telefono";
 		} else {
-			if (!ValidacionUtil.sonNumeros(String.valueOf(data.getTelefono()))) {
+			if (!ValidacionUtil.esTelefono(String.valueOf(data.getTelefono()))) {
 				return "Error el campo Nro. de Telefono no es valido";
 			} else {
 				TelefonoPropietario aux = telefonoPropietarioDAO.obtenerTelefonoPropietario(data.getTelefono());

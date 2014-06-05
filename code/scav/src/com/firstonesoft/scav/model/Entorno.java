@@ -194,4 +194,10 @@ public class Entorno implements Serializable {
 		return vehiculo;
 	}
 
+	@Override
+	public String toString() {
+		return "Entorno [id=" + id + ", nombre=" + nombre + ", ubicacion="
+				+ ubicacion + "]";
+	}
+
 }

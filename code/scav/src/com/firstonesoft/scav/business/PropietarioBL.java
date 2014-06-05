@@ -50,7 +50,7 @@ public class PropietarioBL {
 		if (data.getCi().equals("")) {
 			return "Error debe completar el campo CI";
 		} else {
-			if (!ValidacionUtil.sonLetrasNumeros(data.getCi())) {
+			if (!ValidacionUtil.esCI(data.getCi())) {
 				return "Error el campo CI solo acepta Letras y Numeros";
 			} else {
 				if (propietarioDao.obtenerPropietarioCi(data.getCi()) != null) {
@@ -62,7 +62,7 @@ public class PropietarioBL {
 		if (data.getNombres().equals("")) {
 			return "Error debe completar el campo Nombres";
 		} else {
-			if (!ValidacionUtil.sonLetrasPalabras(data.getNombres())) {
+			if (!ValidacionUtil.esNombres(data.getNombres())) {
 				return "Error el campo Nombres no es valido";
 			}
 		}
@@ -70,7 +70,7 @@ public class PropietarioBL {
 		if (data.getApellidos().equals("")) {
 			return "Error debe completar el campo Apellidos";
 		} else {
-			if (!ValidacionUtil.sonLetrasPalabras(data.getApellidos())) {
+			if (!ValidacionUtil.esApellidos(data.getApellidos())) {
 				return "Error el campo Apellidos no es valido";
 			}
 		}
@@ -98,7 +98,7 @@ public class PropietarioBL {
 		if (data.getNombres().equals("")) {
 			return "Error debe completar el campo Nombres";
 		} else {
-			if (!ValidacionUtil.sonLetrasPalabras(data.getNombres())) {
+			if (!ValidacionUtil.esNombres(data.getNombres())) {
 				return "Error el campo Nombres no es valido";
 			}
 		}
@@ -106,7 +106,7 @@ public class PropietarioBL {
 		if (data.getApellidos().equals("")) {
 			return "Error debe completar el campo Apellidos";
 		} else {
-			if (!ValidacionUtil.sonLetrasPalabras(data.getApellidos())) {
+			if (!ValidacionUtil.esApellidos(data.getApellidos())) {
 				return "Error el campo Apellidos no es valido";
 			}
 		}

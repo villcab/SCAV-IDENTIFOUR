@@ -16,34 +16,36 @@ public class Parameters {
 	}
 	
 	public static String system_name;
-	public static String system_active_directory;
-	public static String system_username;
-	public static String system_password;
-	
-	public static Integer system_tiempo_fuera;
-	public static Integer system_numero_intentos;
 	
 	public static String db_driver;
 	public static String db_url;
 	public static String db_username;
 	public static String db_password;
+	
+	public static String er_ci;
+	public static String er_nombres;
+	public static String er_apellido_paterno;
+	public static String er_placa;
+	public static String er_marca;
+	public static String er_telefonos;
 
 	public static void init() {
 		try {
 			rb = ResourceBundle.getBundle(configFile);
 			
 			system_name = rb.getString("system.name");
-			system_active_directory = rb.getString("system.active_directory");
-			system_username = rb.getString("system.username");
-			system_password = rb.getString("system.password");
-			
-			system_tiempo_fuera = Integer.parseInt(rb.getString("system.tiempo.fuera"));
-			system_numero_intentos = Integer.parseInt(rb.getString("system.numero.intentos"));
 			
 			db_driver = rb.getString("db.driver");
 			db_url = rb.getString("db.url");
 			db_username = rb.getString("db.username");
 			db_password = rb.getString("db.password");
+			
+			er_ci = rb.getString("er.ci");
+			er_nombres = rb.getString("er.nombres");
+			er_apellido_paterno = rb.getString("er.apellido.paterno");
+			er_placa = rb.getString("er.placa");
+			er_marca = rb.getString("er.marca");
+			er_telefonos = rb.getString("er.telefonos");
 			
 		} catch (Exception e) {
 			log.error("Fallo al cargar el Archivo de Properties [" + configFile + "]: ", e);
