@@ -21,7 +21,6 @@ public class ServiceProvider {
 		try {
 			Class.forName(DRIVER).newInstance();
 			conexion = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-
 		} catch (Exception e) {
 			log.error("Error al conectar con la Base de Datos URL["+URL+"], " + e);
 		}

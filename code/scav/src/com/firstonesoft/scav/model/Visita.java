@@ -73,4 +73,10 @@ public class Visita implements Serializable {
 		this.vehiculoVisitas = vehiculoVisitas;
 	}
 
+	@Override
+	public String toString() {
+		return "Visita [ci=" + ci + ", apellidos=" + apellidos + ", nombres="
+				+ nombres + "]";
+	}
+
 }
