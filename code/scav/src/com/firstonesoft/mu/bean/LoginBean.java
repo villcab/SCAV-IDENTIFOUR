@@ -113,10 +113,14 @@ public class LoginBean implements Serializable {
 		
 		DefaultSubMenu subMenu = new DefaultSubMenu("Opciones");
 		
-		DefaultMenuItem item = new DefaultMenuItem("Cerrar Sesion");
+		DefaultMenuItem item = new DefaultMenuItem("Configuracion de Perfil");
+		item.setUrl("scav_administrador_entorno.xhtml");
+		item.setIcon("ui-icon-person");
+		subMenu.addElement(item);
+		
+		item = new DefaultMenuItem("Cerrar Sesion");
 		item.setUrl("/Logout");
 		item.setIcon("ui-icon-close");
-		
 		subMenu.addElement(item);
 		
 		model.addElement(subMenu);
