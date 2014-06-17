@@ -75,10 +75,6 @@ public class PropietarioBL {
 			}
 		}
 		
-		if (data.getNroLicencia().equals("")) {
-			return "Error debe completar el campo Nro de Licencia";
-		}
-		
 		if (data.getFoto() == null) {
 			return "Error debe sacar una foto";
 		}
@@ -109,10 +105,6 @@ public class PropietarioBL {
 			if (!ValidacionUtil.esApellidos(data.getApellidos())) {
 				return "Error el campo Apellidos no es valido";
 			}
-		}
-		
-		if (data.getNroLicencia().equals("")) {
-			return "Error debe completar el campo Nro de Licencia";
 		}
 		
 		return error;
