@@ -1,7 +1,9 @@
 package com.firstonesoft.scav.bean;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -11,9 +13,16 @@ import javax.faces.bean.ViewScoped;
 import org.apache.log4j.Logger;
 import org.primefaces.component.selectoneradio.SelectOneRadio;
 
+import com.firstonesoft.client.Client;
+import com.firstonesoft.client.util.ObjectUtil;
+import com.firstonesoft.util.Accion;
 import com.firstonesoft.util.FacesUtil;
+import com.firstonesoft.util.Parameters;
 
+import firstone.serializable.Alarma;
 import firstone.serializable.Aviso;
+import firstone.serializable.Contrato;
+import firstone.serializable.Propietario;
 
 @ManagedBean
 @ViewScoped
@@ -68,6 +77,46 @@ public class AlarmaAvisoBean implements Serializable {
 			
 			log.info("Enviando Aviso...");
 			log.info("Aviso: " + selectTipoAviso + ", Mensaje: " + mensajeAviso);
+			
+			Aviso aviso = new Aviso();
+			aviso.setFecha_hora((new Date()).getTime());
+			aviso.setFrom("Web");
+			aviso.setMensaje(mensajeAviso);
+			if (selectTipoAviso.trim().equalsIgnoreCase("1"))
+				aviso.setTo(Aviso.DIRIGIDO_TODOS);
+			else if (selectTipoAviso.trim().equals("2"))
+				aviso.setTo(Aviso.DIRIGIDO_TRANCAS);
+			else if (selectTipoAviso.trim().equals("3"))
+				aviso.setTo(Aviso.DIRIGIDO_PROPIETARIOS);
+			
+			Propietario configurador = new Propietario();
+	        configurador.setApellidos("FirstOneSoft");
+	        configurador.setCi("000000-1");
+	        configurador.setFoto(null);
+	        configurador.setNombres("IdentiFour");
+	        configurador.setNro_licencia("000000-C");
+			
+			Client client = new Client(Parameters.CORE_IP, Parameters.CORE_PORT);
+			try {
+	            client.connectOpened(configurador.getCi(), configurador);
+	            
+	            
+	            Contrato contrato = new Contrato();
+	            contrato.setAccion(Accion.AVISO);
+	            contrato.setContenido(ObjectUtil.createBytes(aviso));
+	            contrato.setId_entorno(idEntorno);
+	            try {
+	                 client.sendPackage(ObjectUtil.createBytes(contrato));
+	            } catch (IOException ex) {
+	                log.error("Error al conectarse al Servidor",ex);
+	            }
+	            
+	            client.disconect();
+	            
+	        } catch (IOException ex) {
+	            log.error("Error al procesar por socket",ex);
+	        }
+			
 			FacesUtil.showFacesMessage("Aviso Enviado a: " + selectTipoAviso, FacesUtil.SEVERITY_INFO);
 			
 			mensajeAviso = "";
@@ -81,6 +130,44 @@ public class AlarmaAvisoBean implements Serializable {
 		try {
 			log.info("Enviando Alarma...");
 			log.info("Alarma: " + prioridad);
+			
+			Alarma alarma = new Alarma();
+			alarma.setEmisor("web");
+			if (prioridad.trim().equals("1"))
+				alarma.setPrioridad("Rojo");
+			if (prioridad.trim().equals("2"))
+				alarma.setPrioridad("Amarillo");
+			if (prioridad.trim().equals("3"))
+				alarma.setPrioridad("Verde");
+			
+			Propietario configurador = new Propietario();
+	        configurador.setApellidos("FirstOneSoft");
+	        configurador.setCi("000000-1");
+	        configurador.setFoto(null);
+	        configurador.setNombres("IdentiFour");
+	        configurador.setNro_licencia("000000-C");
+			
+			Client client = new Client(Parameters.CORE_IP, Parameters.CORE_PORT);
+			try {
+	            client.connectOpened(configurador.getCi(), configurador);
+	            
+	            
+	            Contrato contrato = new Contrato();
+	            contrato.setAccion(Accion.ALARMA);
+	            contrato.setContenido(ObjectUtil.createBytes(alarma));
+	            contrato.setId_entorno(idEntorno);
+	            try {
+	                 client.sendPackage(ObjectUtil.createBytes(contrato));
+	            } catch (IOException ex) {
+	                log.error("Error al conectarse al Servidor",ex);
+	            }
+	            
+	            client.disconect();
+	            
+	        } catch (IOException ex) {
+	            log.error("Error al procesar por socket",ex);
+	        }
+			
 			FacesUtil.showFacesMessage("Alarma Enviado a: " + prioridad, FacesUtil.SEVERITY_INFO);
 		} catch (Exception e) {
 			log.error("Error al enviar el Aviso: ", e);

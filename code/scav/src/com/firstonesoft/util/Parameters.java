@@ -28,6 +28,9 @@ public class Parameters {
 	public static String er_placa;
 	public static String er_marca;
 	public static String er_telefonos;
+	
+	public static String CORE_IP;
+    public static Integer CORE_PORT;
 
 	public static void init() {
 		try {
@@ -46,6 +49,9 @@ public class Parameters {
 			er_placa = rb.getString("er.placa");
 			er_marca = rb.getString("er.marca");
 			er_telefonos = rb.getString("er.telefonos");
+			
+			CORE_IP = rb.getString("CORE.IP");
+	        CORE_PORT = Integer.parseInt(rb.getString("CORE.PORT"));
 			
 		} catch (Exception e) {
 			log.error("Fallo al cargar el Archivo de Properties [" + configFile + "]: ", e);

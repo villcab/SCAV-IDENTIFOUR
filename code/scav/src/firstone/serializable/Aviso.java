@@ -1,11 +1,20 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
 package firstone.serializable;
 
 import java.io.Serializable;
 
+/**
+ *
+ * @author Milton
+ */
 public class Aviso implements Serializable {
     
-	private static final long serialVersionUID = 1L;
-	public static final byte DIRIGIDO_TODOS             = 1;
+    public static final byte DIRIGIDO_TODOS             = 1;
     public static final byte DIRIGIDO_TRANCAS           = 2;
     public static final byte DIRIGIDO_PROPIETARIOS      = 3;
     
@@ -69,5 +78,7 @@ public class Aviso implements Serializable {
     public void setFecha_hora(long fecha_hora) {
         this.fecha_hora = fecha_hora;
     }
+    
+    
     
 }

@@ -57,6 +57,7 @@
 					<div class="line-divider" />
 					
 					<p:commandButton value="Tomar Foto" onclick="dialogCamera.show();" style="float: right;" icon="camara"/>
+					<p:commandButton value=" Cargar Foto" onclick="dialogCargar.show();" style="float: right;" icon="foto"/>
                     
 				</div>
 				
@@ -79,6 +80,31 @@
 		                    <h:panelGrid columns="2">
 		                        <p:commandButton value="Capturar" onclick="photoCam.capture();" icon="ok"/>
 		                        <p:commandButton value="Cerrar" onclick="dialogCamera.hide();" icon="cancelar"/>
+		                    </h:panelGrid>
+		                </h:panelGrid>
+		            </p:dialog>
+		            
+		            <p:dialog widgetVar="dialogCargar"
+		            		  resizable="false"
+		            		  header="Cargar Imagen"
+		            		  modal="true"
+		            		  showEffect="fade"
+		            		  hideEffect="fade"
+		            		  appendToBody="true">
+		            		  
+		                <h:panelGrid>
+		                    <p:fileUpload fileUploadListener="#{photoController.onupload}"
+		                    			  mode="advanced"
+		                    			  dragDropSupport="false"
+           								  update="smsId, panelFotoId"
+           								  sizeLimit="400000"
+           								  uploadLabel="Subir Imagen"
+           								  cancelLabel="Cancelar"
+           								  label="Seleccionar"
+           								  allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+		                    
+		                    <h:panelGrid columns="2">
+		                        <p:commandButton value="Cerrar" onclick="dialogCargar.hide();" icon="cancelar"/>
 		                    </h:panelGrid>
 		                </h:panelGrid>
 		            </p:dialog>
