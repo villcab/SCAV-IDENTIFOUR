@@ -25,6 +25,8 @@ public class AlarmaAvisoBean implements Serializable {
 	private List<SelectOneRadio> itemsTipoAvisos;
 	private String selectTipoAviso;
 	private Integer idEntorno;
+	
+	private String mensajeAviso;
 
 	@PostConstruct
 	private void init() {
@@ -52,10 +54,38 @@ public class AlarmaAvisoBean implements Serializable {
 		s.setValue(Aviso.DIRIGIDO_TRANCAS);
 		itemsTipoAvisos.add(s);
 		
+		s = new SelectOneRadio();
 		s.setLabel("Dirigido a los Propietarios");
 		s.setValue(Aviso.DIRIGIDO_PROPIETARIOS);
 		itemsTipoAvisos.add(s);
 		
+		selectTipoAviso = String.valueOf(Aviso.DIRIGIDO_TODOS);
+		
+	}
+	
+	public void enviarAviso() {
+		try {
+			
+			log.info("Enviando Aviso...");
+			log.info("Aviso: " + selectTipoAviso + ", Mensaje: " + mensajeAviso);
+			FacesUtil.showFacesMessage("Aviso Enviado a: " + selectTipoAviso, FacesUtil.SEVERITY_INFO);
+			
+			mensajeAviso = "";
+		} catch (Exception e) {
+			log.error("Error al enviar el Aviso: ", e);
+			FacesUtil.showFacesMessage("Error al enviar el Aviso", FacesUtil.SEVERITY_ERROR);
+		}
+	}
+	
+	public void enviarAlarma(String prioridad) {
+		try {
+			log.info("Enviando Alarma...");
+			log.info("Alarma: " + prioridad);
+			FacesUtil.showFacesMessage("Alarma Enviado a: " + prioridad, FacesUtil.SEVERITY_INFO);
+		} catch (Exception e) {
+			log.error("Error al enviar el Aviso: ", e);
+			FacesUtil.showFacesMessage("Error al enviar el Alarma", FacesUtil.SEVERITY_ERROR);
+		}
 	}
 
 	
@@ -84,6 +114,14 @@ public class AlarmaAvisoBean implements Serializable {
 
 	public void setIdEntorno(Integer idEntorno) {
 		this.idEntorno = idEntorno;
+	}
+	
+	public String getMensajeAviso() {
+		return mensajeAviso;
+	}
+	
+	public void setMensajeAviso(String mensajeAviso) {
+		this.mensajeAviso = mensajeAviso;
 	}
 
 }

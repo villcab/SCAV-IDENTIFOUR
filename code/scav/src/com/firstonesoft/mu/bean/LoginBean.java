@@ -22,6 +22,7 @@ import com.firstonesoft.scav.business.AdministradorEntornoBL;
 import com.firstonesoft.scav.model.AdministradorEntorno;
 import com.firstonesoft.scav.model.Entorno;
 import com.firstonesoft.util.FacesUtil;
+import com.firstonesoft.util.Parameters;
 
 @ManagedBean
 @SessionScoped
@@ -118,6 +119,13 @@ public class LoginBean implements Serializable {
 		item.setIcon("ui-icon-person");
 		subMenu.addElement(item);
 		
+		item = new DefaultMenuItem("Manual de Usuario");
+		String pathDoc = "/" + Parameters.system_name + "/resources/mu.pdf";
+		String strUrlDoc = "window.open('" + pathDoc + "'); return false;";
+		item.setOnclick(strUrlDoc);
+		item.setIcon("ui-icon-document");
+		subMenu.addElement(item);
+		
 		item = new DefaultMenuItem("Cerrar Sesion");
 		item.setUrl("/Logout");
 		item.setIcon("ui-icon-close");
@@ -130,7 +138,7 @@ public class LoginBean implements Serializable {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private void cargarMenusCompleto() {
 		model = new DefaultMenuModel();
-		List<MuMenu> menus = menuBL.getAllMenus();
+		List<MuMenu> menus = menuBL.getMenusNoDisponibles();
 		for (MuMenu m : menus) {
 			DefaultSubMenu subMenu = new DefaultSubMenu(m.getNombre());
 			List listMenus = m.getMuMenus();

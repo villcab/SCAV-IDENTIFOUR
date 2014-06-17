@@ -16,6 +16,10 @@ public class MenuBL {
 		return menuDao.getMenusDisponibles();
 	}
 	
+	public List<MuMenu> getMenusNoDisponibles() {
+		return menuDao.getMenusNoDisponibles();
+	}
+	
 	public List<MuMenu> getAllMenus() {
 		return menuDao.getAllMenus();
 	}

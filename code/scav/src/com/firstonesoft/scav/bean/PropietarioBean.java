@@ -107,6 +107,7 @@ public class PropietarioBean implements Serializable {
 			propietario.setEntorno(eaux);
 			
 			propietario.setEstado(true);
+			propietario.setNroLicencia(ci);
 			if (propietarioBL.guardar(propietario)) {
 				log.info("Se guardo correctamente el: " + propietario.toString());
 				

@@ -35,11 +35,11 @@
 						    				   itemValue="#{c.value}"/>
 						    </p:selectOneRadio>
 						    
-						    <p:inputTextarea rows="5" cols="48" />
+						    <p:inputTextarea rows="5" cols="65" value="#{alarmaAvisoBean.mensajeAviso}"/>
 						    
 						    <p:commandButton value="Enviar Aviso"
-											 actionListener="#{vehiculoBean.guardarVehiculo()}"
-											 update=""
+											 actionListener="#{alarmaAvisoBean.enviarAviso()}"
+											 update="smsId, panelAvisoId"
 											 icon="aviso" />
 						</h:panelGrid>
 						
@@ -54,20 +54,20 @@
 						<h:panelGrid columns="1" cellpadding="25px">
 							
 						    <p:commandButton value="Alarma Alta"
-											 actionListener="#{vehiculoBean.guardarVehiculo()}"
-											 update=""
+											 actionListener="#{alarmaAvisoBean.enviarAlarma(1)}"
+											 update="smsId"
 											 style="width: 150px"
 											 icon="btn_red" />
 											 
 							<p:commandButton value="Alarma Media"
-											 actionListener="#{vehiculoBean.guardarVehiculo()}"
-											 update=""
+											 actionListener="#{alarmaAvisoBean.enviarAlarma(2)}"
+											 update="smsId"
 											 style="width: 150px"
 											 icon="btn_yellow" />
 											 
 							<p:commandButton value="Alarma Baja"
-											 actionListener="#{vehiculoBean.guardarVehiculo()}"
-											 update=""
+											 actionListener="#{alarmaAvisoBean.enviarAlarma(3)}"
+											 update="smsId"
 											 style="width: 150px"
 											 icon="btn_green" />
 						</h:panelGrid>

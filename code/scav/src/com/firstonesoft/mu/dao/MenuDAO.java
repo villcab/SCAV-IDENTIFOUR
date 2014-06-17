@@ -20,6 +20,12 @@ public class MenuDAO {
 	}
 	
 	@SuppressWarnings("unchecked")
+	public List<MuMenu> getMenusNoDisponibles() {
+		Query q = manager.createQuery("from MuMenu c where c.muMenu = null and c.estado = false");
+		return q.getResultList();
+	}
+	
+	@SuppressWarnings("unchecked")
 	public List<MuMenu> getAllMenus() {
 		Query q = manager.createQuery("from MuMenu c where c.muMenu = null");
 		return q.getResultList();

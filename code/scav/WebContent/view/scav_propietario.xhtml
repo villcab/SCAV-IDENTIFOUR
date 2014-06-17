@@ -20,7 +20,7 @@
 		
 			<p:growl id="smsId" showDetail="true"/>
 			
-			<h1 class="form-title">Gestionar Propietarios</h1>
+			<h1 class="form-title">Gestionar Conductores</h1>
 
 			<div id="page-content">
 				
@@ -37,10 +37,7 @@
 							
 							<h:outputLabel value="Apellidos: *" styleClass="name"/>
 							<p:inputText value="#{propietarioBean.propietario.apellidos}" style="width: 200px" maxlength="200"/>
-		
-							<h:outputLabel value="Nro. de Licencia: *" styleClass="name"/>
-							<p:inputText value="#{propietarioBean.propietario.nroLicencia}" style="width: 200px" maxlength="10"/>
-							
+
 							<h:outputLabel value="Nro. de Telefono: *" rendered="#{!propietarioBean.edit}" styleClass="name"/>
 							<p:inputText value="#{propietarioBean.telefonoNuevo}" rendered="#{!propietarioBean.edit}" style="width: 200px" maxlength="10"/>
 		
@@ -64,7 +61,7 @@
 				</div>
 				
 				<div class="one-half last">
-					<p:panel id="panelFotoId" header="FOTO DEL PROPIETARIO" style="width: 360px;height: 280px;">
+					<p:panel id="panelFotoId" header="FOTO DEL CONDUCTOR" style="width: 360px;height: 280px;">
 						<p:graphicImage value="#{pageContext.servletContext.contextPath}/resources/images/tmp/#{photoController.foto}"
 										cache="false"
 										style="width: 340px;height: 240px;"/>
@@ -95,10 +92,10 @@
 			
 			<p:dataTable id="tableGralId"
 						 var="var" value="#{propietarioBean.propietarios}"
-						 emptyMessage="NO EXISTEN REGISTROS DE PROPIETARIOS" >
+						 emptyMessage="NO EXISTEN REGISTROS DE CONDUCTORES" >
 						 
 				<f:facet name="header">
-					<h:outputLabel value="LISTA DE PROPIETARIOS" />
+					<h:outputLabel value="LISTA DE CONDUCTORES" />
 				</f:facet>
 				
 				<p:column headerText="CI" sortBy="#{var.ci}" filterBy="#{var.ci}">
