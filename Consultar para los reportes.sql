@@ -21,12 +21,12 @@ select vv.placa,
 			 (SELECT count(*)
 				from ingreso_salida vis1
 				WHERE vis1.placa = vv.placa and (vis1.fecha_hora::timestamp::date) >= ('2014-06-01 17:53:16'::timestamp::date)
-																		and (vis1.fecha_hora::timestamp::date) <= ('2014-06-07 17:53:16'::timestamp::date)
-																		and vis1.tipo = 'INGRESO') as cant_total
+					and (vis1.fecha_hora::timestamp::date) <= ('2014-06-07 17:53:16'::timestamp::date)
+					and vis1.tipo = 'INGRESO') as cant_total
 
 from ingreso_salida vis, vehiculo vv
-where vis.placa = vv.placa and (vis.fecha_hora::timestamp::date) >= ('2014-06-01 17:53:16'::timestamp::date)
-													 and (vis.fecha_hora::timestamp::date) <= ('2014-06-07 17:53:16'::timestamp::date)
+		where vis.placa = vv.placa and (vis.fecha_hora::timestamp::date) >= ('2014-06-01 17:53:16'::timestamp::date)
+		 and (vis.fecha_hora::timestamp::date) <= ('2014-06-07 17:53:16'::timestamp::date)
 GROUP BY vv.placa
 ORDER BY cant_total DESC
 LIMIT 10;

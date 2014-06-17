@@ -1,0 +1,156 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/resources/template/master.xhtml">
+	
+	<ui:define name="content">
+
+		<h:form id="frmGralId" styleClass="container">
+		
+			<h1 class="form-title">Reportes</h1>
+			
+			<p:messages id="smsId" showDetail="false" />
+			
+			<center>
+				<h:panelGrid columns="2" cellpadding="5">
+				
+					<p:panel id="panelReporte1Id" header="Ingresos y Salidas" style="width: 450px; height: 250px">
+						<h4>Genera un reporte con la cantidad de ingresos y salidas, bajo un rango determinado de  fechas</h4>	
+						<h:panelGrid columns="2" cellpadding="5px" >
+						
+							<p:outputLabel value="Desde la Fecha: " styleClass="name" />
+							<p:calendar id="calendarInicioR1" value="#{reporteBean.fechaInicioR1}" maxdate="#{reporteBean.fechaFinR1}" showOn="button" pattern="dd-MM-yyyy" required="true">
+								<p:ajax event="dateSelect" update="calendarFinR1" />
+							</p:calendar>
+							
+							<p:outputLabel value="Hasta la Fecha: " styleClass="name" />
+							<p:calendar id="calendarFinR1" value="#{reporteBean.fechaFinR1}" mindate="#{reporteBean.fechaInicioR1}" showOn="button" pattern="dd-MM-yyyy" required="true">
+								<p:ajax event="dateSelect" update="calendarInicioR1" />
+							</p:calendar>
+						    
+						    <p:commandButton value="Generar"
+											 actionListener="#{reporteBean.generarReporte1}"
+											 icon="reporte"
+											 update="smsId"
+											 ajax="false" />
+						</h:panelGrid>
+					</p:panel>
+					
+					<p:panel id="panelReporte2Id" header="Detalle de los Ingresos y Salidas de un Vehiculo" style="width: 450px; height: 250px">
+						<h4>Genera un reporte detallado de los ingresos y salidas de un vehiculo, bajo un rago determinado de fechas</h4>
+						<h:panelGrid columns="2" cellpadding="5px" >
+						
+							<h:outputLabel value="Seleccione el Vehiculo: " styleClass="name"/>
+							<p:selectOneMenu value="#{reporteBean.selectPlacaR2}"
+											 filter="true"
+											 filterMatchMode="startsWith" >
+								<f:selectItems value="#{reporteBean.itemPlacasR2}"/>
+							</p:selectOneMenu>
+							
+							<h:outputLabel value="Desde la Fecha: : " styleClass="name"/>
+							<p:calendar id="calendarIniR2" value="#{reporteBean.fechaInicioR2}" maxdate="#{reporteBean.fechaFinR2}" showOn="button" pattern="dd-MM-yyyy" required="true" >
+								<p:ajax event="dateSelect" update="calendarFinR2" />
+							</p:calendar>
+							
+							<h:outputLabel value="Hasta la Fecha: " styleClass="name"/>
+							<p:calendar id="calendarFinR2" value="#{reporteBean.fechaFinR2}" mindate="#{reporteBean.fechaInicioR2}" showOn="button" pattern="dd-MM-yyyy" required="true">
+								<p:ajax event="dateSelect" update="calendarIniR2"/>
+							</p:calendar>
+							
+						    <p:commandButton value="Generar"
+											 actionListener="#{reporteBean.generarReporte2}"
+											 icon="reporte"
+											 update="smsId"
+											 ajax="false" />
+		
+						</h:panelGrid>
+					</p:panel>
+					
+					<p:panel id="panelReporte3Id" header="Vehiculos que tiene un Propietario" style="width: 450px; height: 180px">
+						<h4>Genera un reporte una lista de vehiculos que tiene registrado un propietario</h4>
+						<h:panelGrid columns="2" cellpadding="5px" >
+						
+							<h:outputLabel value="Seleccione el Propietario: " styleClass="name"/>
+							<p:selectOneMenu value="#{reporteBean.selectPropietarioR3}"
+											 filter="true"
+											 filterMatchMode="startsWith" >
+								<f:selectItems value="#{reporteBean.itemPropietariosR3}"/>
+							</p:selectOneMenu>
+							
+						    <p:commandButton value="Generar"
+											 actionListener="#{reporteBean.generarReporte3}"
+											 icon="reporte"
+											 update="smsId"
+											 ajax="false" />
+						</h:panelGrid>
+					</p:panel>
+					
+					<p:panel id="panelReporte4Id" header="Transacciones de las Trancas" style="width: 450px; height: 180px">
+						<h4>Genera un reporte con grafico de las trancas con sus respectivas cantidades de ingresos o salidas</h4>
+						<h:panelGrid columns="2" cellpadding="5px" >
+							
+						    <p:commandButton value="Generar"
+											 actionListener="#{reporteBean.generarReporte4}"
+											 icon="reporte"
+											 update="smsId"
+											 ajax="false" />
+						</h:panelGrid>
+						
+					</p:panel>
+					
+					<p:panel id="panelReporte5Id" header="Bitacoras de los Guardias" style="width: 450px; height: 215px">
+						<h4>Genera un reporte de bitacoras del guardia seleccionado de acuerdo a las cantidad de detalles que ingrese el usuario</h4>
+						<h:panelGrid columns="2" cellpadding="5px" >
+						
+							<h:outputLabel value="Seleccione el Guardia: " styleClass="name"/>
+							<p:selectOneMenu value="#{reporteBean.selectGuardiaR5}"
+											 filter="true"
+											 filterMatchMode="startsWith" >
+								<f:selectItems value="#{reporteBean.itemGuardiasR5}"/>
+							</p:selectOneMenu>
+							
+							<h:outputLabel value="Cantidad de Detalles: " styleClass="name"/>
+							<p:spinner value="#{reporteBean.cantidadR5}" min="10" max="500" />
+							
+						    <p:commandButton value="Generar"
+						    				 update="smsId"
+											 actionListener="#{reporteBean.generarReporte5}"
+											 icon="reporte"
+											 ajax="false"/>
+						</h:panelGrid>
+					</p:panel>
+					
+					<p:panel id="panelReporte6Id" header="Visitas del Entorno" style="width: 450px; height: 215px">
+						<h4>Genera un reporte de las visitas del entorno</h4>
+						<h:panelGrid columns="2" cellpadding="5px" >
+						
+							<h:outputLabel value="Seleccione el Guardia: " styleClass="name"/>
+							<p:selectOneMenu value="#{reporteBean.selectVisitaR6}"
+											 filter="true"
+											 filterMatchMode="startsWith" >
+								<f:selectItems value="#{reporteBean.itemVisitasR6}"/>
+							</p:selectOneMenu>
+							
+						    <p:commandButton value="Generar"
+											 actionListener="#{reporteBean.generarReporte6}"
+											 icon="reporte"
+											 update="smsId"
+											 ajax="false"/>
+						</h:panelGrid>
+					</p:panel>
+					
+				</h:panelGrid>
+			</center>
+		</h:form>
+	    
+	</ui:define>
+
+</ui:composition>
+
+</html>

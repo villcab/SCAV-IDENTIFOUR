@@ -1,0 +1,119 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/resources/template/master.xhtml">
+	
+	<ui:define name="content">
+
+		<h:form id="frmGralId" styleClass="container">
+		
+			<p:growl id="smsId" showDetail="true"/>
+			
+			<h1 class="form-title">Configuracion de Perfil</h1>
+
+			<center>
+			
+				<div class="line-divider" />
+			
+				<h:panelGrid id="gridId" columns="4">
+					<p:commandButton value="Editar"
+									 actionListener="#{administradorEntornoBean.cargarEdicion()}"
+									 update=":frmGralId:panelGralId, gridId"
+									 disabled="#{administradorEntornoBean.edit}"
+									 icon="editar" />
+									 
+					<p:commandButton value="Actualizar"
+									 actionListener="#{administradorEntornoBean.editarAdministradorEntorno()}"
+									 update=":frmGralId:smsId, :frmGralId:panelGralId, gridId"
+									 disabled="#{!administradorEntornoBean.edit}"
+									 icon="guardar"/>
+									 
+					<p:commandButton value="Cancelar"
+									 actionListener="#{administradorEntornoBean.cancelarEdicion()}"
+									 update="gridId, :frmGralId:panelGralId"
+									 disabled="#{!administradorEntornoBean.edit}"
+									 icon="cancelar"/>
+				</h:panelGrid>
+				
+				<p:panel id="panelGralId" header="INFORMACION GENERAL" style="width: 438px;">
+					<h:panelGrid columns="2" cellpadding="2">
+	
+						<h:outputLabel value="CI: " styleClass="name" />
+						<p:inputText value="#{administradorEntornoBean.ci}" style="width: 200px" disabled="true"/>
+	
+						<h:outputLabel value="Nombres: " styleClass="name"/>
+						<p:inputText value="#{administradorEntornoBean.perfil.nombres}" style="width: 250px" maxlength="100" disabled="#{!administradorEntornoBean.edit}"/>
+						
+						<h:outputLabel value="Apellidos: " styleClass="name"/>
+						<p:inputText value="#{administradorEntornoBean.perfil.apellidos}" style="width: 250px" maxlength="100" disabled="#{!administradorEntornoBean.edit}"/>
+						
+						<h:outputLabel value="Email: " styleClass="name"/>
+						<p:inputText value="#{administradorEntornoBean.perfil.email}" style="width: 250px" maxlength="100" disabled="true"/>
+
+					</h:panelGrid>
+				</p:panel>
+				
+				<br />
+				
+				<p:commandButton value="Cambiar Contrase&ntilde;a"
+								 oncomplete="dlgPassword.show();"
+								 icon="llave"/>
+
+			</center>
+			
+		</h:form>
+		
+		<p:confirmDialog global="true" showEffect="fade" hideEffect="explode" >
+	        <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+	        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+	    </p:confirmDialog>
+	    
+	    <!-- DIALOGO PARA EL CAMBIO DE PASSWORD	-->
+	    <p:dialog id="dialogPasswordId"
+	    		  header="CAMBIO DE CONTRASE&Ntilde;A"
+	    		  widgetVar="dlgPassword"
+	    		  resizable="false"
+	    		  showEffect="fade"
+	    		  hideEffect="explode"
+	    		  modal="true"
+	    		  appendToBody="true">
+	    		  
+	    	<h:form id="frmPasswordId">
+
+				<h:panelGrid columns="2" cellpadding="2">
+	
+					<h:outputLabel value="Contrase&ntilde;a Actual: " styleClass="name"/>
+					<p:password value="#{administradorEntornoBean.passwordActual}" maxlength="10"/>
+					
+					<h:outputLabel value="Nueva Contrase&ntilde;a: " styleClass="name"/>
+					<p:password value="#{administradorEntornoBean.passwordNuevo}" maxlength="10"/>
+					
+					<h:outputLabel value="Repita la Nueva Contrase&ntilde;a Actual: " styleClass="name"/>
+					<p:password value="#{administradorEntornoBean.passwordNuevoRep}" maxlength="10"/>
+
+					<p:commandButton value="Guardar"
+									 actionListener="#{administradorEntornoBean.cambiarPassword()}"
+									 update=":frmGralId:smsId"
+									 icon="guardar" />
+									 
+					<p:commandButton value="Cancelar"
+									 oncomplete="dlgPassword.hide();"
+									 icon="cancelar"/>
+									 
+				</h:panelGrid>
+			
+			</h:form>
+
+		</p:dialog>
+	    
+	</ui:define>
+
+</ui:composition>
+
+</html>
